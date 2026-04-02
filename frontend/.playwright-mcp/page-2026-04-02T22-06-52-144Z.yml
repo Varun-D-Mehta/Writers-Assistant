@@ -1,0 +1,127 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - banner [ref=e3]:
+      - link "Projects" [ref=e4] [cursor=pointer]:
+        - /url: /
+      - generic [ref=e5]: /
+    - generic [ref=e6]:
+      - complementary [ref=e7]:
+        - generic [ref=e8]:
+          - generic [ref=e9]: 📖
+          - generic [ref=e10]: Ruchita Test Example
+        - navigation [ref=e11]:
+          - generic [ref=e12]:
+            - button "Story Bible" [ref=e13]:
+              - img [ref=e14]
+              - text: Story Bible
+            - generic [ref=e16]:
+              - link "📋 Overview" [ref=e17] [cursor=pointer]:
+                - /url: /projects/ruchita-test-example
+                - generic [ref=e18]: 📋
+                - text: Overview
+              - generic [ref=e20]:
+                - button [ref=e21]:
+                  - img [ref=e22]
+                - link "👤 Characters 3" [ref=e24] [cursor=pointer]:
+                  - /url: /projects/ruchita-test-example/characters
+                  - generic [ref=e25]: 👤
+                  - generic [ref=e26]: Characters
+                  - generic [ref=e27]: "3"
+              - generic [ref=e29]:
+                - button [ref=e30]:
+                  - img [ref=e31]
+                - link "⚡ Events 4" [ref=e33] [cursor=pointer]:
+                  - /url: /projects/ruchita-test-example/events
+                  - generic [ref=e34]: ⚡
+                  - generic [ref=e35]: Events
+                  - generic [ref=e36]: "4"
+              - generic [ref=e38]:
+                - button [ref=e39]:
+                  - img [ref=e40]
+                - link "🌍 Environment 3" [ref=e42] [cursor=pointer]:
+                  - /url: /projects/ruchita-test-example/environment
+                  - generic [ref=e43]: 🌍
+                  - generic [ref=e44]: Environment
+                  - generic [ref=e45]: "3"
+              - generic [ref=e47]:
+                - button [ref=e48]:
+                  - img [ref=e49]
+                - link "📦 Objects" [ref=e51] [cursor=pointer]:
+                  - /url: /projects/ruchita-test-example/objects
+                  - generic [ref=e52]: 📦
+                  - generic [ref=e53]: Objects
+          - generic [ref=e55]:
+            - generic [ref=e56]:
+              - button "Manuscript" [ref=e57]:
+                - img [ref=e58]
+                - text: Manuscript
+              - button "Add part" [ref=e60]:
+                - img [ref=e61]
+            - generic [ref=e64]:
+              - generic [ref=e65]:
+                - button "📁 Day Story" [ref=e66]:
+                  - img [ref=e67]
+                  - generic [ref=e69]: 📁
+                  - generic [ref=e70]: Day Story
+                - button "Add chapter" [ref=e71]:
+                  - img [ref=e72]
+              - generic [ref=e74]:
+                - link "📄 CH 1" [ref=e75] [cursor=pointer]:
+                  - /url: /projects/ruchita-test-example/parts/day-story/chapters/ch-1
+                  - generic [ref=e76]: 📄
+                  - generic [ref=e77]: CH 1
+                - link "📄 CH 2" [ref=e78] [cursor=pointer]:
+                  - /url: /projects/ruchita-test-example/parts/day-story/chapters/ch-2
+                  - generic [ref=e79]: 📄
+                  - generic [ref=e80]: CH 2
+      - main [ref=e81]:
+        - generic [ref=e82]:
+          - generic [ref=e84]:
+            - generic [ref=e85]:
+              - heading "Story Bible — Overview" [level=2] [ref=e86]
+              - button "Export PDF" [ref=e88]
+            - generic [ref=e89]:
+              - heading "General Information" [level=3] [ref=e90]
+              - generic [ref=e91]:
+                - generic [ref=e92]:
+                  - generic [ref=e93]: Story Title
+                  - textbox "Enter story title..." [ref=e94]
+                - generic [ref=e95]:
+                  - generic [ref=e96]: Genre
+                  - textbox "Enter genre..." [ref=e97]
+                - generic [ref=e98]:
+                  - generic [ref=e99]: Setting
+                  - textbox "Enter setting..." [ref=e100]
+                - generic [ref=e101]:
+                  - generic [ref=e102]: Time Period
+                  - textbox "Enter time period..." [ref=e103]
+                - generic [ref=e104]:
+                  - generic [ref=e105]: Point of View
+                  - textbox "Enter point of view..." [ref=e106]
+                - generic [ref=e107]:
+                  - generic [ref=e108]: Tone & Style
+                  - textbox "Enter tone & style..." [ref=e109]
+                - generic [ref=e110]:
+                  - generic [ref=e111]: Synopsis
+                  - textbox "Enter synopsis..." [ref=e112]
+          - generic [ref=e114]:
+            - generic [ref=e115]:
+              - generic [ref=e116]: 💬 Story Bible Chat
+              - button "Collapse chat" [ref=e117]:
+                - img [ref=e118]
+            - generic [ref=e120]:
+              - generic [ref=e121]:
+                - generic [ref=e123]: Create a sample charachter for me
+                - generic [ref=e125]: "Of course! Let’s create a well-rounded character. Here’s a basic outline: ### Character Name Elysia Norwind ### Background Elysia hails from the tranquil, sprawling forests of Lumeria, a realm known for its ethereal beauty and ancient, magical trees. Her family has been the guardians of the Sacred Grove for generations, tasked with maintaining the balance between nature and magic. ### Appearance Elysia has striking green eyes that seem to shift with the seasons and hair that cascades in waves of auburn, reminiscent of autumn leaves. Tall and graceful, she often wears robes made from the soft, silken fibers of the woodland trees. ### Personality Elysia is deeply empathetic, with an innate ability to sense the emotions of those around her, both human and non-human. She is fiercely protective of her loved ones and the natural world, with a strong sense of purpose driven by her guardianship duties. Though gentle, she possesses a steely resolve when confronted with injustice or threats to her homeland. ### Abilities Growing up in the Sacred Grove, Elysia has access to a unique form of nature magic. She can communicate with animals, heal injuries with enchanted melodies, and manipulate plant growth. Her most powerful ability allows her to summon protective barriers of vines and leaves. ### Goals Elysia's primary goal is to preserve the delicate balance of Lumeria's ecosystem. She dreams of forging an alliance between the various races of her world to protect their shared home from encroaching industrial expansion and dark magic forces. ### Challenges She often struggles with the burden of expectations placed upon her as the heir to the guardian title. Elysia also battles with feelings of isolation, as her responsibilities set her apart from her peers. ### Relationships - **Elder Thorne:** Her mentor and the current guardian of the grove, an enigmatic figure steeped in ancient wisdom. - **Kylen Ashford:** A human adventurer who stumbled into the grove, sparking a tentative friendship based on mutual respect and curiosity about each other’s worlds. If you like this character, we can further develop aspects such as her backstory, critical events in her life, or her interaction with other characters and the world of Lumeria. Let me know how you'd like to proceed!"
+                - generic [ref=e127]: Give me sample text about 3 events where she goes to the gym, then goes to brunch then goes to meet her husband
+                - generic [ref=e129]: "Certainly! Here’s a series of events that blend Elysia's day-to-day life with her unique background as a guardian of the Sacred Grove: --- ### Event 1: Morning at the Woodland Gym As the first light of dawn peeked through the lush canopy of Lumeria, Elysia entered the Woodland Gym, a unique structure built from living trees that had shaped themselves into walls and archways. Here, the air was alive with energy, and the forest itself seemed eager to join in the workout. Elysia moved through her exercises with flowing grace, drawing strength from the earth beneath her feet. Each movement was a dance in harmony with the rustling leaves, as the gym doubled as a place to connect with the primal force of nature. She practiced her balance on twisted roots and honed her agility with the playful guidance of woodland spirits, all under the watchful eyes of Elder Thorne, who occasionally visited with silent approval. ### Event 2: Brunch at the Glade Café After her invigorating workout, Elysia made her way to the Glade Café, nestled amongst the towering trunks and vibrant flora. A favorite spot for both locals and travelers, the café was renowned for its forest-inspired cuisine. Elysia settled herself at an open-air table, where rays of sunlight danced upon the dew-touched petals of nearby flowers. As she savored her woodlandberry crêpes and sipped on herbal tea, she exchanged greetings with familiar faces. Conversations flowed like the nearby stream, touching on everything from the recent restoration efforts at the Sacred Grove to delightful anecdotes from her human friend, Kylen, who often marveled at Lumeria’s wonders. ### Event 3: Evening Meeting with Her Husband The day drew to a close as Elysia made her way to a secluded glen, where she often met her husband, Thalin, a fellow guardian with a heart as dedicated to Lumeria as hers. The setting sun cast a warm, amber glow across the glen, where Thalin awaited her with his usual gentle smile and a woven basket filled with moon-lit orchids, a courtship tradition among their kind. They exchanged stories from the day's adventures, sharing laughs and quiet moments of reflection. Their bond was strengthened by mutual respect and shared purpose, as they planned their next steps in uniting the realms against impending threats. Together, they watched the stars awaken in the night sky, their shared commitment to the Sacred Grove and each other shining brightly between them. --- These events illustrate Elysia’s life intertwined with the tranquility and responsibilities of Lumeria, highlighting her connection to both nature and the people she cherishes. If you’d like to explore any of these events further, feel free to ask!"
+                - generic [ref=e131]: Give me some crap about the environment
+                - generic [ref=e133]: "Certainly! Let's expand on the environment of Lumeria to give you a richer setting: ### The Realm of Lumeria Lumeria is a land where the natural world and magic coexist in a delicate balance. It is a realm renowned for its breathtaking ethereal landscapes and the harmonious relationships between its diverse ecosystems. #### The Sacred Grove At the heart of Lumeria lies the Sacred Grove, a pristine forest imbued with ancient magic. This grove serves as a spiritual center for the realm, where towering trees with luminescent bark coil into expansive canopies, filtering sunlight into a kaleidoscope of colors. The air is filled with the soothing hum of mystical currents that seem to breathe life into the flora and fauna. The trees here are ancient sentinels, whispering their wisdom to those attuned to nature. #### Flora and Fauna Lumeria is home to a vast array of unique and magical species. The flora includes moonlit orchids that bloom under the starry sky, whispering blossoms that convey hidden messages, and colossal ferns that form natural green corridors. The fauna is equally fascinating, from the small glimmering fireflies that light up the night like constellations to majestic lumicorns, ethereal creatures known for their healing horns. #### The Glade Café and Woodland Gym Nestled within this magical environment, the Glade Café and Woodland Gym act as social and recreational hubs. The café is an open-air haven where patrons can savor delicacies inspired by the forest itself. With tables surrounded by vibrant flowers and gentle streams, it is a place of relaxation and community. The gym, constructed by the trees themselves, stands as a testament to the synergy between nature and life in Lumeria, encouraging harmony and strength among its visitors. #### The Elemental Influence The realm's weather patterns are directly influenced by elemental spirits, which ensure that balance is maintained throughout Lumeria. The gentle caress of a breeze might carry the song of a spirit, and rain often falls as nurturing droplets that revitalize the land. In this way, the environment is a living, breathing entity, interacting with the inhabitants in profound and mystical ways. By detailing these aspects of Lumeria, we've not only enriched the background but also created potential plot threads and interactions with the environment for Elysia and other characters. If there's any specific area you’d like more detail about, just let me know!"
+              - generic [ref=e134]:
+                - generic [ref=e135]:
+                  - textbox "Ask about your story bible..." [ref=e136]
+                  - button "Send" [disabled] [ref=e137]
+                - button "Clear Chat" [ref=e138]
+  - button "Open Next.js Dev Tools" [ref=e144] [cursor=pointer]:
+    - img [ref=e145]
+  - alert [ref=e148]

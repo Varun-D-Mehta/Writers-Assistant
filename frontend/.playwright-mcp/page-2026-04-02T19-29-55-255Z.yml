@@ -1,0 +1,52 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - banner [ref=e3]:
+      - link "Projects" [ref=e4] [cursor=pointer]:
+        - /url: /
+      - generic [ref=e5]: /
+    - generic [ref=e6]:
+      - complementary [ref=e7]:
+        - link "Story Bible" [ref=e9] [cursor=pointer]:
+          - /url: /projects/test-project
+        - navigation [ref=e10]:
+          - generic [ref=e11]:
+            - generic [ref=e12]:
+              - generic [ref=e13]: Test Part
+              - button "+" [ref=e14]
+            - list [ref=e15]:
+              - listitem [ref=e16]:
+                - link "Test Chapter" [ref=e17] [cursor=pointer]:
+                  - /url: /projects/test-project/parts/test-part/chapters/test-chapter
+        - button "+ Add Part" [ref=e19]
+      - main [ref=e20]:
+        - generic [ref=e21]:
+          - generic [ref=e23]:
+            - heading "Story Bible" [level=2] [ref=e25]
+            - generic [ref=e26]:
+              - button "Characters" [ref=e27]
+              - button "Events" [ref=e28]
+              - button "Environment" [ref=e29]
+            - generic [ref=e30]:
+              - generic [ref=e31]:
+                - generic [ref=e32]:
+                  - textbox "Character name" [ref=e33]
+                  - button "Remove" [ref=e34]
+                - textbox "Description..." [ref=e35]: Test
+                - textbox "Traits (comma-separated)" [ref=e36]: Test
+                - textbox "Notes..." [ref=e37]: Test
+              - button "+ Add Character" [ref=e38]
+          - generic [ref=e40]:
+            - generic [ref=e41]:
+              - generic [ref=e42]: 💬 Story Bible Chat
+              - button "Collapse chat" [ref=e43]:
+                - img [ref=e44]
+            - generic [ref=e46]:
+              - paragraph [ref=e49]: Ask anything about your story bible...
+              - generic [ref=e50]:
+                - generic [ref=e51]:
+                  - textbox "Ask about your story bible..." [ref=e52]
+                  - button "Send" [disabled] [ref=e53]
+                - button "Clear Chat" [ref=e54]
+  - button "Open Next.js Dev Tools" [ref=e60] [cursor=pointer]:
+    - img [ref=e61]
+  - alert [ref=e64]

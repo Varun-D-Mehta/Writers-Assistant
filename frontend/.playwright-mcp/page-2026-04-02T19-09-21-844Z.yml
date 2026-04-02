@@ -1,0 +1,9 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e3]:
+      - heading "Writers Assistant" [level=1] [ref=e4]
+      - button "New Project" [ref=e5]
+    - generic [ref=e6]:
+      - paragraph [ref=e7]: No projects yet
+      - paragraph [ref=e8]: Create your first project to get started
+  - alert [ref=e9]

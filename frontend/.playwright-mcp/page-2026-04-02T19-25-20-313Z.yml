@@ -1,0 +1,74 @@
+- generic [active] [ref=e1]:
+  - button "Open Next.js Dev Tools" [ref=e15] [cursor=pointer]:
+    - img [ref=e16]
+  - alert [ref=e19]
+  - generic [ref=e20]:
+    - banner [ref=e21]:
+      - link "Projects" [ref=e22] [cursor=pointer]:
+        - /url: /
+      - generic [ref=e23]: /
+    - generic [ref=e24]:
+      - complementary [ref=e25]:
+        - link "Story Bible" [ref=e27] [cursor=pointer]:
+          - /url: /projects/test-project
+        - navigation [ref=e28]:
+          - generic [ref=e29]:
+            - generic [ref=e30]:
+              - generic [ref=e31]: Test Part
+              - button "+" [ref=e32]
+            - list [ref=e33]:
+              - listitem [ref=e34]:
+                - link "Test Chapter" [ref=e35] [cursor=pointer]:
+                  - /url: /projects/test-project/parts/test-part/chapters/test-chapter
+        - button "+ Add Part" [ref=e37]
+      - main [ref=e38]:
+        - generic [ref=e56]:
+          - generic [ref=e58]:
+            - generic [ref=e59]:
+              - generic [ref=e60]:
+                - button "B" [ref=e61]
+                - button "I" [ref=e62]
+                - button "H2" [ref=e64]
+                - button "H3" [ref=e65]
+                - button "“”" [ref=e67]
+                - button "List" [ref=e68]
+              - generic [ref=e69]:
+                - generic [ref=e70]: 0 words
+                - generic [ref=e71]: Saved
+            - textbox [ref=e74]:
+              - paragraph [ref=e75]: Test writer 123
+              - paragraph [ref=e76]: Tets this thing onece
+              - paragraph [ref=e77]: The morning light creptthrough the curtains, casting a warm glow over the room as Test stretched, awakening to the promise of a new day filled with possibilities.
+          - generic [ref=e79]:
+            - generic [ref=e80]:
+              - button "💬Chat" [ref=e81]
+              - button "🔍Context Check" [ref=e82]
+              - button "📝Proposals 2" [ref=e99]:
+                - text: 📝Proposals
+                - generic [ref=e100]: "2"
+              - button "Collapse panel" [ref=e84]:
+                - img [ref=e85]
+            - generic [ref=e88]:
+              - generic [ref=e89]:
+                - generic [ref=e91]: Can you write some test chapter
+                - generic [ref=e93]: "Sure! Since the story bible is limited, I'll create a test chapter based on a hypothetical fantasy setting. This chapter will aim to establish a sense of the world and perhaps hint at upcoming events. --- **Chapter 1: The Whispering Grove** The early morning sun filtered through the dense canopy of the Whispering Grove, casting intricate patterns of light and shadow on the forest floor. Oriana, a young herbalist known for her curiosity and gentle demeanor, meandered through the ancient woodland, her basket swinging at her side. Her fingers brushed against the feathery ferns and delicate blooms, each plant whispering its secrets in the soft language only she could understand. This grove, with its tangled roots and hidden pathways, was a sanctuary—both for Oriana and the creatures who dwelled within its depths. As she trod upon the mossy path, Oriana noticed something peculiar: a vine of silver ivy curling up a gnarled oak. It shimmered with a soft, ethereal light—a sign of enchantment. Her heart quickened, for silver ivy was known only to grow where magic seeped into the soil. She knelt beside the vine, her green eyes wide with wonder, and traced the leaves with tentative fingers. In that moment, the air around her seemed to hold its breath. \"Do you hear it too?\" a voice called out, breaking the silence. It was Elandir, the ranger from the northern woods, clad in his usual garb of leather and earth-toned garb that camouflaged him among the trees. Oriana rose to meet him, a knowing smile on her lips. \"The grove is alive with whispers today,\" she replied softly. \"There is something here that calls to us.\" Elandir nodded, his gaze lingering on the silver ivy. \"The elders spoke of a time when this grove would change, when it would be touched by the fading light of the old world.\" Together, they listened to the wood's murmurs, the secrets woven into the very fabric of life around them. The groves spoke of events long past and those yet to unfold. And as the tendrils of silver ivy reached skyward, Oriana and Elandir knew their paths were soon to intertwine with the grove's ancient magic. In the heart of the forest, destiny was awakening. --- Feel free to provide more specific details on your characters or setting if you'd like a draft that better fits your vision!"
+                - generic [ref=e102]: Fix the typo "Tets" to "Test" and "onece" to "once"
+                - generic [ref=e104]:
+                  - text: "Sure! Here's the corrected text with the typos fixed:"
+                  - generic [ref=e105]:
+                    - generic [ref=e106]: "Suggested edit:"
+                    - generic [ref=e107]: Test writer 123 Tets this thing onece
+                    - generic [ref=e108]: Test writer 123 Test this thing once
+                    - button "Add to Proposals →" [ref=e109]
+                  - text: "And just a bit more following your description:"
+                  - generic [ref=e110]:
+                    - generic [ref=e111]: "Suggested edit:"
+                    - generic [ref=e112]: The morning light crept
+                    - generic [ref=e113]: The morning light crept
+                    - button "Add to Proposals →" [ref=e114]
+                  - text: If there's anything else you'd like to adjust or add, please let me know!
+              - generic [ref=e94]:
+                - generic [ref=e95]:
+                  - textbox "Ask about your chapter..." [ref=e96]
+                  - button "Send" [disabled] [ref=e97]
+                - button "Clear Chat" [ref=e98]

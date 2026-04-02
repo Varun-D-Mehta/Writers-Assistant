@@ -1,0 +1,106 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - banner [ref=e3]:
+      - link "Projects" [ref=e4] [cursor=pointer]:
+        - /url: /
+      - generic [ref=e5]: /
+    - generic [ref=e6]:
+      - complementary [ref=e7]:
+        - generic [ref=e8]:
+          - generic [ref=e9]: 📖
+          - generic [ref=e10]: Test Project
+        - navigation [ref=e11]:
+          - generic [ref=e12]:
+            - button "Story Bible" [ref=e13]:
+              - img [ref=e14]
+              - text: Story Bible
+            - generic [ref=e16]:
+              - link "📋 Overview" [ref=e17] [cursor=pointer]:
+                - /url: /projects/test-project
+                - generic [ref=e18]: 📋
+                - text: Overview
+              - generic [ref=e20]:
+                - button [ref=e21]:
+                  - img [ref=e22]
+                - link "👤 Characters 1" [ref=e24] [cursor=pointer]:
+                  - /url: /projects/test-project/characters
+                  - generic [ref=e25]: 👤
+                  - generic [ref=e26]: Characters
+                  - generic [ref=e27]: "1"
+              - generic [ref=e29]:
+                - button [ref=e30]:
+                  - img [ref=e31]
+                - link "⚡ Events 2" [ref=e33] [cursor=pointer]:
+                  - /url: /projects/test-project/events
+                  - generic [ref=e34]: ⚡
+                  - generic [ref=e35]: Events
+                  - generic [ref=e36]: "2"
+              - generic [ref=e38]:
+                - button [ref=e39]:
+                  - img [ref=e40]
+                - link "🌍 Environment 1" [ref=e42] [cursor=pointer]:
+                  - /url: /projects/test-project/environment
+                  - generic [ref=e43]: 🌍
+                  - generic [ref=e44]: Environment
+                  - generic [ref=e45]: "1"
+              - generic [ref=e47]:
+                - button [ref=e48]:
+                  - img [ref=e49]
+                - link "📦 Objects" [ref=e51] [cursor=pointer]:
+                  - /url: /projects/test-project/objects
+                  - generic [ref=e52]: 📦
+                  - generic [ref=e53]: Objects
+          - generic [ref=e55]:
+            - generic [ref=e56]:
+              - button "Manuscript" [ref=e57]:
+                - img [ref=e58]
+                - text: Manuscript
+              - button "Add part" [ref=e60]:
+                - img [ref=e61]
+            - paragraph [ref=e64]: No parts yet
+      - main [ref=e65]:
+        - generic [ref=e66]:
+          - generic [ref=e68]:
+            - generic [ref=e69]:
+              - generic [ref=e70]:
+                - button "B" [ref=e71]
+                - button "I" [ref=e72]
+                - button "H2" [ref=e74]
+                - button "H3" [ref=e75]
+                - button "“”" [ref=e77]
+                - button "List" [ref=e78]
+              - generic [ref=e79]:
+                - generic [ref=e80]: 161 words
+                - generic [ref=e81]: Unsaved changes
+            - textbox [ref=e84]:
+              - paragraph [ref=e85]: Test writer 123 Test this thing once
+              - paragraph [ref=e86]: The morning light crept through the curtains, casting a warm glow over the room. Test felt the gentle tug of consciousness as he emerged from the depths of slumber, sensing the day brimming with potential at the edges of his awareness. A symphony of birdsong from outside the window heralded the arrival of spring, each note lifting his spirits further as he blinked away the remnants of sleep. Today felt like an open book, each page ready to be written with a myriad of experiences and opportunities.
+              - paragraph [ref=e87]: Test woke up with stiff joints groaning as he streched in the wrm morning sun and took a deep breath, savoring the scent of freshly brewed coffee drifting in from the kitchen.He swung his legs over the side of the bed, feeling the cool floor beneath his feet, and made his way toward the inviting aroma, eager to start the day with a hot cup in hand.
+              - paragraph [ref=e88]
+              - paragraph [ref=e89]
+              - paragraph [ref=e90]
+          - generic [ref=e92]:
+            - generic [ref=e93]:
+              - button "💬Chat" [ref=e94]
+              - button "🔍Context Check" [ref=e95]
+              - button "📝Proposals" [ref=e96]
+              - button "Collapse panel" [ref=e97]:
+                - img [ref=e98]
+            - generic [ref=e101]:
+              - generic [ref=e102]:
+                - generic [ref=e104]: Can you write some test chapter
+                - generic [ref=e106]: "Sure! Since the story bible is limited, I'll create a test chapter based on a hypothetical fantasy setting. This chapter will aim to establish a sense of the world and perhaps hint at upcoming events. --- **Chapter 1: The Whispering Grove** The early morning sun filtered through the dense canopy of the Whispering Grove, casting intricate patterns of light and shadow on the forest floor. Oriana, a young herbalist known for her curiosity and gentle demeanor, meandered through the ancient woodland, her basket swinging at her side. Her fingers brushed against the feathery ferns and delicate blooms, each plant whispering its secrets in the soft language only she could understand. This grove, with its tangled roots and hidden pathways, was a sanctuary—both for Oriana and the creatures who dwelled within its depths. As she trod upon the mossy path, Oriana noticed something peculiar: a vine of silver ivy curling up a gnarled oak. It shimmered with a soft, ethereal light—a sign of enchantment. Her heart quickened, for silver ivy was known only to grow where magic seeped into the soil. She knelt beside the vine, her green eyes wide with wonder, and traced the leaves with tentative fingers. In that moment, the air around her seemed to hold its breath. \"Do you hear it too?\" a voice called out, breaking the silence. It was Elandir, the ranger from the northern woods, clad in his usual garb of leather and earth-toned garb that camouflaged him among the trees. Oriana rose to meet him, a knowing smile on her lips. \"The grove is alive with whispers today,\" she replied softly. \"There is something here that calls to us.\" Elandir nodded, his gaze lingering on the silver ivy. \"The elders spoke of a time when this grove would change, when it would be touched by the fading light of the old world.\" Together, they listened to the wood's murmurs, the secrets woven into the very fabric of life around them. The groves spoke of events long past and those yet to unfold. And as the tendrils of silver ivy reached skyward, Oriana and Elandir knew their paths were soon to intertwine with the grove's ancient magic. In the heart of the forest, destiny was awakening. --- Feel free to provide more specific details on your characters or setting if you'd like a draft that better fits your vision!"
+                - generic [ref=e108]: Fix the typo "Tets" to "Test" and "onece" to "once"
+                - generic [ref=e110]: "Sure! Here's the corrected text with the typos fixed: <original>Test writer 123 Tets this thing onece</original> <rewrite>Test writer 123 Test this thing once</rewrite> And just a bit more following your description: <original>The morning light crept</original> <rewrite>The morning light crept</rewrite> If there's anything else you'd like to adjust or add, please let me know!"
+                - generic [ref=e112]: Write the whole chapter for me
+                - generic [ref=e114]: "Sure, I can help you construct the chapter using the initial test text as a starting point and expanding upon it. Let's create a cohesive chapter that evolves from the morning scene: --- **Chapter 1: A New Dawn** <original>The morning light crept through the curtains, casting a warm glow over the room as Test stretched, awakening to the promise of a new day filled with possibilities.</original> <rewrite>The morning light crept through the curtains, casting a warm glow over the room as Test stretched, awakening to the promise of a new day filled with possibilities. Birds chirped outside the window, their songs carrying the joyful notes of a nascent spring. Test blinked against the light, feeling the grogginess of a deep sleep cling to the edges of his consciousness.</rewrite> <original>Test woke up with stiff joints groaning as he streched in the wrm morning sun and took a deep breath, savoring the scent of freshly brewed coffee drifting in from the kitchen. He swung his legs over the side of the bed, feeling the cool floor beneath his feet, and made his way toward the inviting aroma, eager to start the day with a hot cup in hand.</original> <rewrite>Test woke with stiff joints groaning as he stretched in the warm morning sun. He took a deep breath, savoring the scent of freshly brewed coffee drifting in from the kitchen. As he swung his legs over the side of the bed, feeling the cool floor beneath his feet, he recalled the day's tasks that lay ahead. A meeting with old friends, a walk through the bustling market, and perhaps a moment to indulge in his latest hobby of sketching the intricate patterns he saw in the clouds.</rewrite> As he made his way to the kitchen, the aroma of coffee grew stronger, mingling with the comforting scent of toast browning on the counter. It was in these morning rituals that Test found solace—a simple yet profound enjoyment of life's small pleasures. The kitchen was bathed in sunlight, and Test found himself pausing to appreciate the moment. He poured himself a cup of coffee and settled into the chair by the window, where he could watch the world awaken around him. A contented sigh escaped his lips as he sipped the hot beverage, feeling its warmth spread through him. The landscape outside was alive; neighbors were beginning their days, birds were fluttering between trees, and the distant hum of the city could be heard rising as the rural outskirts began to stir. In these early hours, before the day's demands pressed in, there was a purity to life. Test's gaze fell on the notebook lying nearby, its pages filled with half-formed ideas and sketches. He flipped it open, allowing his thoughts to flow with the ease of the unfolding morning, capturing snippets and images, storing them for when creativity next struck with irresistible force. With the sun now higher in the sky, he took the last sip of his coffee and stood, ready to embrace the day with all its potential. The world was full of stories waiting to be lived, and Test felt invigorated by the possibilities. He stepped out, closing the door gently behind him, and set off toward a day that promised the familiar comfort of routine interwoven with the thrill of the unexpected—a perfect balance for a heart eager for both stability and adventure. --- I hope you find this draft suitable for your needs. If you have any specific elements or themes you'd like to incorporate, let me know!"
+                - generic [ref=e116]: Write the next Para;
+                - generic [ref=e118]: "Certainly! Let’s continue building on the scene where Test steps out to embrace the day: --- Just outside his door, the world seemed to smile in greeting. The sky above was a canvas of blue, dotted with fluffy clouds that drifted aimlessly, much like his own thoughts on a lazy afternoon. The vibrant colors of spring were all around, in the blooming flowers that lined the path and in the eager chatter of children playing nearby. As Test walked, he felt the rhythmic crunch of gravel underfoot, a sound that always managed to ground him, reminding him of the simple joys that life had to offer. He waved to Mrs. O’Hara, the elderly lady tending to her garden, who gave him a warm smile in return. Her roses were the pride of the neighborhood, their fragrant petals a testament to her diligence and care over the years. Her small wave was a daily ritual, a reassuring constant in Test's life. As he made his way towards the park, he found himself thinking about the meeting with his friends later. Their gatherings were infrequent but cherished, providing not just friendship but insights into worlds outside his own. Test knew that each of his friends would bring their stories, news from their own little corners of the world, and together they would weave tales over coffee and laughter. For now, though, the soft air of the morning wrapped around him like a comforting embrace, and he let his mind drift, open to whatever this promising day might bring."
+              - generic [ref=e119]:
+                - generic [ref=e120]:
+                  - textbox "Ask about your chapter..." [ref=e121]
+                  - button "Send" [disabled] [ref=e122]
+                - button "Clear Chat" [ref=e123]
+  - button "Open Next.js Dev Tools" [ref=e129] [cursor=pointer]:
+    - img [ref=e130]
+  - alert [ref=e133]

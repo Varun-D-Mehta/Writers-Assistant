@@ -1,0 +1,39 @@
+- generic [active] [ref=e1]:
+  - button "Open Next.js Dev Tools" [ref=e15] [cursor=pointer]:
+    - img [ref=e16]
+  - alert [ref=e19]
+  - generic [ref=e20]:
+    - banner [ref=e21]:
+      - link "Projects" [ref=e22] [cursor=pointer]:
+        - /url: /
+      - generic [ref=e23]: /
+    - generic [ref=e24]:
+      - complementary [ref=e25]:
+        - link "Story Bible" [ref=e27] [cursor=pointer]:
+          - /url: /projects/test-project
+        - navigation [ref=e28]:
+          - generic [ref=e29]:
+            - generic [ref=e30]:
+              - generic [ref=e31]: Test Part
+              - button "+" [ref=e32]
+            - list [ref=e33]:
+              - listitem [ref=e34]:
+                - link "Test Chapter" [ref=e35] [cursor=pointer]:
+                  - /url: /projects/test-project/parts/test-part/chapters/test-chapter
+        - button "+ Add Part" [ref=e37]
+      - main [ref=e38]:
+        - generic [ref=e40]:
+          - heading "Story Bible" [level=2] [ref=e42]
+          - generic [ref=e43]:
+            - button "Characters" [ref=e44]
+            - button "Events" [ref=e45]
+            - button "Environment" [ref=e46]
+          - generic [ref=e47]:
+            - generic [ref=e48]:
+              - generic [ref=e49]:
+                - textbox "Character name" [ref=e50]
+                - button "Remove" [ref=e51]
+              - textbox "Description..." [ref=e52]: Test
+              - textbox "Traits (comma-separated)" [ref=e53]: Test
+              - textbox "Notes..." [ref=e54]: Test
+            - button "+ Add Character" [ref=e55]

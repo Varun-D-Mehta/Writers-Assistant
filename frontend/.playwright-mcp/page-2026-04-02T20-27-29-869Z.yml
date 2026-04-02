@@ -1,0 +1,93 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - banner [ref=e3]:
+      - link "Projects" [ref=e4] [cursor=pointer]:
+        - /url: /
+      - generic [ref=e5]: /
+    - generic [ref=e6]:
+      - complementary [ref=e7]:
+        - navigation [ref=e8]:
+          - generic [ref=e9]:
+            - button "Story Bible" [ref=e10]:
+              - img [ref=e11]
+              - text: Story Bible
+            - generic [ref=e13]:
+              - link "📖 Characters" [ref=e14] [cursor=pointer]:
+                - /url: /projects/test-project
+                - generic [ref=e15]: 📖
+                - text: Characters
+              - link "⚡ Events" [ref=e16] [cursor=pointer]:
+                - /url: /projects/test-project
+                - generic [ref=e17]: ⚡
+                - text: Events
+              - link "🌍 Environment" [ref=e18] [cursor=pointer]:
+                - /url: /projects/test-project
+                - generic [ref=e19]: 🌍
+                - text: Environment
+          - generic [ref=e21]:
+            - generic [ref=e22]:
+              - button "Manuscript" [ref=e23]:
+                - img [ref=e24]
+                - text: Manuscript
+              - button "Add part" [ref=e26]:
+                - img [ref=e27]
+            - generic [ref=e30]:
+              - generic [ref=e31]:
+                - button "📁 Test Part" [ref=e32]:
+                  - img [ref=e33]
+                  - generic [ref=e35]: 📁
+                  - generic [ref=e36]: Test Part
+                - button "Add chapter" [ref=e37]:
+                  - img [ref=e38]
+              - link "📄 Test Chapter" [ref=e41] [cursor=pointer]:
+                - /url: /projects/test-project/parts/test-part/chapters/test-chapter
+                - generic [ref=e42]: 📄
+                - generic [ref=e43]: Test Chapter
+      - main [ref=e44]:
+        - generic [ref=e45]:
+          - generic [ref=e47]:
+            - heading "Story Bible" [level=2] [ref=e49]
+            - generic [ref=e50]:
+              - button "Overview" [ref=e51]
+              - button "Characters" [ref=e52]
+              - button "Events" [ref=e53]
+              - button "Environment" [ref=e54]
+            - generic [ref=e55]:
+              - heading "General Information" [level=3] [ref=e56]
+              - generic [ref=e57]:
+                - generic [ref=e58]:
+                  - generic [ref=e59]: Story Title
+                  - textbox "Enter story title..." [ref=e60]
+                - generic [ref=e61]:
+                  - generic [ref=e62]: Genre
+                  - textbox "Enter genre..." [ref=e63]
+                - generic [ref=e64]:
+                  - generic [ref=e65]: Setting
+                  - textbox "Enter setting..." [ref=e66]
+                - generic [ref=e67]:
+                  - generic [ref=e68]: Time Period
+                  - textbox "Enter time period..." [ref=e69]
+                - generic [ref=e70]:
+                  - generic [ref=e71]: Point of View
+                  - textbox "Enter point of view..." [ref=e72]
+                - generic [ref=e73]:
+                  - generic [ref=e74]: Tone & Style
+                  - textbox "Enter tone & style..." [ref=e75]
+                - generic [ref=e76]:
+                  - generic [ref=e77]: Synopsis
+                  - textbox "Enter synopsis..." [ref=e78]
+          - generic [ref=e80]:
+            - generic [ref=e81]:
+              - generic [ref=e82]: 💬 Story Bible Chat
+              - button "Collapse chat" [ref=e83]:
+                - img [ref=e84]
+            - generic [ref=e86]:
+              - paragraph [ref=e89]: Ask anything about your story bible...
+              - generic [ref=e90]:
+                - generic [ref=e91]:
+                  - textbox "Ask about your story bible..." [ref=e92]
+                  - button "Send" [disabled] [ref=e93]
+                - button "Clear Chat" [ref=e94]
+  - button "Open Next.js Dev Tools" [ref=e100] [cursor=pointer]:
+    - img [ref=e101]
+  - alert [ref=e104]

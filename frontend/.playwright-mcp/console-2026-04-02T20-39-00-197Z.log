@@ -1,0 +1,350 @@
+[      73ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[      81ms] [LOG] [HMR] connected @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[    5760ms] [WARNING] The resource http://localhost:3000/_next/static/media/797e433ab948586e-s.p.0.q-h669a_dqa.woff2 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally. @ http://localhost:3000/projects/test-project/parts/test-part/chapters/test-chapter:0
+[   13565ms] [WARNING] The resource http://localhost:3000/_next/static/media/797e433ab948586e-s.p.0.q-h669a_dqa.woff2 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally. @ http://localhost:3000/projects/test-project/parts/test-part/chapters/test-chapter:0
+[   22061ms] [WARNING] The resource http://localhost:3000/_next/static/media/797e433ab948586e-s.p.0.q-h669a_dqa.woff2 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally. @ http://localhost:3000/projects/test-project/parts/test-part/chapters/test-chapter:0
+[   81860ms] [WARNING] The resource http://localhost:3000/_next/static/media/797e433ab948586e-s.p.0.q-h669a_dqa.woff2 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally. @ http://localhost:3000/projects/test-project?tab=metadata:0
+[   89178ms] [WARNING] The resource http://localhost:3000/_next/static/media/797e433ab948586e-s.p.0.q-h669a_dqa.woff2 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally. @ http://localhost:3000/projects/test-project/parts/test-part/chapters/test-chapter:0
+[  241818ms] [WARNING] The resource http://localhost:3000/_next/static/media/797e433ab948586e-s.p.0.q-h669a_dqa.woff2 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally. @ http://localhost:3000/projects/test-project?tab=environment&idx=0:0
+[  246986ms] [WARNING] The resource http://localhost:3000/_next/static/media/797e433ab948586e-s.p.0.q-h669a_dqa.woff2 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally. @ http://localhost:3000/projects/test-project?tab=metadata:0
+[  250023ms] [WARNING] The resource http://localhost:3000/_next/static/media/797e433ab948586e-s.p.0.q-h669a_dqa.woff2 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally. @ http://localhost:3000/projects/test-project?tab=metadata:0
+[  253468ms] [WARNING] The resource http://localhost:3000/_next/static/media/797e433ab948586e-s.p.0.q-h669a_dqa.woff2 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally. @ http://localhost:3000/projects/test-project?tab=characters&idx=0:0
+[  303633ms] [WARNING] The resource http://localhost:3000/_next/static/media/797e433ab948586e-s.p.0.q-h669a_dqa.woff2 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally. @ http://localhost:3000/projects/test-project?tab=environment&idx=0:0
+[  309815ms] [WARNING] The resource http://localhost:3000/_next/static/media/797e433ab948586e-s.p.0.q-h669a_dqa.woff2 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally. @ http://localhost:3000/projects/test-project/parts/test-part/chapters/test-chapter:0
+[  328244ms] [WARNING] The resource http://localhost:3000/_next/static/media/797e433ab948586e-s.p.0.q-h669a_dqa.woff2 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally. @ http://localhost:3000/projects/test-project/parts/test-part/chapters/test-chapter:0
+[  348083ms] [WARNING] The resource http://localhost:3000/_next/static/media/797e433ab948586e-s.p.0.q-h669a_dqa.woff2 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally. @ http://localhost:3000/projects/test-project/parts/test-part/chapters/test-chapter:0
+[  369821ms] [WARNING] The resource http://localhost:3000/_next/static/media/797e433ab948586e-s.p.0.q-h669a_dqa.woff2 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally. @ http://localhost:3000/projects/test-project/parts/test-part/chapters/test-chapter:0
+[ 1159250ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[ 1159289ms] [ERROR] ./src/components/editor/ChapterEditor.tsx:117:9
+the name `wordCount` is defined multiple times
+  115 |   }, []);
+  116 |
+> 117 |   const wordCount = editor?.storage.characterCount?.words() ?? 0;
+      |         ^^^^^^^^^
+  118 |
+  119 |   return (
+  120 |     <div className="flex h-full flex-col">
+
+Ecmascript file had an error
+
+Import traces:
+  Client Component Browser:
+    ./src/components/editor/ChapterEditor.tsx [Client Component Browser]
+    ./src/app/projects/[projectSlug]/parts/[partSlug]/chapters/[chapterSlug]/page.tsx [Client Component Browser]
+    ./src/app/projects/[projectSlug]/parts/[partSlug]/chapters/[chapterSlug]/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/components/editor/ChapterEditor.tsx [Client Component SSR]
+    ./src/app/projects/[projectSlug]/parts/[partSlug]/chapters/[chapterSlug]/page.tsx [Client Component SSR]
+    ./src/app/projects/[projectSlug]/parts/[partSlug]/chapters/[chapterSlug]/page.tsx [Server Component] @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:3272
+[ 1159399ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[ 1159465ms] [ERROR] ./src/components/editor/ChapterEditor.tsx:117:9
+the name `wordCount` is defined multiple times
+  115 |   }, []);
+  116 |
+> 117 |   const wordCount = editor?.storage.characterCount?.words() ?? 0;
+      |         ^^^^^^^^^
+  118 |
+  119 |   return (
+  120 |     <div className="flex h-full flex-col">
+
+Ecmascript file had an error
+
+Import traces:
+  Client Component Browser:
+    ./src/components/editor/ChapterEditor.tsx [Client Component Browser]
+    ./src/app/projects/[projectSlug]/parts/[partSlug]/chapters/[chapterSlug]/page.tsx [Client Component Browser]
+    ./src/app/projects/[projectSlug]/parts/[partSlug]/chapters/[chapterSlug]/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/components/editor/ChapterEditor.tsx [Client Component SSR]
+    ./src/app/projects/[projectSlug]/parts/[partSlug]/chapters/[chapterSlug]/page.tsx [Client Component SSR]
+    ./src/app/projects/[projectSlug]/parts/[partSlug]/chapters/[chapterSlug]/page.tsx [Server Component] @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:3272
+[ 1159567ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[ 1159615ms] [ERROR] ./src/components/editor/ChapterEditor.tsx:117:9
+the name `wordCount` is defined multiple times
+  115 |   }, []);
+  116 |
+> 117 |   const wordCount = editor?.storage.characterCount?.words() ?? 0;
+      |         ^^^^^^^^^
+  118 |
+  119 |   return (
+  120 |     <div className="flex h-full flex-col">
+
+Ecmascript file had an error
+
+Import traces:
+  Client Component Browser:
+    ./src/components/editor/ChapterEditor.tsx [Client Component Browser]
+    ./src/app/projects/[projectSlug]/parts/[partSlug]/chapters/[chapterSlug]/page.tsx [Client Component Browser]
+    ./src/app/projects/[projectSlug]/parts/[partSlug]/chapters/[chapterSlug]/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/components/editor/ChapterEditor.tsx [Client Component SSR]
+    ./src/app/projects/[projectSlug]/parts/[partSlug]/chapters/[chapterSlug]/page.tsx [Client Component SSR]
+    ./src/app/projects/[projectSlug]/parts/[partSlug]/chapters/[chapterSlug]/page.tsx [Server Component] @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:3272
+[ 1159615ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3000/projects/test-project/parts/test-part/chapters/test-chapter?_rsc=z5edx:0
+[ 1159641ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3000/projects/test-project/parts/test-part/chapters/test-chapter:0
+[ 1159682ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/_next/static/chunks/node_modules_react-dom_0bruynb._.js:15305
+[ 1159706ms] Error: ./src/components/editor/ChapterEditor.tsx:117:9
+the name `wordCount` is defined multiple times
+  115 |   }, []);
+  116 |
+> 117 |   const wordCount = editor?.storage.characterCount?.words() ?? 0;
+      |         ^^^^^^^^^
+  118 |
+  119 |   return (
+  120 |     <div className="flex h-full flex-col">
+
+Ecmascript file had an error
+
+Import traces:
+  Client Component Browser:
+    ./src/components/editor/ChapterEditor.tsx [Client Component Browser]
+    ./src/app/projects/[projectSlug]/parts/[partSlug]/chapters/[chapterSlug]/page.tsx [Client Component Browser]
+    ./src/app/projects/[projectSlug]/parts/[partSlug]/chapters/[chapterSlug]/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/components/editor/ChapterEditor.tsx [Client Component SSR]
+    ./src/app/projects/[projectSlug]/parts/[partSlug]/chapters/[chapterSlug]/page.tsx [Client Component SSR]
+    ./src/app/projects/[projectSlug]/parts/[partSlug]/chapters/[chapterSlug]/page.tsx [Server Component]
+
+
+    at <unknown> (Error: ./src/components/editor/ChapterEditor.tsx:117:9)
+    at Object.getCompilationErrors (file:///Users/varunmehta/Dev/writers-assistant/frontend/node_modules/next/dist/server/dev/hot-reloader-turbopack.js:1186:59)
+    at DevBundlerService.getCompilationError (file:///Users/varunmehta/Dev/writers-assistant/frontend/node_modules/next/dist/server/lib/dev-bundler-service.js:44:55)
+    at DevServer.getCompilationError (file:///Users/varunmehta/Dev/writers-assistant/frontend/node_modules/next/dist/server/dev/next-dev-server.js:719:42)
+    at DevServer.findPageComponents (file:///Users/varunmehta/Dev/writers-assistant/frontend/node_modules/next/dist/server/dev/next-dev-server.js:689:43)
+    at async DevServer.renderErrorToResponseImpl (file:///Users/varunmehta/Dev/writers-assistant/frontend/node_modules/next/dist/server/base-server.js:1745:26)
+[ 1159706ms] [LOG] [HMR] connected @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1226
+[ 1159707ms] [ERROR] ./src/components/editor/ChapterEditor.tsx:117:9
+the name `wordCount` is defined multiple times
+  115 |   }, []);
+  116 |
+> 117 |   const wordCount = editor?.storage.characterCount?.words() ?? 0;
+      |         ^^^^^^^^^
+  118 |
+  119 |   return (
+  120 |     <div className="flex h-full flex-col">
+
+Ecmascript file had an error
+
+Import traces:
+  Client Component Browser:
+    ./src/components/editor/ChapterEditor.tsx [Client Component Browser]
+    ./src/app/projects/[projectSlug]/parts/[partSlug]/chapters/[chapterSlug]/page.tsx [Client Component Browser]
+    ./src/app/projects/[projectSlug]/parts/[partSlug]/chapters/[chapterSlug]/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/components/editor/ChapterEditor.tsx [Client Component SSR]
+    ./src/app/projects/[projectSlug]/parts/[partSlug]/chapters/[chapterSlug]/page.tsx [Client Component SSR]
+    ./src/app/projects/[projectSlug]/parts/[partSlug]/chapters/[chapterSlug]/page.tsx [Server Component] @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1945
+[ 1159751ms] [ERROR] ./src/components/editor/ChapterEditor.tsx:117:9
+the name `wordCount` is defined multiple times
+  115 |   }, []);
+  116 |
+> 117 |   const wordCount = editor?.storage.characterCount?.words() ?? 0;
+      |         ^^^^^^^^^
+  118 |
+  119 |   return (
+  120 |     <div className="flex h-full flex-col">
+
+Ecmascript file had an error
+
+Import traces:
+  Client Component Browser:
+    ./src/components/editor/ChapterEditor.tsx [Client Component Browser]
+    ./src/app/projects/[projectSlug]/parts/[partSlug]/chapters/[chapterSlug]/page.tsx [Client Component Browser]
+    ./src/app/projects/[projectSlug]/parts/[partSlug]/chapters/[chapterSlug]/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/components/editor/ChapterEditor.tsx [Client Component SSR]
+    ./src/app/projects/[projectSlug]/parts/[partSlug]/chapters/[chapterSlug]/page.tsx [Client Component SSR]
+    ./src/app/projects/[projectSlug]/parts/[partSlug]/chapters/[chapterSlug]/page.tsx [Server Component] @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1945
+[ 1159816ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1226
+[ 1166393ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1226
+[ 1166420ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3000/projects/test-project/parts/test-part/chapters/test-chapter:0
+[ 1166431ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/_next/static/chunks/node_modules_react-dom_0bruynb._.js:15305
+[ 1166436ms] Error: ./src/components/editor/ChapterEditor.tsx:118:9
+the name `wordCount` is defined multiple times
+  116 |   }, []);
+  117 |
+> 118 |   const wordCount = editor?.storage.characterCount?.words() ?? 0;
+      |         ^^^^^^^^^
+  119 |
+  120 |   return (
+  121 |     <div className="flex h-full flex-col">
+
+Ecmascript file had an error
+
+Import traces:
+  Client Component Browser:
+    ./src/components/editor/ChapterEditor.tsx [Client Component Browser]
+    ./src/app/projects/[projectSlug]/parts/[partSlug]/chapters/[chapterSlug]/page.tsx [Client Component Browser]
+    ./src/app/projects/[projectSlug]/parts/[partSlug]/chapters/[chapterSlug]/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/components/editor/ChapterEditor.tsx [Client Component SSR]
+    ./src/app/projects/[projectSlug]/parts/[partSlug]/chapters/[chapterSlug]/page.tsx [Client Component SSR]
+    ./src/app/projects/[projectSlug]/parts/[partSlug]/chapters/[chapterSlug]/page.tsx [Server Component]
+
+
+    at <unknown> (Error: ./src/components/editor/ChapterEditor.tsx:118:9)
+    at Object.getCompilationErrors (file:///Users/varunmehta/Dev/writers-assistant/frontend/node_modules/next/dist/server/dev/hot-reloader-turbopack.js:1186:59)
+    at DevBundlerService.getCompilationError (file:///Users/varunmehta/Dev/writers-assistant/frontend/node_modules/next/dist/server/lib/dev-bundler-service.js:44:55)
+    at DevServer.getCompilationError (file:///Users/varunmehta/Dev/writers-assistant/frontend/node_modules/next/dist/server/dev/next-dev-server.js:719:42)
+    at DevServer.findPageComponents (file:///Users/varunmehta/Dev/writers-assistant/frontend/node_modules/next/dist/server/dev/next-dev-server.js:689:43)
+    at async DevServer.renderErrorToResponseImpl (file:///Users/varunmehta/Dev/writers-assistant/frontend/node_modules/next/dist/server/base-server.js:1745:26)
+[ 1166436ms] [LOG] [HMR] connected @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1226
+[ 1166441ms] [ERROR] ./src/components/editor/ChapterEditor.tsx:118:9
+the name `wordCount` is defined multiple times
+  116 |   }, []);
+  117 |
+> 118 |   const wordCount = editor?.storage.characterCount?.words() ?? 0;
+      |         ^^^^^^^^^
+  119 |
+  120 |   return (
+  121 |     <div className="flex h-full flex-col">
+
+Ecmascript file had an error
+
+Import traces:
+  Client Component Browser:
+    ./src/components/editor/ChapterEditor.tsx [Client Component Browser]
+    ./src/app/projects/[projectSlug]/parts/[partSlug]/chapters/[chapterSlug]/page.tsx [Client Component Browser]
+    ./src/app/projects/[projectSlug]/parts/[partSlug]/chapters/[chapterSlug]/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/components/editor/ChapterEditor.tsx [Client Component SSR]
+    ./src/app/projects/[projectSlug]/parts/[partSlug]/chapters/[chapterSlug]/page.tsx [Client Component SSR]
+    ./src/app/projects/[projectSlug]/parts/[partSlug]/chapters/[chapterSlug]/page.tsx [Server Component] @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1945
+[ 1166475ms] [ERROR] ./src/components/editor/ChapterEditor.tsx:118:9
+the name `wordCount` is defined multiple times
+  116 |   }, []);
+  117 |
+> 118 |   const wordCount = editor?.storage.characterCount?.words() ?? 0;
+      |         ^^^^^^^^^
+  119 |
+  120 |   return (
+  121 |     <div className="flex h-full flex-col">
+
+Ecmascript file had an error
+
+Import traces:
+  Client Component Browser:
+    ./src/components/editor/ChapterEditor.tsx [Client Component Browser]
+    ./src/app/projects/[projectSlug]/parts/[partSlug]/chapters/[chapterSlug]/page.tsx [Client Component Browser]
+    ./src/app/projects/[projectSlug]/parts/[partSlug]/chapters/[chapterSlug]/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/components/editor/ChapterEditor.tsx [Client Component SSR]
+    ./src/app/projects/[projectSlug]/parts/[partSlug]/chapters/[chapterSlug]/page.tsx [Client Component SSR]
+    ./src/app/projects/[projectSlug]/parts/[partSlug]/chapters/[chapterSlug]/page.tsx [Server Component] @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1945
+[ 1176445ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1226
+[ 1176471ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3000/projects/test-project/parts/test-part/chapters/test-chapter:0
+[ 1176480ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/_next/static/chunks/node_modules_react-dom_0bruynb._.js:15305
+[ 1176484ms] Error: ./src/components/editor/ChapterEditor.tsx:119:9
+the name `wordCount` is defined multiple times
+  117 |   }, []);
+  118 |
+> 119 |   const wordCount = editor?.storage.characterCount?.words() ?? 0;
+      |         ^^^^^^^^^
+  120 |
+  121 |   return (
+  122 |     <div className="flex h-full flex-col">
+
+Ecmascript file had an error
+
+Import traces:
+  Client Component Browser:
+    ./src/components/editor/ChapterEditor.tsx [Client Component Browser]
+    ./src/app/projects/[projectSlug]/parts/[partSlug]/chapters/[chapterSlug]/page.tsx [Client Component Browser]
+    ./src/app/projects/[projectSlug]/parts/[partSlug]/chapters/[chapterSlug]/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/components/editor/ChapterEditor.tsx [Client Component SSR]
+    ./src/app/projects/[projectSlug]/parts/[partSlug]/chapters/[chapterSlug]/page.tsx [Client Component SSR]
+    ./src/app/projects/[projectSlug]/parts/[partSlug]/chapters/[chapterSlug]/page.tsx [Server Component]
+
+
+    at <unknown> (Error: ./src/components/editor/ChapterEditor.tsx:119:9)
+    at Object.getCompilationErrors (file:///Users/varunmehta/Dev/writers-assistant/frontend/node_modules/next/dist/server/dev/hot-reloader-turbopack.js:1186:59)
+    at DevBundlerService.getCompilationError (file:///Users/varunmehta/Dev/writers-assistant/frontend/node_modules/next/dist/server/lib/dev-bundler-service.js:44:55)
+    at DevServer.getCompilationError (file:///Users/varunmehta/Dev/writers-assistant/frontend/node_modules/next/dist/server/dev/next-dev-server.js:719:42)
+    at DevServer.findPageComponents (file:///Users/varunmehta/Dev/writers-assistant/frontend/node_modules/next/dist/server/dev/next-dev-server.js:689:43)
+    at async DevServer.renderErrorToResponseImpl (file:///Users/varunmehta/Dev/writers-assistant/frontend/node_modules/next/dist/server/base-server.js:1745:26)
+[ 1176483ms] [LOG] [HMR] connected @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1226
+[ 1176486ms] [ERROR] ./src/components/editor/ChapterEditor.tsx:119:9
+the name `wordCount` is defined multiple times
+  117 |   }, []);
+  118 |
+> 119 |   const wordCount = editor?.storage.characterCount?.words() ?? 0;
+      |         ^^^^^^^^^
+  120 |
+  121 |   return (
+  122 |     <div className="flex h-full flex-col">
+
+Ecmascript file had an error
+
+Import traces:
+  Client Component Browser:
+    ./src/components/editor/ChapterEditor.tsx [Client Component Browser]
+    ./src/app/projects/[projectSlug]/parts/[partSlug]/chapters/[chapterSlug]/page.tsx [Client Component Browser]
+    ./src/app/projects/[projectSlug]/parts/[partSlug]/chapters/[chapterSlug]/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/components/editor/ChapterEditor.tsx [Client Component SSR]
+    ./src/app/projects/[projectSlug]/parts/[partSlug]/chapters/[chapterSlug]/page.tsx [Client Component SSR]
+    ./src/app/projects/[projectSlug]/parts/[partSlug]/chapters/[chapterSlug]/page.tsx [Server Component] @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1945
+[ 1176518ms] [ERROR] ./src/components/editor/ChapterEditor.tsx:119:9
+the name `wordCount` is defined multiple times
+  117 |   }, []);
+  118 |
+> 119 |   const wordCount = editor?.storage.characterCount?.words() ?? 0;
+      |         ^^^^^^^^^
+  120 |
+  121 |   return (
+  122 |     <div className="flex h-full flex-col">
+
+Ecmascript file had an error
+
+Import traces:
+  Client Component Browser:
+    ./src/components/editor/ChapterEditor.tsx [Client Component Browser]
+    ./src/app/projects/[projectSlug]/parts/[partSlug]/chapters/[chapterSlug]/page.tsx [Client Component Browser]
+    ./src/app/projects/[projectSlug]/parts/[partSlug]/chapters/[chapterSlug]/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/components/editor/ChapterEditor.tsx [Client Component SSR]
+    ./src/app/projects/[projectSlug]/parts/[partSlug]/chapters/[chapterSlug]/page.tsx [Client Component SSR]
+    ./src/app/projects/[projectSlug]/parts/[partSlug]/chapters/[chapterSlug]/page.tsx [Server Component] @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1945
+[ 1181769ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1226
+[ 1181827ms] [LOG] [Fast Refresh] done in 11ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1226
+[ 1181906ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[ 1181919ms] [LOG] [HMR] connected @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[ 1200951ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[ 1200979ms] [LOG] [Fast Refresh] done in 13ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[ 1242749ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[ 1242779ms] [LOG] [Fast Refresh] done in 12ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[ 1247912ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[ 1247939ms] [LOG] [Fast Refresh] done in 12ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[ 1266946ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[ 1266975ms] [LOG] [Fast Refresh] done in 12ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[ 1276520ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[ 1276549ms] [LOG] [Fast Refresh] done in 12ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[ 2037600ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[ 2037764ms] [LOG] [Fast Refresh] done in 18ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[ 2045649ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[ 2045830ms] [LOG] [Fast Refresh] done in 18ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[ 2054374ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[ 2054580ms] [LOG] [Fast Refresh] done in 14ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[ 2062879ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[ 2063107ms] [LOG] [Fast Refresh] done in 15ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[ 2079341ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[ 2079383ms] [LOG] [Fast Refresh] done in 22ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[ 2135959ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[ 2136011ms] [LOG] [Fast Refresh] done in 32ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[ 2136109ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[ 2136118ms] [LOG] [HMR] connected @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[ 2152807ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[ 2152849ms] [LOG] [Fast Refresh] done in 28ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431

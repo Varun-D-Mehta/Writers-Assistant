@@ -1,0 +1,12 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e3]:
+      - heading "Writers Assistant" [level=1] [ref=e4]
+      - button "New Project" [ref=e5]
+    - link "Test Project Created 03/04/2026" [ref=e7] [cursor=pointer]:
+      - /url: /projects/test-project
+      - heading "Test Project" [level=2] [ref=e8]
+      - paragraph [ref=e9]: Created 03/04/2026
+  - button "Open Next.js Dev Tools" [ref=e15] [cursor=pointer]:
+    - img [ref=e16]
+  - alert [ref=e19]

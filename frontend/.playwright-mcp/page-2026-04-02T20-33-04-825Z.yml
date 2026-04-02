@@ -1,0 +1,108 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - banner [ref=e3]:
+      - link "Projects" [ref=e4] [cursor=pointer]:
+        - /url: /
+      - generic [ref=e5]: /
+    - generic [ref=e6]:
+      - complementary [ref=e7]:
+        - navigation [ref=e8]:
+          - generic [ref=e9]:
+            - button "Story Bible" [ref=e10]:
+              - img [ref=e11]
+              - text: Story Bible
+            - generic [ref=e13]:
+              - button "📋 Overview" [ref=e14]:
+                - generic [ref=e15]: 📋
+                - text: Overview
+              - button "👤 Characters 1" [ref=e18]:
+                - img [ref=e19]
+                - generic [ref=e21]: 👤
+                - generic [ref=e22]: Characters
+                - generic [ref=e23]: "1"
+              - button "⚡ Events 2" [ref=e26]:
+                - img [ref=e27]
+                - generic [ref=e29]: ⚡
+                - generic [ref=e30]: Events
+                - generic [ref=e31]: "2"
+              - button "🌍 Environment 1" [ref=e34]:
+                - img [ref=e35]
+                - generic [ref=e37]: 🌍
+                - generic [ref=e38]: Environment
+                - generic [ref=e39]: "1"
+          - generic [ref=e41]:
+            - generic [ref=e42]:
+              - button "Manuscript" [ref=e43]:
+                - img [ref=e44]
+                - text: Manuscript
+              - button "Add part" [ref=e46]:
+                - img [ref=e47]
+            - generic [ref=e50]:
+              - generic [ref=e51]:
+                - button "📁 Test Part" [ref=e52]:
+                  - img [ref=e53]
+                  - generic [ref=e55]: 📁
+                  - generic [ref=e56]: Test Part
+                - button "Add chapter" [ref=e57]:
+                  - img [ref=e58]
+              - link "📄 Test Chapter" [ref=e61] [cursor=pointer]:
+                - /url: /projects/test-project/parts/test-part/chapters/test-chapter
+                - generic [ref=e62]: 📄
+                - generic [ref=e63]: Test Chapter
+      - main [ref=e64]:
+        - generic [ref=e65]:
+          - generic [ref=e67]:
+            - heading "Story Bible" [level=2] [ref=e69]
+            - generic [ref=e70]:
+              - button "Overview" [ref=e71]
+              - button "Characters" [ref=e72]
+              - button "Timeline" [ref=e73]
+              - button "Environment" [ref=e74]
+            - generic [ref=e75]:
+              - generic [ref=e78]:
+                - generic [ref=e79]:
+                  - generic [ref=e81]: "1"
+                  - generic [ref=e82]:
+                    - generic [ref=e83]:
+                      - textbox "Event name" [ref=e84]
+                      - generic [ref=e85]:
+                        - button "Move up" [disabled] [ref=e86]:
+                          - img [ref=e87]
+                        - button "Move down" [ref=e89]:
+                          - img [ref=e90]
+                        - button "Remove" [ref=e92]:
+                          - img [ref=e93]
+                    - textbox "What happens in this event..." [ref=e95]: Test
+                    - textbox "Related chapters (comma-separated)" [ref=e96]
+                - generic [ref=e97]:
+                  - generic [ref=e99]: "2"
+                  - generic [ref=e100]:
+                    - generic [ref=e101]:
+                      - textbox "Event name" [ref=e102]
+                      - generic [ref=e103]:
+                        - button "Move up" [ref=e104]:
+                          - img [ref=e105]
+                        - button "Move down" [disabled] [ref=e107]:
+                          - img [ref=e108]
+                        - button "Remove" [ref=e110]:
+                          - img [ref=e111]
+                    - textbox "What happens in this event..." [ref=e113]: Test 2
+                    - textbox "Related chapters (comma-separated)" [ref=e114]
+              - button "Add Event" [ref=e115]:
+                - img [ref=e116]
+                - text: Add Event
+          - generic [ref=e119]:
+            - generic [ref=e120]:
+              - generic [ref=e121]: 💬 Story Bible Chat
+              - button "Collapse chat" [ref=e122]:
+                - img [ref=e123]
+            - generic [ref=e125]:
+              - paragraph [ref=e128]: Ask anything about your story bible...
+              - generic [ref=e129]:
+                - generic [ref=e130]:
+                  - textbox "Ask about your story bible..." [ref=e131]
+                  - button "Send" [disabled] [ref=e132]
+                - button "Clear Chat" [ref=e133]
+  - button "Open Next.js Dev Tools" [ref=e139] [cursor=pointer]:
+    - img [ref=e140]
+  - alert [ref=e143]

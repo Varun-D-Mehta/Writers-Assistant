@@ -1,0 +1,15 @@
+- generic [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e3]:
+      - heading "Writers Assistant" [level=1] [ref=e4]
+      - button "New Project" [ref=e5]
+    - generic [ref=e19]:
+      - textbox "Project title..." [active] [ref=e20]
+      - button "Create" [ref=e21]
+      - button "Cancel" [ref=e22]
+    - generic [ref=e6]:
+      - paragraph [ref=e7]: No projects yet
+      - paragraph [ref=e8]: Create your first project to get started
+  - button "Open Next.js Dev Tools" [ref=e14] [cursor=pointer]:
+    - img [ref=e15]
+  - alert [ref=e18]

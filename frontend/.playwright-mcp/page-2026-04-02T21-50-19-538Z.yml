@@ -1,0 +1,99 @@
+- generic [ref=e1]:
+  - generic [ref=e2]:
+    - banner [ref=e3]:
+      - link "Projects" [ref=e4] [cursor=pointer]:
+        - /url: /
+      - generic [ref=e5]: /
+    - generic [ref=e6]:
+      - complementary [ref=e7]:
+        - generic [ref=e8]:
+          - generic [ref=e9]: 📖
+          - generic [ref=e10]: Test Project
+        - navigation [ref=e11]:
+          - generic [ref=e12]:
+            - button "Story Bible" [ref=e13]:
+              - img [ref=e14]
+              - text: Story Bible
+            - generic [ref=e16]:
+              - link "📋 Overview" [ref=e17] [cursor=pointer]:
+                - /url: /projects/test-project
+                - generic [ref=e18]: 📋
+                - text: Overview
+              - generic [ref=e20]:
+                - button [ref=e21]:
+                  - img [ref=e22]
+                - link "👤 Characters 1" [ref=e24] [cursor=pointer]:
+                  - /url: /projects/test-project/characters
+                  - generic [ref=e25]: 👤
+                  - generic [ref=e26]: Characters
+                  - generic [ref=e27]: "1"
+              - generic [ref=e29]:
+                - button [ref=e30]:
+                  - img [ref=e31]
+                - link "⚡ Events 2" [ref=e33] [cursor=pointer]:
+                  - /url: /projects/test-project/events
+                  - generic [ref=e34]: ⚡
+                  - generic [ref=e35]: Events
+                  - generic [ref=e36]: "2"
+              - generic [ref=e38]:
+                - button [ref=e39]:
+                  - img [ref=e40]
+                - link "🌍 Environment 1" [ref=e42] [cursor=pointer]:
+                  - /url: /projects/test-project/environment
+                  - generic [ref=e43]: 🌍
+                  - generic [ref=e44]: Environment
+                  - generic [ref=e45]: "1"
+              - generic [ref=e47]:
+                - button [ref=e48]:
+                  - img [ref=e49]
+                - link "📦 Objects 1" [ref=e51] [cursor=pointer]:
+                  - /url: /projects/test-project/objects
+                  - generic [ref=e52]: 📦
+                  - generic [ref=e53]: Objects
+                  - generic [ref=e54]: "1"
+          - generic [ref=e56]:
+            - generic [ref=e57]:
+              - button "Manuscript" [ref=e58]:
+                - img [ref=e59]
+                - text: Manuscript
+              - button "Add part" [ref=e61]:
+                - img [ref=e62]
+            - generic [ref=e65]:
+              - generic [ref=e66]:
+                - button "📁 Test Part" [ref=e67]:
+                  - img [ref=e68]
+                  - generic [ref=e70]: 📁
+                  - generic [ref=e71]: Test Part
+                - button "Add chapter" [ref=e72]:
+                  - img [ref=e73]
+              - link "📄 Test Chapter" [ref=e76] [cursor=pointer]:
+                - /url: /projects/test-project/parts/test-part/chapters/test-chapter
+                - generic [ref=e77]: 📄
+                - generic [ref=e78]: Test Chapter
+      - main [ref=e79]:
+        - generic [ref=e80]:
+          - generic [ref=e82]:
+            - heading "Characters" [level=2] [ref=e84]
+            - generic [ref=e85]:
+              - generic [ref=e86]:
+                - generic [ref=e87]:
+                  - textbox "Character name" [ref=e88]
+                  - button "Remove" [ref=e89]
+                - textbox "Description..." [ref=e90]: Test
+                - textbox "Traits (comma-separated)" [ref=e91]: Test
+                - textbox "Notes..." [ref=e92]: Test
+              - button "+ Add Character" [ref=e93]
+          - generic [ref=e95]:
+            - generic [ref=e96]:
+              - button "💬Chat" [ref=e97]
+              - button "📝Proposals" [active] [ref=e98]
+              - button "Collapse panel" [ref=e99]:
+                - img [ref=e100]
+            - generic [ref=e122]:
+              - button "+ Request Proposal" [ref=e124]
+              - generic [ref=e126]:
+                - paragraph [ref=e127]: No pending proposals
+                - paragraph [ref=e128]: Select an entry and request a proposal
+  - button "Open Next.js Dev Tools" [ref=e117] [cursor=pointer]:
+    - img [ref=e118]
+  - alert [ref=e121]

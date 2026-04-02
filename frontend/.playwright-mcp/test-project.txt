@@ -1,0 +1,39 @@
+============================================================
+  Test Project
+  Writers Assistant Export
+============================================================
+
+[STORY BIBLE]
+
+[CHARACTERS]
+  Character: Unnamed
+    Description: Test
+    Traits: Test
+    Notes: Test
+
+[EVENTS]
+  Event 1: Unnamed
+    Test
+
+  Event 2: Unnamed
+    Test 2
+
+[ENVIRONMENT]
+  Setting: Unnamed
+    Test Environment
+
+[OBJECTS]
+  Object: Unnamed
+
+[MANUSCRIPT]
+
+[PART: test-part]
+
+[CHAPTER: test-chapter]
+
+Test writer 123 
+Test this thing once 
+The morning light crept through the curtains, casting a warm glow over the room. Test felt the gentle tug of consciousness as he emerged from the depths of slumber, sensing the day brimming with potential at the edges of his awareness. A symphony of birdsong from outside the window heralded the arrival of spring, each note lifting his spirits further as he blinked away the remnants of sleep. Today felt like an open book, each page ready to be written with a myriad of experiences and opportunities.
+Test woke up with stiff joints groaning as he streched in the wrm morning sun and took a deep breath, savoring the scent of freshly brewed coffee drifting in from the kitchen.He swung his legs over the side of the bed, feeling the cool floor beneath his feet, and made his way toward the inviting aroma, eager to start the day with a hot cup in hand.
+
+---

@@ -1,0 +1,99 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - banner [ref=e3]:
+      - link "Projects" [ref=e4] [cursor=pointer]:
+        - /url: /
+      - generic [ref=e5]: /
+    - generic [ref=e6]:
+      - complementary [ref=e7]:
+        - navigation [ref=e8]:
+          - generic [ref=e9]:
+            - button "Story Bible" [ref=e10]:
+              - img [ref=e11]
+              - text: Story Bible
+            - generic [ref=e13]:
+              - link "📖 Characters" [ref=e14] [cursor=pointer]:
+                - /url: /projects/test-project
+                - generic [ref=e15]: 📖
+                - text: Characters
+              - link "⚡ Events" [ref=e16] [cursor=pointer]:
+                - /url: /projects/test-project
+                - generic [ref=e17]: ⚡
+                - text: Events
+              - link "🌍 Environment" [ref=e18] [cursor=pointer]:
+                - /url: /projects/test-project
+                - generic [ref=e19]: 🌍
+                - text: Environment
+          - generic [ref=e21]:
+            - generic [ref=e22]:
+              - button "Manuscript" [ref=e23]:
+                - img [ref=e24]
+                - text: Manuscript
+              - button "Add part" [ref=e26]:
+                - img [ref=e27]
+            - generic [ref=e30]:
+              - generic [ref=e31]:
+                - button "📁 Test Part" [ref=e32]:
+                  - img [ref=e33]
+                  - generic [ref=e35]: 📁
+                  - generic [ref=e36]: Test Part
+                - button "Add chapter" [ref=e37]:
+                  - img [ref=e38]
+              - link "📄 Test Chapter" [ref=e41] [cursor=pointer]:
+                - /url: /projects/test-project/parts/test-part/chapters/test-chapter
+                - generic [ref=e42]: 📄
+                - generic [ref=e43]: Test Chapter
+      - main [ref=e44]:
+        - generic [ref=e45]:
+          - generic [ref=e47]:
+            - generic [ref=e48]:
+              - generic [ref=e49]:
+                - button "B" [ref=e50]
+                - button "I" [ref=e51]
+                - button "H2" [ref=e53]
+                - button "H3" [ref=e54]
+                - button "“”" [ref=e56]
+                - button "List" [ref=e57]
+              - generic [ref=e58]:
+                - generic [ref=e59]: 0 words
+                - generic [ref=e60]: Unsaved changes
+            - textbox [ref=e63]:
+              - paragraph [ref=e64]: Test writer 123 Test this thing once
+              - paragraph [ref=e65]: The morning light crept through the curtains, casting a warm glow over the room as Test stretched, awakening to the promise of a new day filled with possibilities.
+              - paragraph [ref=e66]: Test woke up with stiff joints groaning as he streched in the wrm morning sun and took a deep breath, savoring the scent of freshly brewed coffee drifting in from the kitchen.He swung his legs over the side of the bed, feeling the cool floor beneath his feet, and made his way toward the inviting aroma, eager to start the day with a hot cup in hand.
+              - paragraph [ref=e67]
+              - paragraph [ref=e68]
+          - generic [ref=e70]:
+            - generic [ref=e71]:
+              - button "💬Chat" [ref=e72]
+              - button "🔍Context Check" [ref=e73]
+              - button "📝Proposals" [ref=e74]
+              - button "Collapse panel" [ref=e75]:
+                - img [ref=e76]
+            - generic [ref=e79]:
+              - generic [ref=e80]:
+                - generic [ref=e82]: Can you write some test chapter
+                - generic [ref=e84]: "Sure! Since the story bible is limited, I'll create a test chapter based on a hypothetical fantasy setting. This chapter will aim to establish a sense of the world and perhaps hint at upcoming events. --- **Chapter 1: The Whispering Grove** The early morning sun filtered through the dense canopy of the Whispering Grove, casting intricate patterns of light and shadow on the forest floor. Oriana, a young herbalist known for her curiosity and gentle demeanor, meandered through the ancient woodland, her basket swinging at her side. Her fingers brushed against the feathery ferns and delicate blooms, each plant whispering its secrets in the soft language only she could understand. This grove, with its tangled roots and hidden pathways, was a sanctuary—both for Oriana and the creatures who dwelled within its depths. As she trod upon the mossy path, Oriana noticed something peculiar: a vine of silver ivy curling up a gnarled oak. It shimmered with a soft, ethereal light—a sign of enchantment. Her heart quickened, for silver ivy was known only to grow where magic seeped into the soil. She knelt beside the vine, her green eyes wide with wonder, and traced the leaves with tentative fingers. In that moment, the air around her seemed to hold its breath. \"Do you hear it too?\" a voice called out, breaking the silence. It was Elandir, the ranger from the northern woods, clad in his usual garb of leather and earth-toned garb that camouflaged him among the trees. Oriana rose to meet him, a knowing smile on her lips. \"The grove is alive with whispers today,\" she replied softly. \"There is something here that calls to us.\" Elandir nodded, his gaze lingering on the silver ivy. \"The elders spoke of a time when this grove would change, when it would be touched by the fading light of the old world.\" Together, they listened to the wood's murmurs, the secrets woven into the very fabric of life around them. The groves spoke of events long past and those yet to unfold. And as the tendrils of silver ivy reached skyward, Oriana and Elandir knew their paths were soon to intertwine with the grove's ancient magic. In the heart of the forest, destiny was awakening. --- Feel free to provide more specific details on your characters or setting if you'd like a draft that better fits your vision!"
+                - generic [ref=e86]: Fix the typo "Tets" to "Test" and "onece" to "once"
+                - generic [ref=e88]:
+                  - text: "Sure! Here's the corrected text with the typos fixed:"
+                  - generic [ref=e89]:
+                    - generic [ref=e90]: "Suggested edit:"
+                    - generic [ref=e91]: Test writer 123 Tets this thing onece
+                    - generic [ref=e92]: Test writer 123 Test this thing once
+                    - button "Add to Proposals →" [ref=e93]
+                  - text: "And just a bit more following your description:"
+                  - generic [ref=e94]:
+                    - generic [ref=e95]: "Suggested edit:"
+                    - generic [ref=e96]: The morning light crept
+                    - generic [ref=e97]: The morning light crept
+                    - button "Add to Proposals →" [ref=e98]
+                  - text: If there's anything else you'd like to adjust or add, please let me know!
+              - generic [ref=e99]:
+                - generic [ref=e100]:
+                  - textbox "Ask about your chapter..." [ref=e101]
+                  - button "Send" [disabled] [ref=e102]
+                - button "Clear Chat" [ref=e103]
+  - button "Open Next.js Dev Tools" [ref=e109] [cursor=pointer]:
+    - img [ref=e110]
+  - alert [ref=e113]

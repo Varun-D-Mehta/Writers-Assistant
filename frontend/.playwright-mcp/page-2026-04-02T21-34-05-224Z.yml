@@ -1,0 +1,23 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e3]:
+      - heading "Writers Assistant" [level=1] [ref=e4]
+      - generic [ref=e5]:
+        - button "Import PDF" [ref=e6]
+        - button "New Project" [ref=e7]
+    - generic [ref=e8]:
+      - link "📖 Ruchita Test Example Created 03/04/2026" [ref=e9] [cursor=pointer]:
+        - /url: /projects/ruchita-test-example
+        - heading "📖 Ruchita Test Example" [level=2] [ref=e10]:
+          - generic [ref=e11]: 📖
+          - text: Ruchita Test Example
+        - paragraph [ref=e12]: Created 03/04/2026
+      - link "📖 Test Project Created 03/04/2026" [ref=e13] [cursor=pointer]:
+        - /url: /projects/test-project
+        - heading "📖 Test Project" [level=2] [ref=e14]:
+          - generic [ref=e15]: 📖
+          - text: Test Project
+        - paragraph [ref=e16]: Created 03/04/2026
+  - button "Open Next.js Dev Tools" [ref=e22] [cursor=pointer]:
+    - img [ref=e23]
+  - alert [ref=e26]
