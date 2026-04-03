@@ -6,6 +6,9 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from config import settings
+
+# CORS is handled by the gateway in production.
+# Kept here for local development only.
 from app.routers import projects, parts, chapters, story_bible, chat, context_check, fix, proposals, predict, propose
 from app.routers import export, import_project
 from app.services.storage import projects_root, ensure_dir

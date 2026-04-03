@@ -1,0 +1,41 @@
+from pydantic_settings import BaseSettings
+
+
+class Settings(BaseSettings):
+    # Google OAuth
+    google_client_id: str = ""
+    google_client_secret: str = ""
+    google_redirect_uri: str = "http://localhost:9000/auth/callback"
+
+    # JWT
+    jwt_secret: str = "dev-secret-change-in-production"
+    jwt_algorithm: str = "HS256"
+    jwt_expiry_hours: int = 24
+
+    # Fly.io Machines API
+    fly_api_token: str = ""
+    fly_app_name: str = "wa-workers"
+    fly_region: str = "sjc"
+    fly_worker_image: str = "registry.fly.io/wa-workers:latest"
+
+    # Session management
+    idle_timeout_minutes: int = 15
+    max_sessions_per_user: int = 2
+
+    # Stripe
+    stripe_secret_key: str = ""
+    stripe_webhook_secret: str = ""
+    stripe_price_monthly: str = ""
+    stripe_price_annual: str = ""
+
+    # CORS
+    cors_origins: str = "http://localhost:3000"
+
+    # Frontend URL (for OAuth redirect after login)
+    frontend_url: str = "http://localhost:3000"
+
+    class Config:
+        env_file = ".env"
+
+
+settings = Settings()

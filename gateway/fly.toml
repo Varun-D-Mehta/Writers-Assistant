@@ -1,0 +1,23 @@
+app = "wa-gateway"
+primary_region = "sjc"
+
+[build]
+  dockerfile = "Dockerfile"
+
+[env]
+  FRONTEND_URL = "https://writers-assistant.vercel.app"
+  CORS_ORIGINS = "https://writers-assistant.vercel.app,http://localhost:3000"
+  FLY_APP_NAME = "wa-workers"
+  FLY_REGION = "sjc"
+
+[http_service]
+  internal_port = 9000
+  force_https = true
+  auto_stop_machines = false
+  auto_start_machines = true
+  min_machines_running = 1
+
+[[vm]]
+  cpu_kind = "shared"
+  cpus = 1
+  memory_mb = 256
