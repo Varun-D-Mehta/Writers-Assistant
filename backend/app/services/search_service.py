@@ -1,4 +1,4 @@
-"""Web search service using DuckDuckGo for research-based proposals."""
+"""Web search service using DuckDuckGo for research-based ideas."""
 
 import logging
 from duckduckgo_search import DDGS

@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import type { Editor } from "@tiptap/react";
 import { useChatStore } from "@/stores/useChatStore";
-import { useProposalStore } from "@/stores/useProposalStore";
+import { useIdeaStore } from "@/stores/useIdeaStore";
 import { API_BASE } from "@/lib/constants";
 import ChatMessage from "./ChatMessage";
 
@@ -31,7 +31,7 @@ export default function ChatTab({
     addMessage,
     clearChat,
   } = useChatStore();
-  const { addProposal } = useProposalStore();
+  const { addIdea } = useIdeaStore();
   const [input, setInput] = useState("");
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -93,10 +93,10 @@ export default function ChatTab({
             const data = JSON.parse(jsonStr);
             if (data.done) {
               fullResponse = data.full_response;
-              // Auto-create proposals from structured backend data
-              if (data.proposals && Array.isArray(data.proposals)) {
-                for (const p of data.proposals) {
-                  addProposal(projectSlug, partSlug, chapterSlug, {
+              // Auto-create ideas from structured backend data
+              if (data.ideas && Array.isArray(data.ideas)) {
+                for (const p of data.ideas) {
+                  addIdea(projectSlug, partSlug, chapterSlug, {
                     source: "chat",
                     source_label: "Chat suggestion",
                     original_text: (p.original || "").trim(),

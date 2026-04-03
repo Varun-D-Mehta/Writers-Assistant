@@ -9,7 +9,7 @@ from config import settings
 
 # CORS is handled by the gateway in production.
 # Kept here for local development only.
-from app.routers import projects, parts, chapters, story_bible, chat, context_check, fix, proposals, predict, propose
+from app.routers import projects, parts, chapters, story_bible, chat, context_check, fix, ideas, predict, propose
 from app.routers import export, import_project
 from app.services.storage import projects_root, ensure_dir
 
@@ -66,14 +66,14 @@ app.include_router(
     tags=["chat"],
 )
 app.include_router(
-    proposals.router,
-    prefix="/api/projects/{project_slug}/parts/{part_slug}/chapters/{chapter_slug}/proposals",
-    tags=["proposals"],
+    ideas.router,
+    prefix="/api/projects/{project_slug}/parts/{part_slug}/chapters/{chapter_slug}/ideas",
+    tags=["ideas"],
 )
 app.include_router(context_check.router, prefix="/api", tags=["context-check"])
 app.include_router(predict.router, prefix="/api", tags=["predict"])
 app.include_router(fix.router, prefix="/api", tags=["fix"])
-app.include_router(propose.router, prefix="/api", tags=["propose"])
+app.include_router(propose.router, prefix="/api", tags=["ideate"])
 app.include_router(export.router, prefix="/api", tags=["export"])
 app.include_router(import_project.router, prefix="/api", tags=["import"])
 

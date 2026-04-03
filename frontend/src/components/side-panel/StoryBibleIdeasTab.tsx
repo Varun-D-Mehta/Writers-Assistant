@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { apiFetch } from "@/lib/api";
-import type { BibleProposal } from "@/lib/types";
+import type { BibleIdea } from "@/lib/types";
 
 const STORY_BIBLE_TYPES = [
   { value: "rewrite", label: "Rewrite" },
@@ -13,7 +13,7 @@ const STORY_BIBLE_TYPES = [
   { value: "consistency", label: "Consistency Check" },
 ];
 
-interface StoryBibleProposalsTabProps {
+interface StoryBibleIdeasTabProps {
   projectSlug: string;
   /** Which section: "characters", "events", "environment", "objects" */
   section: string;
@@ -23,31 +23,31 @@ interface StoryBibleProposalsTabProps {
   onAcceptEntry: (entryIndex: number, updatedEntry: Record<string, unknown>) => void;
 }
 
-export default function StoryBibleProposalsTab({
+export default function StoryBibleIdeasTab({
   projectSlug,
   section,
   entries,
   onAcceptEntry,
-}: StoryBibleProposalsTabProps) {
-  const [proposals, setProposals] = useState<BibleProposal[]>([]);
+}: StoryBibleIdeasTabProps) {
+  const [ideas, setIdeas] = useState<BibleIdea[]>([]);
   const [entryIndex, setEntryIndex] = useState(0);
   const [instruction, setInstruction] = useState("");
-  const [proposalType, setProposalType] = useState("rewrite");
+  const [ideaType, setIdeaType] = useState("rewrite");
   const [requesting, setRequesting] = useState(false);
   const [showForm, setShowForm] = useState(false);
   const [showHistory, setShowHistory] = useState(false);
 
-  // Load persisted proposals on mount
+  // Load persisted ideas on mount
   useEffect(() => {
-    apiFetch<BibleProposal[]>(
-      `/api/projects/${projectSlug}/story-bible/proposals`
+    apiFetch<BibleIdea[]>(
+      `/api/projects/${projectSlug}/story-bible/ideas`
     ).then((data) => {
       // Filter to this section
-      setProposals(data.filter((p) => p.section === section));
+      setIdeas(data.filter((p) => p.section === section));
     });
   }, [projectSlug, section]);
 
-  async function requestProposal(e: React.FormEvent) {
+  async function requestIdea(e: React.FormEvent) {
     e.preventDefault();
     if (!instruction.trim() || requesting || entries.length === 0) return;
 
@@ -65,13 +65,13 @@ export default function StoryBibleProposalsTab({
           section,
           entry_index: entryIndex,
           instruction: instruction.trim(),
-          proposal_type: proposalType,
+          proposal_type: ideaType,
         }),
       });
 
-      // Persist the proposal to the backend
-      const saved = await apiFetch<BibleProposal>(
-        `/api/projects/${projectSlug}/story-bible/proposals`,
+      // Persist the idea to the backend
+      const saved = await apiFetch<BibleIdea>(
+        `/api/projects/${projectSlug}/story-bible/ideas`,
         {
           method: "POST",
           body: JSON.stringify({
@@ -85,7 +85,7 @@ export default function StoryBibleProposalsTab({
         }
       );
 
-      setProposals((prev) => [...prev, saved]);
+      setIdeas((prev) => [...prev, saved]);
       setInstruction("");
       setShowForm(false);
     } finally {
@@ -93,22 +93,22 @@ export default function StoryBibleProposalsTab({
     }
   }
 
-  async function handleAccept(proposal: BibleProposal) {
-    onAcceptEntry(proposal.entry_index, proposal.proposed_entry);
+  async function handleAccept(idea: BibleIdea) {
+    onAcceptEntry(idea.entry_index, idea.proposed_entry);
     // Update status on backend
-    const updated = await apiFetch<BibleProposal>(
-      `/api/projects/${projectSlug}/story-bible/proposals/${proposal.id}`,
+    const updated = await apiFetch<BibleIdea>(
+      `/api/projects/${projectSlug}/story-bible/ideas/${idea.id}`,
       { method: "PATCH", body: JSON.stringify({ status: "accepted" }) }
     );
-    setProposals((prev) => prev.map((p) => (p.id === proposal.id ? updated : p)));
+    setIdeas((prev) => prev.map((p) => (p.id === idea.id ? updated : p)));
   }
 
-  async function handleReject(proposal: BibleProposal) {
-    const updated = await apiFetch<BibleProposal>(
-      `/api/projects/${projectSlug}/story-bible/proposals/${proposal.id}`,
+  async function handleReject(idea: BibleIdea) {
+    const updated = await apiFetch<BibleIdea>(
+      `/api/projects/${projectSlug}/story-bible/ideas/${idea.id}`,
       { method: "PATCH", body: JSON.stringify({ status: "declined" }) }
     );
-    setProposals((prev) => prev.map((p) => (p.id === proposal.id ? updated : p)));
+    setIdeas((prev) => prev.map((p) => (p.id === idea.id ? updated : p)));
   }
 
   function renderEntryDiff(current: Record<string, unknown>, proposed: Record<string, unknown>) {
@@ -149,15 +149,15 @@ export default function StoryBibleProposalsTab({
     (e, i) => (e.name as string) || `Entry ${i + 1}`
   );
 
-  const pending = proposals.filter((p) => p.status === "pending");
-  const history = proposals.filter((p) => p.status !== "pending");
+  const pending = ideas.filter((p) => p.status === "pending");
+  const history = ideas.filter((p) => p.status !== "pending");
 
   return (
     <div className="flex h-full flex-col">
       {/* Request form */}
       <div className="border-b border-slate-700/50 p-3">
         {showForm ? (
-          <form onSubmit={requestProposal}>
+          <form onSubmit={requestIdea}>
             {/* Target entry selector */}
             {entries.length > 0 && (
               <select
@@ -170,10 +170,10 @@ export default function StoryBibleProposalsTab({
                 ))}
               </select>
             )}
-            {/* Proposal type */}
+            {/* Idea type */}
             <select
-              value={proposalType}
-              onChange={(e) => setProposalType(e.target.value)}
+              value={ideaType}
+              onChange={(e) => setIdeaType(e.target.value)}
               className="mb-2 w-full rounded-lg border border-slate-600 bg-slate-800 px-3 py-2 text-xs text-slate-200 focus:border-indigo-500 focus:outline-none"
             >
               {STORY_BIBLE_TYPES.map((t) => (
@@ -198,10 +198,10 @@ export default function StoryBibleProposalsTab({
                 {requesting ? (
                   <span className="flex items-center justify-center gap-2">
                     <span className="h-3 w-3 animate-spin rounded-full border-2 border-white border-t-transparent" />
-                    {proposalType === "fetch_info" ? "Searching..." : "Generating..."}
+                    {ideaType === "fetch_info" ? "Searching..." : "Generating..."}
                   </span>
                 ) : (
-                  "Generate Proposal"
+                  "Generate Idea"
                 )}
               </button>
               <button
@@ -219,18 +219,18 @@ export default function StoryBibleProposalsTab({
             disabled={entries.length === 0}
             className="w-full rounded-lg border border-dashed border-slate-600 px-4 py-2.5 text-sm text-slate-400 transition hover:border-indigo-500/50 hover:text-indigo-400 disabled:opacity-50"
           >
-            {entries.length === 0 ? "Add an entry first" : "+ Request Proposal"}
+            {entries.length === 0 ? "Add an entry first" : "+ Request Idea"}
           </button>
         )}
       </div>
 
-      {/* Proposals list */}
+      {/* Ideas list */}
       <div className="flex-1 overflow-y-auto p-3">
         {pending.length === 0 && history.length === 0 ? (
           <div className="flex h-full flex-col items-center justify-center">
-            <p className="text-sm text-slate-500">No pending proposals</p>
+            <p className="text-sm text-slate-500">No pending ideas</p>
             <p className="mt-1 text-xs text-slate-600">
-              Select an entry and request a proposal
+              Select an entry and request a idea
             </p>
           </div>
         ) : (

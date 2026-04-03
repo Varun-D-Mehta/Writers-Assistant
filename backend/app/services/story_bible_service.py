@@ -1,11 +1,11 @@
-"""Service for story bible chat, proposals, and context checks."""
+"""Service for story bible chat, ideas, and context checks."""
 
 import json
 import logging
 
 from app.prompts.story_bible_chat_system import STORY_BIBLE_CHAT_PROMPT
 from app.prompts.story_bible_context_check_system import STORY_BIBLE_CHECK_PROMPT
-from app.prompts.story_bible_propose_system import (
+from app.prompts.story_bible_ideate_system import (
     BIBLE_PROPOSE_PROMPT,
     BIBLE_PROPOSE_TYPES,
     SECTION_SCHEMAS,
@@ -56,17 +56,17 @@ def build_bible_chat_messages(
     return messages, history
 
 
-# ── Proposal generation ───────────────────────────────────────────
+# ── Idea generation ───────────────────────────────────────────
 
 
-def build_bible_propose_messages(
+def build_bible_ideate_messages(
     project_slug: str,
     section: str,
     entry_index: int,
     instruction: str,
-    proposal_type: str = "rewrite",
+    idea_type: str = "rewrite",
 ) -> tuple[list[dict], dict]:
-    """Build messages for story bible proposal generation.
+    """Build messages for story bible idea generation.
 
     Returns (messages_for_ai, current_entry).
     Raises ValueError if entry_index is invalid.
@@ -84,11 +84,11 @@ def build_bible_propose_messages(
     current_entry = entries[entry_index]
     entry_schema = SECTION_SCHEMAS.get(section, "{}")
     type_instruction = BIBLE_PROPOSE_TYPES.get(
-        proposal_type, BIBLE_PROPOSE_TYPES["rewrite"]
+        idea_type, BIBLE_PROPOSE_TYPES["rewrite"]
     )
 
     search_context = ""
-    if proposal_type == "fetch_info":
+    if idea_type == "fetch_info":
         search_results = web_search(instruction)
         search_context = f"## Web Search Results\n{search_results}"
 

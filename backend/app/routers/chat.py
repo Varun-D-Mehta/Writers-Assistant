@@ -12,7 +12,7 @@ from app.models.chat import ChatRequest
 from app.services.ai_service import StreamUsage, chat_stream
 from app.services.chat_service import (
     build_chat_messages,
-    extract_proposals_from_response,
+    extract_ideas_from_response,
     load_chat_history,
     save_chat_history,
 )
@@ -40,7 +40,7 @@ async def send_chat_message(
     """Send a message to the AI assistant and stream the response.
 
     Builds context from the chapter content and story bible,
-    streams the AI response, extracts any proposals, and saves
+    streams the AI response, extracts any ideas, and saves
     the conversation to history.
     """
     logger.info("Chat message received for %s/%s/%s", project_slug, part_slug, chapter_slug)
@@ -61,8 +61,8 @@ async def send_chat_message(
                 full_response += chunk
                 yield f"data: {json.dumps({'token': chunk})}\n\n"
 
-        # Extract proposals from the response
-        clean_text, proposals = extract_proposals_from_response(full_response)
+        # Extract ideas from the response
+        clean_text, ideas = extract_ideas_from_response(full_response)
 
         # Save both user message and assistant response to history
         now = datetime.now(timezone.utc).isoformat()
@@ -82,7 +82,7 @@ async def send_chat_message(
         save_chat_history(project_slug, part_slug, chapter_slug, history)
         logger.info("Chat response completed and saved for %s/%s/%s", project_slug, part_slug, chapter_slug)
 
-        yield f"data: {json.dumps({'done': True, 'full_response': clean_text, 'proposals': proposals})}\n\n"
+        yield f"data: {json.dumps({'done': True, 'full_response': clean_text, 'ideas': ideas})}\n\n"
 
     return StreamingResponse(stream(), media_type="text/event-stream")
 

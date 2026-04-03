@@ -16,27 +16,27 @@ from app.services.storage import (
 logger = logging.getLogger(__name__)
 
 
-def extract_proposals_from_response(text: str) -> tuple[str, list[dict]]:
-    """Extract and strip the json:proposals block from a chat response.
+def extract_ideas_from_response(text: str) -> tuple[str, list[dict]]:
+    """Extract and strip the json:ideas block from a chat response.
 
     Args:
         text: The raw chat response text.
 
     Returns:
-        A tuple of (clean_text, proposals_list).
+        A tuple of (clean_text, ideas_list).
     """
-    pattern = r'```json:proposals\s*\n(.*?)\n```'
+    pattern = r'```json:ideas\s*\n(.*?)\n```'
     match = re.search(pattern, text, re.DOTALL)
     if not match:
         return text.strip(), []
     try:
-        proposals = json.loads(match.group(1))
-        logger.info("Extracted %d proposals from chat response", len(proposals))
+        ideas = json.loads(match.group(1))
+        logger.info("Extracted %d ideas from chat response", len(ideas))
     except json.JSONDecodeError:
-        logger.error("Failed to parse proposals JSON from chat response")
+        logger.error("Failed to parse ideas JSON from chat response")
         return text.strip(), []
     clean_text = text[:match.start()].strip()
-    return clean_text, proposals
+    return clean_text, ideas
 
 
 def load_chat_history(project_slug: str, part_slug: str, chapter_slug: str) -> list[dict]:

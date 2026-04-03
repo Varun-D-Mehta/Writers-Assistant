@@ -4,10 +4,10 @@ import { useState, useEffect } from "react";
 import type { Editor } from "@tiptap/react";
 import ChatTab from "./ChatTab";
 import ContextCheckTab from "./ContextCheckTab";
-import ProposalsTab from "./ProposalsTab";
-import { useProposalStore } from "@/stores/useProposalStore";
+import IdeasTab from "./IdeasTab";
+import { useIdeaStore } from "@/stores/useIdeaStore";
 
-type Tab = "chat" | "context" | "proposals";
+type Tab = "chat" | "context" | "ideas";
 
 interface SidePanelProps {
   projectSlug: string;
@@ -31,16 +31,16 @@ export default function SidePanel({
   onRewriteHandled,
 }: SidePanelProps) {
   const [activeTab, setActiveTab] = useState<Tab>("chat");
-  const proposals = useProposalStore((s) => s.proposals);
+  const ideas = useIdeaStore((s) => s.ideas);
 
-  // Switch to proposals tab when a rewrite is requested from the editor
+  // Switch to ideas tab when a rewrite is requested from the editor
   useEffect(() => {
     if (rewriteRequest) {
-      setActiveTab("proposals");
+      setActiveTab("ideas");
     }
   }, [rewriteRequest]);
 
-  const pendingCount = proposals.filter((p) => p.status === "pending").length;
+  const pendingCount = ideas.filter((p) => p.status === "pending").length;
 
   if (collapsed) {
     return (
@@ -69,9 +69,9 @@ export default function SidePanel({
           🔍
         </button>
         <button
-          onClick={() => { onToggleCollapse(); setActiveTab("proposals"); }}
+          onClick={() => { onToggleCollapse(); setActiveTab("ideas"); }}
           className="relative rounded p-1.5 text-slate-500 transition hover:bg-white/[0.05]"
-          title="Proposals"
+          title="Ideas"
         >
           📝
           {pendingCount > 0 && (
@@ -87,7 +87,7 @@ export default function SidePanel({
   const tabs: { key: Tab; label: string; icon: string }[] = [
     { key: "chat", label: "Chat", icon: "💬" },
     { key: "context", label: "Context Check", icon: "🔍" },
-    { key: "proposals", label: "Proposals", icon: "📝" },
+    { key: "ideas", label: "Ideas", icon: "📝" },
   ];
 
   return (
@@ -105,7 +105,7 @@ export default function SidePanel({
           >
             <span className="mr-1">{tab.icon}</span>
             {tab.label}
-            {tab.key === "proposals" && pendingCount > 0 && (
+            {tab.key === "ideas" && pendingCount > 0 && (
               <span className="ml-1 inline-flex h-4 min-w-4 items-center justify-center rounded-full bg-indigo-600 px-1 text-[10px] text-white">
                 {pendingCount}
               </span>
@@ -128,10 +128,10 @@ export default function SidePanel({
           <ChatTab projectSlug={projectSlug} partSlug={partSlug} chapterSlug={chapterSlug} editor={editor} />
         )}
         {activeTab === "context" && (
-          <ContextCheckTab projectSlug={projectSlug} partSlug={partSlug} chapterSlug={chapterSlug} editor={editor} onSwitchToProposals={() => setActiveTab("proposals")} />
+          <ContextCheckTab projectSlug={projectSlug} partSlug={partSlug} chapterSlug={chapterSlug} editor={editor} onSwitchToIdeas={() => setActiveTab("ideas")} />
         )}
-        {activeTab === "proposals" && (
-          <ProposalsTab projectSlug={projectSlug} partSlug={partSlug} chapterSlug={chapterSlug} editor={editor} rewriteRequest={rewriteRequest} onRewriteHandled={onRewriteHandled} />
+        {activeTab === "ideas" && (
+          <IdeasTab projectSlug={projectSlug} partSlug={partSlug} chapterSlug={chapterSlug} editor={editor} rewriteRequest={rewriteRequest} onRewriteHandled={onRewriteHandled} />
         )}
       </div>
     </div>
