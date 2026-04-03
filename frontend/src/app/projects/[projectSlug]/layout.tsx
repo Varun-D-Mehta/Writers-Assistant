@@ -1,5 +1,6 @@
 import Link from "next/link";
 import ProjectSidebar from "@/components/layout/ProjectSidebar";
+import OnboardingTutorial from "@/components/OnboardingTutorial";
 
 export default function ProjectLayout({
   children,
@@ -19,8 +20,9 @@ export default function ProjectLayout({
       </header>
       <div className="flex flex-1 overflow-hidden">
         <ProjectSidebar />
-        <main className="flex-1 overflow-hidden">{children}</main>
+        <main className="flex-1 overflow-hidden" data-tour="editor-area">{children}</main>
       </div>
+      <OnboardingTutorial />
     </div>
   );
 }

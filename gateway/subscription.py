@@ -1,18 +1,18 @@
-"""Subscription management: trial checking, Stripe webhooks."""
+"""Subscription management: trial checking, Razorpay integration."""
 
+import hashlib
+import hmac
+import json
 import logging
 from datetime import datetime, timezone
 
-import stripe
 from starlette.requests import Request
 from starlette.responses import JSONResponse
 
-from auth import db, get_user, verify_jwt
+from auth import get_db, get_user, verify_jwt
 from config import settings
 
 logger = logging.getLogger(__name__)
-
-stripe.api_key = settings.stripe_secret_key
 
 
 def check_subscription(user_data: dict) -> tuple[bool, str]:
@@ -36,7 +36,7 @@ def check_subscription(user_data: dict) -> tuple[bool, str]:
     if status == "cancelled":
         expires = user_data.get("subscription_expires_at")
         if expires and isinstance(expires, datetime) and now < expires:
-            return True, "cancelled"  # Still has access until period ends
+            return True, "cancelled"
         return False, "expired"
 
     return False, "expired"
@@ -47,7 +47,6 @@ async def subscription_middleware(request: Request, user_id: str) -> JSONRespons
 
     Returns None if access is granted, or a 403 JSONResponse if denied.
     """
-    # Skip subscription check for auth routes and webhooks
     path = request.url.path
     if path.startswith("/auth/") or path.startswith("/webhooks/"):
         return None
@@ -66,11 +65,17 @@ async def subscription_middleware(request: Request, user_id: str) -> JSONRespons
     return None
 
 
-# ── Stripe Checkout ───────────────────────────────────────────────
+# ── Razorpay Subscription Creation ────────────────────────────────
 
 
-async def create_checkout_session(request: Request):
-    """Create a Stripe Checkout session for subscribing."""
+async def create_razorpay_subscription(request: Request):
+    """Create a Razorpay subscription for the authenticated user.
+
+    Returns the subscription ID and Razorpay key for frontend checkout.
+    The frontend uses Razorpay's JavaScript checkout widget to complete payment.
+    """
+    import httpx
+
     token = request.cookies.get("wa_token")
     if not token:
         return JSONResponse({"error": "Not authenticated"}, status_code=401)
@@ -85,100 +90,166 @@ async def create_checkout_session(request: Request):
 
     body = await request.json()
     plan = body.get("plan", "monthly")
-    price_id = settings.stripe_price_annual if plan == "annual" else settings.stripe_price_monthly
+    plan_id = settings.razorpay_plan_annual if plan == "annual" else settings.razorpay_plan_monthly
 
     try:
-        session = stripe.checkout.Session.create(
-            customer_email=user_data.get("email"),
-            payment_method_types=["card"],
-            line_items=[{"price": price_id, "quantity": 1}],
-            mode="subscription",
-            success_url=f"{settings.frontend_url}?subscribed=true",
-            cancel_url=f"{settings.frontend_url}?subscribed=false",
-            metadata={"user_id": payload["sub"]},
-        )
-        return JSONResponse({"checkout_url": session.url})
+        async with httpx.AsyncClient() as client:
+            resp = await client.post(
+                "https://api.razorpay.com/v1/subscriptions",
+                auth=(settings.razorpay_key_id, settings.razorpay_key_secret),
+                json={
+                    "plan_id": plan_id,
+                    "total_count": 12 if plan == "annual" else 120,
+                    "quantity": 1,
+                    "notes": {
+                        "user_id": payload["sub"],
+                        "email": user_data.get("email", ""),
+                    },
+                },
+            )
+            resp.raise_for_status()
+            sub = resp.json()
+
+        return JSONResponse({
+            "subscription_id": sub["id"],
+            "razorpay_key": settings.razorpay_key_id,
+            "name": "Writers Assistant",
+            "description": f"{'Annual' if plan == 'annual' else 'Monthly'} Subscription",
+            "prefill": {
+                "name": user_data.get("name", ""),
+                "email": user_data.get("email", ""),
+            },
+        })
     except Exception as e:
-        logger.error("Stripe checkout error: %s", e)
-        return JSONResponse({"error": "Failed to create checkout session"}, status_code=500)
+        logger.error("Razorpay subscription creation error: %s", e)
+        return JSONResponse({"error": "Failed to create subscription"}, status_code=500)
 
 
-# ── Stripe Webhooks ───────────────────────────────────────────────
+# ── Razorpay Webhook ──────────────────────────────────────────────
 
 
-async def handle_stripe_webhook(request: Request):
-    """Handle Stripe webhook events for subscription lifecycle."""
-    payload = await request.body()
-    sig_header = request.headers.get("stripe-signature", "")
+async def handle_razorpay_webhook(request: Request):
+    """Handle Razorpay webhook events for subscription lifecycle."""
+    body = await request.body()
+    signature = request.headers.get("x-razorpay-signature", "")
 
-    try:
-        event = stripe.Webhook.construct_event(
-            payload, sig_header, settings.stripe_webhook_secret
-        )
-    except (ValueError, stripe.error.SignatureVerificationError) as e:
-        logger.error("Stripe webhook verification failed: %s", e)
+    # Verify webhook signature
+    expected = hmac.new(
+        settings.razorpay_webhook_secret.encode(),
+        body,
+        hashlib.sha256,
+    ).hexdigest()
+
+    if not hmac.compare_digest(expected, signature):
+        logger.error("Razorpay webhook signature mismatch")
         return JSONResponse({"error": "Invalid signature"}, status_code=400)
 
-    event_type = event["type"]
-    data = event["data"]["object"]
-    logger.info("Stripe webhook: %s", event_type)
+    data = json.loads(body)
+    event = data.get("event", "")
+    payload = data.get("payload", {})
+    logger.info("Razorpay webhook: %s", event)
 
-    if event_type == "checkout.session.completed":
-        user_id = data.get("metadata", {}).get("user_id")
-        subscription_id = data.get("subscription")
-        if user_id and subscription_id:
-            await _activate_subscription(user_id, subscription_id)
-
-    elif event_type == "customer.subscription.deleted":
-        await _cancel_subscription(data)
-
-    elif event_type == "customer.subscription.updated":
-        await _update_subscription(data)
+    if event == "subscription.activated":
+        await _activate_subscription(payload)
+    elif event == "subscription.charged":
+        await _charge_subscription(payload)
+    elif event == "subscription.cancelled":
+        await _cancel_subscription(payload)
+    elif event == "subscription.paused":
+        await _pause_subscription(payload)
 
     return JSONResponse({"ok": True})
 
 
-async def _activate_subscription(user_id: str, subscription_id: str):
-    """Activate a user's subscription after successful checkout."""
-    sub = stripe.Subscription.retrieve(subscription_id)
-    doc_ref = db.collection("users").document(user_id)
+async def _activate_subscription(payload: dict):
+    """Handle subscription activation."""
+    sub = payload.get("subscription", {}).get("entity", {})
+    user_id = sub.get("notes", {}).get("user_id")
+    if not user_id:
+        return
+
+    doc_ref = get_db().collection("users").document(user_id)
     await doc_ref.update({
         "subscription_status": "active",
-        "subscription_id": subscription_id,
-        "subscription_expires_at": datetime.fromtimestamp(
-            sub["current_period_end"], tz=timezone.utc
-        ),
-        "plan": "annual" if "annual" in sub["items"]["data"][0]["price"]["id"] else "monthly",
+        "subscription_id": sub.get("id", ""),
+        "plan": "annual" if sub.get("plan_id") == settings.razorpay_plan_annual else "monthly",
     })
     logger.info("Subscription activated for user %s", user_id)
 
 
-async def _cancel_subscription(sub_data: dict):
+async def _charge_subscription(payload: dict):
+    """Handle successful subscription charge (renewal)."""
+    sub = payload.get("subscription", {}).get("entity", {})
+    user_id = sub.get("notes", {}).get("user_id")
+    if not user_id:
+        return
+
+    doc_ref = get_db().collection("users").document(user_id)
+    await doc_ref.update({
+        "subscription_status": "active",
+        "subscription_expires_at": datetime.fromtimestamp(
+            sub.get("current_end", 0), tz=timezone.utc
+        ),
+    })
+
+
+async def _cancel_subscription(payload: dict):
     """Handle subscription cancellation."""
-    sub_id = sub_data.get("id")
-    # Find user by subscription_id
-    query = db.collection("users").where("subscription_id", "==", sub_id).limit(1)
-    docs = [doc async for doc in query.stream()]
-    if docs:
-        await docs[0].reference.update({
-            "subscription_status": "cancelled",
-            "subscription_expires_at": datetime.fromtimestamp(
-                sub_data.get("current_period_end", 0), tz=timezone.utc
-            ),
-        })
-        logger.info("Subscription cancelled for sub %s", sub_id)
+    sub = payload.get("subscription", {}).get("entity", {})
+    user_id = sub.get("notes", {}).get("user_id")
+    if not user_id:
+        return
+
+    doc_ref = get_db().collection("users").document(user_id)
+    await doc_ref.update({
+        "subscription_status": "cancelled",
+        "subscription_expires_at": datetime.fromtimestamp(
+            sub.get("current_end", 0), tz=timezone.utc
+        ),
+    })
+    logger.info("Subscription cancelled for user %s", user_id)
 
 
-async def _update_subscription(sub_data: dict):
-    """Handle subscription updates (renewal, plan change)."""
-    sub_id = sub_data.get("id")
-    query = db.collection("users").where("subscription_id", "==", sub_id).limit(1)
-    docs = [doc async for doc in query.stream()]
-    if docs:
-        status = "active" if sub_data.get("status") == "active" else sub_data.get("status", "active")
-        await docs[0].reference.update({
-            "subscription_status": status,
-            "subscription_expires_at": datetime.fromtimestamp(
-                sub_data.get("current_period_end", 0), tz=timezone.utc
-            ),
-        })
+async def _pause_subscription(payload: dict):
+    """Handle subscription pause."""
+    sub = payload.get("subscription", {}).get("entity", {})
+    user_id = sub.get("notes", {}).get("user_id")
+    if not user_id:
+        return
+
+    doc_ref = get_db().collection("users").document(user_id)
+    await doc_ref.update({"subscription_status": "paused"})
+    logger.info("Subscription paused for user %s", user_id)
+
+
+# ── Subscription Management ──────────────────────────────────────
+
+
+async def cancel_subscription(request: Request):
+    """Cancel the current user's subscription via Razorpay API."""
+    import httpx
+
+    token = request.cookies.get("wa_token")
+    if not token:
+        return JSONResponse({"error": "Not authenticated"}, status_code=401)
+
+    payload = verify_jwt(token)
+    if not payload:
+        return JSONResponse({"error": "Invalid token"}, status_code=401)
+
+    user_data = await get_user(payload["sub"])
+    if not user_data or not user_data.get("subscription_id"):
+        return JSONResponse({"error": "No active subscription"}, status_code=400)
+
+    try:
+        async with httpx.AsyncClient() as client:
+            resp = await client.post(
+                f"https://api.razorpay.com/v1/subscriptions/{user_data['subscription_id']}/cancel",
+                auth=(settings.razorpay_key_id, settings.razorpay_key_secret),
+                json={"cancel_at_cycle_end": 1},  # Cancel at end of billing period
+            )
+            resp.raise_for_status()
+        return JSONResponse({"ok": True, "message": "Subscription will cancel at end of billing period"})
+    except Exception as e:
+        logger.error("Razorpay cancel error: %s", e)
+        return JSONResponse({"error": "Failed to cancel subscription"}, status_code=500)

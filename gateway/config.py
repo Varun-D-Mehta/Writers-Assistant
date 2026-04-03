@@ -22,11 +22,12 @@ class Settings(BaseSettings):
     idle_timeout_minutes: int = 15
     max_sessions_per_user: int = 2
 
-    # Stripe
-    stripe_secret_key: str = ""
-    stripe_webhook_secret: str = ""
-    stripe_price_monthly: str = ""
-    stripe_price_annual: str = ""
+    # Razorpay
+    razorpay_key_id: str = ""
+    razorpay_key_secret: str = ""
+    razorpay_webhook_secret: str = ""
+    razorpay_plan_monthly: str = ""
+    razorpay_plan_annual: str = ""
 
     # CORS
     cors_origins: str = "http://localhost:3000"

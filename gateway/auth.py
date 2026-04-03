@@ -6,7 +6,6 @@ from datetime import datetime, timedelta, timezone
 
 import jwt
 from authlib.integrations.starlette_client import OAuth
-from google.cloud import firestore
 from starlette.requests import Request
 from starlette.responses import JSONResponse, RedirectResponse
 
@@ -14,8 +13,16 @@ from config import settings
 
 logger = logging.getLogger(__name__)
 
-# Firestore client (uses GOOGLE_APPLICATION_CREDENTIALS env var or ADC)
-db = firestore.AsyncClient()
+# Firestore client — lazily initialized so gateway starts without GCP credentials in dev
+db = None
+
+
+def get_db():
+    global db
+    if db is None:
+        from google.cloud import firestore
+        db = firestore.AsyncClient()
+    return db
 
 # OAuth setup
 oauth = OAuth()
@@ -53,7 +60,7 @@ async def upsert_user(google_user: dict) -> dict:
     On first login, initializes a 7-day free trial.
     """
     user_id = google_user["sub"]
-    doc_ref = db.collection("users").document(user_id)
+    doc_ref = get_db().collection("users").document(user_id)
     doc = await doc_ref.get()
     now = datetime.now(timezone.utc)
 
@@ -86,7 +93,7 @@ async def upsert_user(google_user: dict) -> dict:
 
 async def get_user(user_id: str) -> dict | None:
     """Get user data from Firestore."""
-    doc = await db.collection("users").document(user_id).get()
+    doc = await get_db().collection("users").document(user_id).get()
     return doc.to_dict() if doc.exists else None
 
 

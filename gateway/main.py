@@ -12,7 +12,7 @@ from auth import handle_google_callback, handle_google_login, handle_logout, han
 from config import settings
 from proxy import proxy_request
 from session_manager import idle_reaper_loop, manager
-from subscription import create_checkout_session, handle_stripe_webhook
+from subscription import cancel_subscription, create_razorpay_subscription, handle_razorpay_webhook
 
 logging.basicConfig(
     level=logging.INFO,
@@ -74,12 +74,17 @@ async def auth_logout(request: Request):
 
 @app.post("/subscribe")
 async def subscribe(request: Request):
-    return await create_checkout_session(request)
+    return await create_razorpay_subscription(request)
 
 
-@app.post("/webhooks/stripe")
-async def stripe_webhook(request: Request):
-    return await handle_stripe_webhook(request)
+@app.post("/subscribe/cancel")
+async def unsubscribe(request: Request):
+    return await cancel_subscription(request)
+
+
+@app.post("/webhooks/razorpay")
+async def razorpay_webhook(request: Request):
+    return await handle_razorpay_webhook(request)
 
 
 # ── Session management ────────────────────────────────────────────

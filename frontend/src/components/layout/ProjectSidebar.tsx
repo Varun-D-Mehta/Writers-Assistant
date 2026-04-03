@@ -185,7 +185,7 @@ export default function ProjectSidebar() {
 
       <nav className="flex-1 overflow-y-auto py-2">
         {/* -- Story Bible -- */}
-        <div className="mb-1">
+        <div className="mb-1" data-tour="story-bible">
           <button
             onClick={() => toggleSection("bible")}
             className="flex w-full items-center gap-1.5 px-3 py-1.5 text-left text-[11px] font-semibold uppercase tracking-wider text-slate-500 hover:text-slate-300"
@@ -403,7 +403,7 @@ export default function ProjectSidebar() {
         <div className="mx-3 my-2 border-t" style={{ borderColor: "var(--border)" }} />
 
         {/* -- Manuscript -- */}
-        <div>
+        <div data-tour="manuscript">
           <div className="flex items-center justify-between pr-2">
             <button
               onClick={() => toggleSection("book")}
@@ -541,7 +541,7 @@ export default function ProjectSidebar() {
       </nav>
 
       {/* Export buttons */}
-      <div className="border-t p-2" style={{ borderColor: "var(--border)" }}>
+      <div className="border-t p-2" style={{ borderColor: "var(--border)" }} data-tour="export-buttons">
         <div className="flex gap-1">
           <button
             onClick={async () => {

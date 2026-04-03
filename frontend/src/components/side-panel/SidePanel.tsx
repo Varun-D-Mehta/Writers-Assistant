@@ -84,10 +84,10 @@ export default function SidePanel({
     );
   }
 
-  const tabs: { key: Tab; label: string; icon: string }[] = [
-    { key: "chat", label: "Chat", icon: "💬" },
-    { key: "context", label: "Context Check", icon: "🔍" },
-    { key: "ideas", label: "Ideas", icon: "📝" },
+  const tabs: { key: Tab; label: string; icon: string; tour?: string }[] = [
+    { key: "chat", label: "Chat", icon: "💬", tour: "chat-tab" },
+    { key: "context", label: "Context Check", icon: "🔍", tour: "context-tab" },
+    { key: "ideas", label: "Ideas", icon: "📝", tour: "ideas-tab" },
   ];
 
   return (
@@ -96,6 +96,7 @@ export default function SidePanel({
         {tabs.map((tab) => (
           <button
             key={tab.key}
+            data-tour={tab.tour}
             onClick={() => setActiveTab(tab.key)}
             className={`flex-1 px-2 py-2.5 text-xs font-medium transition ${
               activeTab === tab.key

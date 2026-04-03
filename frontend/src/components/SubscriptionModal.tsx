@@ -5,9 +5,16 @@ import { API_BASE } from "@/lib/constants";
 
 interface SubscriptionModalProps {
   onClose?: () => void;
+  onSuccess?: () => void;
 }
 
-export default function SubscriptionModal({ onClose }: SubscriptionModalProps) {
+declare global {
+  interface Window {
+    Razorpay: new (options: Record<string, unknown>) => { open: () => void };
+  }
+}
+
+export default function SubscriptionModal({ onClose, onSuccess }: SubscriptionModalProps) {
   const [loading, setLoading] = useState<string | null>(null);
 
   async function handleSubscribe(plan: "monthly" | "annual") {
@@ -20,11 +27,32 @@ export default function SubscriptionModal({ onClose }: SubscriptionModalProps) {
         body: JSON.stringify({ plan }),
       });
       const data = await res.json();
-      if (data.checkout_url) {
-        window.location.href = data.checkout_url;
+
+      if (data.subscription_id && data.razorpay_key) {
+        openRazorpayCheckout({
+          key: data.razorpay_key,
+          subscription_id: data.subscription_id,
+          name: data.name,
+          description: data.description,
+          prefill: data.prefill,
+          theme: { color: "#6366f1" },
+          handler: () => onSuccess?.(),
+          modal: { ondismiss: () => setLoading(null) },
+        });
       }
-    } finally {
+    } catch {
       setLoading(null);
+    }
+  }
+
+  function openRazorpayCheckout(options: Record<string, unknown>) {
+    if (window.Razorpay) {
+      new window.Razorpay(options).open();
+    } else {
+      const script = document.createElement("script");
+      script.src = "https://checkout.razorpay.com/v1/checkout.js";
+      script.onload = () => new window.Razorpay(options).open();
+      document.body.appendChild(script);
     }
   }
 
@@ -48,7 +76,7 @@ export default function SubscriptionModal({ onClose }: SubscriptionModalProps) {
             disabled={loading !== null}
             className="w-full rounded-xl bg-indigo-600 px-4 py-3 text-sm font-medium text-white shadow-lg shadow-indigo-500/20 transition hover:bg-indigo-500 disabled:opacity-50"
           >
-            {loading === "monthly" ? "Redirecting..." : "Monthly — $9.99/mo"}
+            {loading === "monthly" ? "Opening checkout..." : "Monthly — ₹799/mo"}
           </button>
           <button
             onClick={() => handleSubscribe("annual")}
@@ -56,7 +84,7 @@ export default function SubscriptionModal({ onClose }: SubscriptionModalProps) {
             className="w-full rounded-xl border px-4 py-3 text-sm font-medium text-slate-200 transition hover:bg-white/[0.05] disabled:opacity-50"
             style={{ borderColor: "var(--border-strong)" }}
           >
-            {loading === "annual" ? "Redirecting..." : "Annual — $89.99/yr (save 25%)"}
+            {loading === "annual" ? "Opening checkout..." : "Annual — ₹6,999/yr (save 27%)"}
           </button>
         </div>
 
