@@ -1,21 +1,21 @@
 "use client";
 
-import type { ChapterProposal } from "@/lib/types";
+import type { ChapterIdea } from "@/lib/types";
 import DiffView from "@/components/ui/DiffView";
 
-interface ProposalCardProps {
-  proposal: ChapterProposal;
+interface IdeaCardProps {
+  idea: ChapterIdea;
   onAccept: () => void;
   onReject: () => void;
 }
 
-export default function ProposalCard({
-  proposal,
+export default function IdeaCard({
+  idea,
   onAccept,
   onReject,
-}: ProposalCardProps) {
+}: IdeaCardProps) {
   const sourceBadgeClass =
-    proposal.source === "chat"
+    idea.source === "chat"
       ? "bg-indigo-500/10 text-indigo-400"
       : "bg-amber-500/20 text-amber-400";
 
@@ -25,14 +25,14 @@ export default function ProposalCard({
         <span
           className={`rounded-full px-2 py-0.5 text-[10px] font-medium ${sourceBadgeClass}`}
         >
-          {proposal.source === "chat" ? "From Chat" : "Auto-Fix"}
+          {idea.source === "chat" ? "From Chat" : "Auto-Fix"}
         </span>
-        <span className="text-xs text-slate-500">{proposal.source_label}</span>
+        <span className="text-xs text-slate-500">{idea.source_label}</span>
       </div>
 
       <DiffView
-        original={proposal.original_text}
-        proposed={proposal.proposed_text}
+        original={idea.original_text}
+        proposed={idea.proposed_text}
       />
 
       <div className="mt-3 flex gap-2">

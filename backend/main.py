@@ -6,7 +6,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from config import settings
-from app.routers import projects, parts, chapters, story_bible, chat, context_check, fix, proposals, predict, propose
+from app.routers import projects, parts, chapters, story_bible, chat, context_check, fix, ideas, predict, propose
 from app.routers import export, import_project
 from app.services.storage import projects_root, ensure_dir
 
@@ -63,9 +63,9 @@ app.include_router(
     tags=["chat"],
 )
 app.include_router(
-    proposals.router,
-    prefix="/api/projects/{project_slug}/parts/{part_slug}/chapters/{chapter_slug}/proposals",
-    tags=["proposals"],
+    ideas.router,
+    prefix="/api/projects/{project_slug}/parts/{part_slug}/chapters/{chapter_slug}/ideas",
+    tags=["ideas"],
 )
 app.include_router(context_check.router, prefix="/api", tags=["context-check"])
 app.include_router(predict.router, prefix="/api", tags=["predict"])

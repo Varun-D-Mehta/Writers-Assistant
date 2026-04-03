@@ -1,6 +1,6 @@
-"""Proposal system prompts and type definitions for chapter and story bible proposals."""
+"""Idea system prompts and type definitions for chapter and story bible ideas."""
 
-# Chapter proposal types
+# Chapter idea types
 CHAPTER_PROPOSAL_TYPES = {
     "rewrite": "Rewrite the passage while preserving meaning but improving prose quality.",
     "expand": "Expand the passage with additional detail, description, or dialogue.",
@@ -11,7 +11,7 @@ CHAPTER_PROPOSAL_TYPES = {
     "fetch_info": "Research factual information via web search and incorporate it naturally into the text.",
 }
 
-# Story bible proposal types
+# Story bible idea types
 STORY_BIBLE_PROPOSAL_TYPES = {
     "rewrite": "Rewrite the entry for clarity, depth, and consistency with the rest of the story bible.",
     "expand": "Expand the entry with additional details, backstory, or connections to other entries.",
@@ -24,7 +24,7 @@ STORY_BIBLE_PROPOSAL_TYPES = {
 # Keep backward compatibility
 PROPOSAL_TYPE_INSTRUCTIONS = CHAPTER_PROPOSAL_TYPES
 
-PROPOSE_SYSTEM_PROMPT = """You are a creative writing assistant generating a text edit proposal for a novel chapter.
+PROPOSE_SYSTEM_PROMPT = """You are a creative writing assistant generating a text edit idea for a novel chapter.
 
 ## Story Bible
 {story_bible}
@@ -37,13 +37,13 @@ PROPOSE_SYSTEM_PROMPT = """You are a creative writing assistant generating a tex
 
 {selected_text_section}
 
-## Proposal Type Instruction
+## Idea Type Instruction
 {proposal_type_instruction}
 
 {search_context}
 
 ## Instructions
-Generate a proposed edit based on the user's request. Return ONLY a JSON object:
+Generate a ideated edit based on the user's request. Return ONLY a JSON object:
 {{
   "original": "the exact original text from the chapter that will be replaced",
   "proposed": "the replacement text"
@@ -68,13 +68,13 @@ STORY_BIBLE_PROPOSE_PROMPT = """You are a story bible editor helping refine a cr
 ## User's Request
 {instruction}
 
-## Proposal Type Instruction
+## Idea Type Instruction
 {proposal_type_instruction}
 
 {search_context}
 
 ## Instructions
-Generate a proposed edit for the story bible entry. Return ONLY a JSON object:
+Generate a ideated edit for the story bible entry. Return ONLY a JSON object:
 {{
   "original": "the exact original text from the target entry",
   "proposed": "the replacement text"

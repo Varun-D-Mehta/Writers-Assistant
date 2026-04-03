@@ -8,12 +8,12 @@ from datetime import datetime, timezone
 from fastapi import APIRouter, HTTPException
 from fastapi.responses import StreamingResponse
 
-from app.models.proposal import (
-    BibleProposal,
-    BibleProposalCreate,
-    BibleProposeRequestBody,
-    BibleProposeResponse,
-    ProposalStatusUpdate,
+from app.models.idea import (
+    BibleIdea,
+    BibleIdeaCreate,
+    BibleIdeaRequestBody,
+    BibleIdeaResponse,
+    IdeaStatusUpdate,
 )
 from app.models.story_bible import StoryBible, StoryBibleChatRequest
 from app.services.ai_service import StreamUsage, chat_stream, json_completion
@@ -21,7 +21,7 @@ from app.services.storage import read_json, story_bible_path, write_json
 from app.services.story_bible_service import (
     build_bible_chat_messages,
     build_bible_context_check_messages,
-    build_bible_propose_messages,
+    build_bible_ideate_messages,
     load_bible_chat_history,
     save_bible_chat_history,
 )
@@ -105,88 +105,88 @@ async def clear_bible_chat(project_slug: str):
     return {"ok": True}
 
 
-# ── Story Bible Proposals ──────────────────────────────────────
+# ── Story Bible Ideas ──────────────────────────────────────
 
 
-@router.post("/propose")
-async def propose_bible_entry(project_slug: str, body: BibleProposeRequestBody) -> BibleProposeResponse:
-    """Generate a structured proposal for a story bible entry."""
-    logger.info("Generating %s proposal for %s[%d] in project %s",
-                body.proposal_type, body.section, body.entry_index, project_slug)
+@router.post("/ideate")
+async def ideate_bible_entry(project_slug: str, body: BibleIdeaRequestBody) -> BibleIdeaResponse:
+    """Generate a structured idea for a story bible entry."""
+    logger.info("Generating %s idea for %s[%d] in project %s",
+                body.idea_type, body.section, body.entry_index, project_slug)
 
     try:
-        messages, current_entry = build_bible_propose_messages(
+        messages, current_entry = build_bible_ideate_messages(
             project_slug, body.section, body.entry_index,
-            body.instruction, body.proposal_type,
+            body.instruction, body.idea_type,
         )
     except ValueError as e:
         raise HTTPException(400, str(e))
 
     result = await json_completion(messages)
-    record_usage(project_slug, "bible_propose", result)
-    proposed = json.loads(result.content)
+    record_usage(project_slug, "bible_ideate", result)
+    ideated = json.loads(result.content)
 
-    return BibleProposeResponse(
+    return BibleIdeaResponse(
         section=body.section,
         entry_index=body.entry_index,
         current_entry=current_entry,
-        proposed_entry=proposed,
-        proposal_type=body.proposal_type,
+        proposed_entry=ideated,
+        idea_type=body.idea_type,
     )
 
 
-# ── Story Bible Proposal Persistence ──────────────────────────
+# ── Story Bible Idea Persistence ──────────────────────────
 
 
-def _bible_proposals_path(project_slug: str):
-    return story_bible_path(project_slug) / "proposals.json"
+def _bible_ideas_path(project_slug: str):
+    return story_bible_path(project_slug) / "ideas.json"
 
 
-@router.get("/proposals")
-async def list_bible_proposals(project_slug: str) -> list[BibleProposal]:
-    """List all story bible proposals for a project."""
-    data = read_json(_bible_proposals_path(project_slug), [])
+@router.get("/ideas")
+async def list_bible_ideas(project_slug: str) -> list[BibleIdea]:
+    """List all story bible ideas for a project."""
+    data = read_json(_bible_ideas_path(project_slug), [])
     for p in data:
         p.setdefault("kind", "bible")
-    return [BibleProposal(**p) for p in data]
+    return [BibleIdea(**p) for p in data]
 
 
-@router.post("/proposals", status_code=201)
-async def create_bible_proposal(project_slug: str, body: BibleProposalCreate) -> BibleProposal:
-    """Persist a story bible proposal."""
-    path = _bible_proposals_path(project_slug)
+@router.post("/ideas", status_code=201)
+async def create_bible_idea(project_slug: str, body: BibleIdeaCreate) -> BibleIdea:
+    """Persist a story bible idea."""
+    path = _bible_ideas_path(project_slug)
     data = read_json(path, [])
-    proposal = BibleProposal(
+    idea = BibleIdea(
         id=str(uuid.uuid4()),
         kind="bible",
         section=body.section,
         entry_index=body.entry_index,
         current_entry=body.current_entry,
         proposed_entry=body.proposed_entry,
-        proposal_type=body.proposal_type,
+        idea_type=body.idea_type,
         source_label=body.source_label,
         status="pending",
         created_at=datetime.now(timezone.utc).isoformat(),
     )
-    data.append(proposal.model_dump())
+    data.append(idea.model_dump())
     write_json(path, data)
-    return proposal
+    return idea
 
 
-@router.patch("/proposals/{proposal_id}")
-async def update_bible_proposal_status(
-    project_slug: str, proposal_id: str, body: ProposalStatusUpdate
-) -> BibleProposal:
-    """Update a story bible proposal's status to accepted or declined."""
-    path = _bible_proposals_path(project_slug)
+@router.patch("/ideas/{idea_id}")
+async def update_bible_idea_status(
+    project_slug: str, idea_id: str, body: IdeaStatusUpdate
+) -> BibleIdea:
+    """Update a story bible idea's status to accepted or declined."""
+    path = _bible_ideas_path(project_slug)
     data = read_json(path, [])
     for p in data:
-        if p["id"] == proposal_id:
+        if p["id"] == idea_id:
             p["status"] = body.status
             p.setdefault("kind", "bible")
             write_json(path, data)
-            return BibleProposal(**p)
-    raise HTTPException(404, f"Proposal {proposal_id} not found")
+            return BibleIdea(**p)
+    raise HTTPException(404, f"Idea {idea_id} not found")
 
 
 # ── Story Bible Context Check ───────────────────────────────────

@@ -1,51 +1,51 @@
-"""Router for generating AI-powered text edit proposals."""
+"""Router for generating AI-powered text edit ideas."""
 
 import json
 import logging
 
 from fastapi import APIRouter
 
-from app.models.proposal import (
-    BibleProposeRequest,
-    BibleProposeResponse,
-    ChapterProposeResponse,
-    ProposeRequest,
-    ProposeResponse,
+from app.models.idea import (
+    BibleIdeaRequest,
+    BibleIdeaResponse,
+    ChapterIdeaResponse,
+    IdeaRequest,
+    IdeaResponse,
 )
 from app.services.ai_service import json_completion
-from app.services.propose_service import build_propose_messages
+from app.services.ideate_service import build_ideate_messages
 from app.services.usage_service import record_usage
 
 logger = logging.getLogger(__name__)
 router = APIRouter()
 
 
-@router.post("/propose")
-async def generate_proposal(body: ProposeRequest) -> ProposeResponse:
-    """Generate an AI-powered text edit proposal.
+@router.post("/ideate")
+async def generate_idea(body: IdeaRequest) -> IdeaResponse:
+    """Generate an AI-powered text edit idea.
 
-    Accepts either a ChapterProposeRequest or BibleProposeRequest
+    Accepts either a ChapterIdeaRequest or BibleIdeaRequest
     (discriminated on the 'kind' field) and returns the matching response type.
     """
-    logger.info("Generating %s proposal (kind=%s) for project %s",
-                body.proposal_type, body.kind, body.project_slug)
+    logger.info("Generating %s idea (kind=%s) for project %s",
+                body.idea_type, body.kind, body.project_slug)
 
-    messages = build_propose_messages(body)
+    messages = build_ideate_messages(body)
     result = await json_completion(messages)
-    record_usage(body.project_slug, "propose", result)
+    record_usage(body.project_slug, "ideate", result)
     data = json.loads(result.content)
 
-    if isinstance(body, BibleProposeRequest):
-        return BibleProposeResponse(
+    if isinstance(body, BibleIdeaRequest):
+        return BibleIdeaResponse(
             section=body.section,
             entry_index=body.entry_index,
             current_entry=data.get("current_entry", {}),
-            proposed_entry=data.get("proposed_entry", data),
-            proposal_type=body.proposal_type,
+            ideated_entry=data.get("ideated_entry", data),
+            idea_type=body.idea_type,
         )
     else:
-        return ChapterProposeResponse(
+        return ChapterIdeaResponse(
             original=data.get("original", ""),
-            proposed=data.get("proposed", ""),
-            proposal_type=body.proposal_type,
+            ideated=data.get("ideated", ""),
+            idea_type=body.idea_type,
         )

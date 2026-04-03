@@ -2,9 +2,9 @@
 
 import { useState } from "react";
 import StoryBibleChat from "./StoryBibleChat";
-import StoryBibleProposalsTab from "./StoryBibleProposalsTab";
+import StoryBibleIdeasTab from "./StoryBibleIdeasTab";
 
-type Tab = "chat" | "proposals";
+type Tab = "chat" | "ideas";
 
 interface StoryBibleSidePanelProps {
   projectSlug: string;
@@ -41,14 +41,14 @@ export default function StoryBibleSidePanel({
           </svg>
         </button>
         <button onClick={() => { onToggleCollapse(); setActiveTab("chat"); }} className="rounded p-1.5 text-slate-500 hover:bg-white/[0.05]" title="Chat">💬</button>
-        <button onClick={() => { onToggleCollapse(); setActiveTab("proposals"); }} className="rounded p-1.5 text-slate-500 hover:bg-white/[0.05]" title="Proposals">📝</button>
+        <button onClick={() => { onToggleCollapse(); setActiveTab("ideas"); }} className="rounded p-1.5 text-slate-500 hover:bg-white/[0.05]" title="Ideas">📝</button>
       </div>
     );
   }
 
   const tabs: { key: Tab; label: string; icon: string }[] = [
     { key: "chat", label: "Chat", icon: "💬" },
-    { key: "proposals", label: "Proposals", icon: "📝" },
+    { key: "ideas", label: "Ideas", icon: "📝" },
   ];
 
   return (
@@ -81,8 +81,8 @@ export default function StoryBibleSidePanel({
 
       <div className="flex-1 overflow-hidden">
         {activeTab === "chat" && <StoryBibleChat projectSlug={projectSlug} />}
-        {activeTab === "proposals" && (
-          <StoryBibleProposalsTab
+        {activeTab === "ideas" && (
+          <StoryBibleIdeasTab
             projectSlug={projectSlug}
             section={section}
             entries={entries}

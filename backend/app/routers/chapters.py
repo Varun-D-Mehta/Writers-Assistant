@@ -60,7 +60,7 @@ async def create_chapter(
     }
     write_json(path / "content.json", empty_doc)
     write_json(path / "chat_history.json", {"messages": []})
-    write_json(path / "proposals.json", [])
+    write_json(path / "ideas.json", [])
     return ChapterMeta(**meta)
 
 

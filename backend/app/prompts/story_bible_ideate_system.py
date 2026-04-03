@@ -1,4 +1,4 @@
-"""Prompt and type definitions for story bible entry proposals."""
+"""Prompt and type definitions for story bible entry ideas."""
 
 SECTION_SCHEMAS = {
     "characters": '{"name": "", "description": "", "traits": [""], "notes": ""}',

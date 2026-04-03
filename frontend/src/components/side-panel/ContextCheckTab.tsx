@@ -2,7 +2,7 @@
 
 import type { Editor } from "@tiptap/react";
 import { useContextCheckStore } from "@/stores/useContextCheckStore";
-import { useProposalStore } from "@/stores/useProposalStore";
+import { useIdeaStore } from "@/stores/useIdeaStore";
 import { apiFetch } from "@/lib/api";
 import type { ContextIssue } from "@/lib/types";
 import IssueCard from "./IssueCard";
@@ -12,7 +12,7 @@ interface ContextCheckTabProps {
   partSlug: string;
   chapterSlug: string;
   editor: Editor | null;
-  onSwitchToProposals: () => void;
+  onSwitchToIdeas: () => void;
 }
 
 function highlightQuoteInEditor(editor: Editor, quote: string) {
@@ -53,10 +53,10 @@ export default function ContextCheckTab({
   partSlug,
   chapterSlug,
   editor,
-  onSwitchToProposals,
+  onSwitchToIdeas,
 }: ContextCheckTabProps) {
   const { issues, isChecking, runCheck } = useContextCheckStore();
-  const { addProposal } = useProposalStore();
+  const { addIdea } = useIdeaStore();
 
   function handleQuoteClick(quote: string) {
     if (!editor) return;
@@ -84,14 +84,14 @@ export default function ContextCheckTab({
       }
     );
 
-    await addProposal(projectSlug, partSlug, chapterSlug, {
+    await addIdea(projectSlug, partSlug, chapterSlug, {
       source: "context-check",
       source_label: `Fix: ${issue.title}`,
       original_text: result.original,
       proposed_text: result.fixed,
     });
 
-    onSwitchToProposals();
+    onSwitchToIdeas();
   }
 
   return (
