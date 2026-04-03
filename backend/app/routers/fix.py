@@ -5,9 +5,10 @@ import logging
 
 from fastapi import APIRouter
 
-from app.schemas.context_check import FixRequest, FixResponse
+from app.models.context_check import FixRequest, FixResponse
 from app.services.ai_service import json_completion
 from app.services.fix_service import build_fix_prompt
+from app.services.usage_service import record_usage
 
 logger = logging.getLogger(__name__)
 router = APIRouter()
@@ -26,6 +27,7 @@ async def generate_fix(body: FixRequest) -> FixResponse:
         body.chapter_content,
     )
     result = await json_completion(messages)
-    data = json.loads(result)
+    record_usage(body.project_slug, "fix", result)
+    data = json.loads(result.content)
     logger.info("Fix generated successfully")
     return FixResponse(original=data.get("original", ""), fixed=data.get("fixed", ""))

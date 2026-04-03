@@ -23,9 +23,9 @@ const severityConfig = {
     icon: "🟡",
   },
   suggestion: {
-    border: "border-blue-500/30",
-    bg: "bg-blue-500/10",
-    badge: "bg-blue-500/20 text-blue-400",
+    border: "border-indigo-500/30",
+    bg: "bg-indigo-500/8",
+    badge: "bg-indigo-500/10 text-indigo-400",
     icon: "🔵",
   },
 };
@@ -66,7 +66,7 @@ export default function IssueCard({
 
       <button
         onClick={() => onQuoteClick(issue.quote)}
-        className="mb-3 block w-full cursor-pointer rounded-lg border border-slate-600 bg-slate-800 p-2 text-left text-xs italic text-slate-400 transition hover:border-blue-500/50 hover:bg-slate-700"
+        className="mb-3 block w-full cursor-pointer rounded-lg border border-slate-600 bg-slate-800 p-2 text-left text-xs italic text-slate-400 transition hover:border-indigo-500/50 hover:bg-white/[0.07]"
       >
         &ldquo;{issue.quote}&rdquo;
       </button>
@@ -74,7 +74,7 @@ export default function IssueCard({
       <button
         onClick={handleAutoFix}
         disabled={fixing}
-        className="w-full rounded-lg bg-slate-800 px-3 py-1.5 text-xs font-medium text-blue-400 hover:bg-slate-700 disabled:opacity-50"
+        className="w-full rounded-lg bg-slate-800 px-3 py-1.5 text-xs font-medium text-indigo-400 hover:bg-white/[0.07] disabled:opacity-50"
       >
         {fixing ? "Generating fix..." : "Auto-Fix"}
       </button>

@@ -3,7 +3,7 @@ from datetime import datetime, timezone
 from fastapi import APIRouter, HTTPException
 from slugify import slugify
 
-from app.schemas.part import Part, PartCreate
+from app.models.part import Part, PartCreate
 from app.services.storage import (
     ensure_dir,
     list_dirs,

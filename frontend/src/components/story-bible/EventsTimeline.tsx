@@ -55,13 +55,13 @@ export default function EventsTimeline({
             <div key={i} className="relative flex gap-4 pb-6">
               {/* Timeline node */}
               <div className="relative z-10 flex flex-col items-center">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border-2 border-blue-500/50 bg-slate-900 text-sm font-bold text-blue-400 shadow-lg shadow-blue-500/10">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border-2 border-indigo-500/50 bg-slate-900 text-sm font-bold text-indigo-400 shadow-lg shadow-blue-500/10">
                   {i + 1}
                 </div>
               </div>
 
               {/* Event card */}
-              <div className="flex-1 rounded-xl border border-slate-700 bg-slate-800/50 p-4">
+              <div className="flex-1 rounded-xl border border-slate-700 bg-[var(--surface-2)] p-4">
                 <div className="mb-2 flex items-start justify-between">
                   <input
                     value={event.name}
@@ -73,7 +73,7 @@ export default function EventsTimeline({
                     <button
                       onClick={() => moveUp(i)}
                       disabled={i === 0}
-                      className="rounded p-1 text-slate-500 hover:bg-slate-700 hover:text-slate-300 disabled:opacity-30"
+                      className="rounded p-1 text-slate-500 hover:bg-white/[0.07] hover:text-slate-300 disabled:opacity-30"
                       title="Move up"
                     >
                       <svg className="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -83,7 +83,7 @@ export default function EventsTimeline({
                     <button
                       onClick={() => moveDown(i)}
                       disabled={i === events.length - 1}
-                      className="rounded p-1 text-slate-500 hover:bg-slate-700 hover:text-slate-300 disabled:opacity-30"
+                      className="rounded p-1 text-slate-500 hover:bg-white/[0.07] hover:text-slate-300 disabled:opacity-30"
                       title="Move down"
                     >
                       <svg className="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -92,7 +92,7 @@ export default function EventsTimeline({
                     </button>
                     <button
                       onClick={() => remove(i)}
-                      className="rounded p-1 text-slate-500 hover:bg-slate-700 hover:text-red-400"
+                      className="rounded p-1 text-slate-500 hover:bg-white/[0.07] hover:text-red-400"
                       title="Remove"
                     >
                       <svg className="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -106,7 +106,7 @@ export default function EventsTimeline({
                   onChange={(e) => update(i, "description", e.target.value)}
                   placeholder="What happens in this event..."
                   rows={2}
-                  className="mb-2 w-full resize-none rounded border border-slate-600 bg-slate-900 px-3 py-2 text-sm text-slate-200 placeholder-slate-500 focus:border-blue-500 focus:outline-none"
+                  className="mb-2 w-full resize-none rounded border border-slate-600 bg-slate-900 px-3 py-2 text-sm text-slate-200 placeholder-slate-500 focus:border-indigo-500 focus:outline-none"
                 />
                 <input
                   value={event.chapter_refs.join(", ")}
@@ -121,7 +121,7 @@ export default function EventsTimeline({
                     )
                   }
                   placeholder="Related chapters (comma-separated)"
-                  className="w-full rounded border border-slate-600 bg-slate-900 px-3 py-2 text-xs text-slate-300 placeholder-slate-500 focus:border-blue-500 focus:outline-none"
+                  className="w-full rounded border border-slate-600 bg-slate-900 px-3 py-2 text-xs text-slate-300 placeholder-slate-500 focus:border-indigo-500 focus:outline-none"
                 />
               </div>
             </div>
@@ -132,7 +132,7 @@ export default function EventsTimeline({
       {/* Add event button */}
       <button
         onClick={addEvent}
-        className="mt-2 flex w-full items-center justify-center gap-2 rounded-xl border-2 border-dashed border-slate-600 py-3 text-sm text-slate-400 hover:border-blue-500/50 hover:text-blue-400"
+        className="mt-2 flex w-full items-center justify-center gap-2 rounded-xl border-2 border-dashed border-slate-600 py-3 text-sm text-slate-400 hover:border-indigo-500/50 hover:text-indigo-400"
       >
         <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />

@@ -28,7 +28,7 @@ export default function MetadataEditor({
   ];
 
   return (
-    <div className="rounded-xl border border-slate-700 bg-slate-800/50 p-5">
+    <div className="rounded-xl border border-slate-700 bg-[var(--surface-2)] p-5">
       <h3 className="mb-4 text-sm font-semibold text-slate-300">
         General Information
       </h3>
@@ -44,14 +44,14 @@ export default function MetadataEditor({
                 onChange={(e) => update(field.key, e.target.value)}
                 placeholder={`Enter ${field.label.toLowerCase()}...`}
                 rows={4}
-                className="w-full resize-none rounded-lg border border-slate-600 bg-slate-900 px-3 py-2 text-sm text-slate-200 placeholder-slate-500 focus:border-blue-500 focus:outline-none"
+                className="w-full resize-none rounded-lg border border-slate-600 bg-slate-900 px-3 py-2 text-sm text-slate-200 placeholder-slate-500 focus:border-indigo-500 focus:outline-none"
               />
             ) : (
               <input
                 value={metadata[field.key]}
                 onChange={(e) => update(field.key, e.target.value)}
                 placeholder={`Enter ${field.label.toLowerCase()}...`}
-                className="w-full rounded-lg border border-slate-600 bg-slate-900 px-3 py-2 text-sm text-slate-200 placeholder-slate-500 focus:border-blue-500 focus:outline-none"
+                className="w-full rounded-lg border border-slate-600 bg-slate-900 px-3 py-2 text-sm text-slate-200 placeholder-slate-500 focus:border-indigo-500 focus:outline-none"
               />
             )}
           </div>

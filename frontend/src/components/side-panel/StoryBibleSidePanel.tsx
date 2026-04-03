@@ -33,15 +33,15 @@ export default function StoryBibleSidePanel({
       <div className="flex w-12 flex-col items-center gap-3 border-l border-slate-700/50 bg-slate-900 pt-3">
         <button
           onClick={onToggleCollapse}
-          className="rounded p-1.5 text-slate-500 hover:bg-slate-800 hover:text-slate-300"
+          className="rounded p-1.5 text-slate-500 hover:bg-white/[0.05] hover:text-slate-300"
           title="Expand panel"
         >
           <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
           </svg>
         </button>
-        <button onClick={() => { onToggleCollapse(); setActiveTab("chat"); }} className="rounded p-1.5 text-slate-500 hover:bg-slate-800" title="Chat">💬</button>
-        <button onClick={() => { onToggleCollapse(); setActiveTab("proposals"); }} className="rounded p-1.5 text-slate-500 hover:bg-slate-800" title="Proposals">📝</button>
+        <button onClick={() => { onToggleCollapse(); setActiveTab("chat"); }} className="rounded p-1.5 text-slate-500 hover:bg-white/[0.05]" title="Chat">💬</button>
+        <button onClick={() => { onToggleCollapse(); setActiveTab("proposals"); }} className="rounded p-1.5 text-slate-500 hover:bg-white/[0.05]" title="Proposals">📝</button>
       </div>
     );
   }
@@ -60,7 +60,7 @@ export default function StoryBibleSidePanel({
             onClick={() => setActiveTab(tab.key)}
             className={`flex-1 px-2 py-2.5 text-xs font-medium transition ${
               activeTab === tab.key
-                ? "border-b-2 border-blue-500 text-blue-400"
+                ? "border-b-2 border-indigo-400 text-indigo-400"
                 : "text-slate-500 hover:text-slate-300"
             }`}
           >

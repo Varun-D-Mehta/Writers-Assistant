@@ -84,13 +84,13 @@ export default function ProjectPage() {
             <div className="flex items-center gap-3">
               <button
                 onClick={() => handleExport("txt")}
-                className="rounded-lg border border-slate-600 px-3 py-1.5 text-xs text-slate-400 hover:bg-slate-800 hover:text-slate-200"
+                className="rounded-lg border border-slate-600 px-3 py-1.5 text-xs text-slate-400 hover:bg-white/[0.05] hover:text-slate-200"
               >
                 Export TXT
               </button>
               <button
                 onClick={() => handleExport("pdf")}
-                className="rounded-lg border border-slate-600 px-3 py-1.5 text-xs text-slate-400 hover:bg-slate-800 hover:text-slate-200"
+                className="rounded-lg border border-slate-600 px-3 py-1.5 text-xs text-slate-400 hover:bg-white/[0.05] hover:text-slate-200"
               >
                 Export PDF
               </button>
@@ -114,7 +114,7 @@ export default function ProjectPage() {
           <div className="flex flex-col items-center gap-3 pt-3">
             <button
               onClick={() => setChatCollapsed(false)}
-              className="rounded p-1.5 text-slate-500 hover:bg-slate-800 hover:text-slate-300"
+              className="rounded p-1.5 text-slate-500 hover:bg-white/[0.05] hover:text-slate-300"
               title="Expand chat"
             >
               <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -123,7 +123,7 @@ export default function ProjectPage() {
             </button>
             <button
               onClick={() => setChatCollapsed(false)}
-              className="rounded p-1.5 text-slate-500 hover:bg-slate-800"
+              className="rounded p-1.5 text-slate-500 hover:bg-white/[0.05]"
               title="Chat"
             >
               💬

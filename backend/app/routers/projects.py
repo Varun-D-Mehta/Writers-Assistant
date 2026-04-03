@@ -7,7 +7,7 @@ from datetime import datetime, timezone
 from fastapi import APIRouter, HTTPException
 from slugify import slugify
 
-from app.schemas.project import Project, ProjectCreate
+from app.models.project import Project, ProjectCreate
 from app.services.storage import (
     ensure_dir,
     list_dirs,
@@ -16,6 +16,7 @@ from app.services.storage import (
     read_json,
     write_json,
 )
+from app.services.usage_service import get_usage_summary
 
 logger = logging.getLogger(__name__)
 router = APIRouter()
@@ -77,3 +78,16 @@ async def get_project(project_slug: str) -> Project:
         logger.error("Project not found: %s", project_slug)
         raise HTTPException(404, "Project not found")
     return Project(**meta)
+
+
+@router.get("/{project_slug}/usage")
+async def get_project_usage(project_slug: str) -> dict:
+    """Get AI token usage summary for a project.
+
+    Returns totals, per-feature breakdown, and per-chapter breakdown
+    with estimated costs.
+    """
+    meta = read_json(project_path(project_slug) / "project.json")
+    if not meta:
+        raise HTTPException(404, "Project not found")
+    return get_usage_summary(project_slug)

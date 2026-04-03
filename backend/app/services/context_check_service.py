@@ -1,8 +1,8 @@
 import json
 
 from app.prompts.context_check_system import CONTEXT_CHECK_SYSTEM_PROMPT
-from app.services.chat_service import extract_text_from_tiptap
 from app.services.storage import (
+    extract_tiptap_text,
     chapter_path,
     list_dirs,
     part_path,
@@ -35,7 +35,7 @@ def gather_previous_chapters(
                 chapter_path(project_slug, ps, cs) / "content.json",
                 {"type": "doc", "content": []},
             )
-            text = extract_text_from_tiptap(content)
+            text = extract_tiptap_text(content)
             if text.strip():
                 title = c_meta.get("title", cs)
                 chapters_text.append(f"### {title}\n{text}")
@@ -61,7 +61,7 @@ def build_context_check_prompt(
         chapter_path(project_slug, part_slug, chapter_slug) / "content.json",
         {"type": "doc", "content": []},
     )
-    current_text = extract_text_from_tiptap(content)
+    current_text = extract_tiptap_text(content)
 
     system_prompt = CONTEXT_CHECK_SYSTEM_PROMPT.format(
         story_bible=story_bible_text,

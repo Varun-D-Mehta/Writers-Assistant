@@ -1,10 +1,10 @@
 "use client";
 
-import type { Proposal } from "@/lib/types";
+import type { ChapterProposal } from "@/lib/types";
 import DiffView from "@/components/ui/DiffView";
 
 interface ProposalCardProps {
-  proposal: Proposal;
+  proposal: ChapterProposal;
   onAccept: () => void;
   onReject: () => void;
 }
@@ -16,7 +16,7 @@ export default function ProposalCard({
 }: ProposalCardProps) {
   const sourceBadgeClass =
     proposal.source === "chat"
-      ? "bg-blue-500/20 text-blue-400"
+      ? "bg-indigo-500/10 text-indigo-400"
       : "bg-amber-500/20 text-amber-400";
 
   return (
@@ -44,7 +44,7 @@ export default function ProposalCard({
         </button>
         <button
           onClick={onReject}
-          className="flex-1 rounded-lg border border-slate-600 px-3 py-1.5 text-xs font-medium text-slate-400 hover:bg-slate-700"
+          className="flex-1 rounded-lg border border-slate-600 px-3 py-1.5 text-xs font-medium text-slate-400 hover:bg-white/[0.07]"
         >
           Reject
         </button>

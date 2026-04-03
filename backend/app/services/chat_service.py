@@ -7,6 +7,7 @@ import re
 from app.prompts.chat_system import CHAT_SYSTEM_PROMPT
 from app.services.storage import (
     chapter_path,
+    extract_tiptap_text,
     read_json,
     story_bible_path,
     write_json,
@@ -36,25 +37,6 @@ def extract_proposals_from_response(text: str) -> tuple[str, list[dict]]:
         return text.strip(), []
     clean_text = text[:match.start()].strip()
     return clean_text, proposals
-
-
-def extract_text_from_tiptap(node: dict) -> str:
-    """Extract plain text from a Tiptap JSON document.
-
-    Args:
-        node: A Tiptap document node dict.
-
-    Returns:
-        Plain text content extracted from the document.
-    """
-    text = ""
-    if node.get("type") == "text":
-        text += node.get("text", "")
-    for child in node.get("content", []):
-        text += extract_text_from_tiptap(child)
-        if child.get("type") in ("paragraph", "heading"):
-            text += "\n"
-    return text
 
 
 def load_chat_history(project_slug: str, part_slug: str, chapter_slug: str) -> list[dict]:
@@ -118,11 +100,11 @@ def build_chat_messages(
 
     # Get chapter content as plain text
     if chapter_content:
-        chapter_text = extract_text_from_tiptap(chapter_content)
+        chapter_text = extract_tiptap_text(chapter_content)
     else:
         content_path = chapter_path(project_slug, part_slug, chapter_slug) / "content.json"
         content_data = read_json(content_path, {"type": "doc", "content": []})
-        chapter_text = extract_text_from_tiptap(content_data)
+        chapter_text = extract_tiptap_text(content_data)
 
     # Build system prompt
     system_prompt = CHAT_SYSTEM_PROMPT.format(

@@ -126,7 +126,7 @@ export default function StoryBibleChat({ projectSlug }: StoryBibleChatProps) {
             <div
               className={`max-w-[85%] rounded-2xl px-4 py-2 text-sm ${
                 msg.role === "user"
-                  ? "rounded-br-md bg-blue-600 text-white"
+                  ? "rounded-br-md bg-indigo-600 text-white"
                   : "rounded-bl-md bg-slate-800 text-slate-200"
               }`}
             >
@@ -152,7 +152,7 @@ export default function StoryBibleChat({ projectSlug }: StoryBibleChatProps) {
             onChange={(e) => setInput(e.target.value)}
             placeholder="Ask about your story bible..."
             disabled={isStreaming}
-            className="flex-1 rounded-lg border border-slate-600 bg-slate-800 px-3 py-2 text-sm text-slate-200 placeholder-slate-500 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 disabled:opacity-50"
+            className="flex-1 rounded-lg border border-slate-600 bg-slate-800 px-3 py-2 text-sm text-slate-200 placeholder-slate-500 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 disabled:opacity-50"
             onKeyDown={(e) => {
               if (e.key === "Enter" && !e.shiftKey) {
                 sendMessage(e);
@@ -162,7 +162,7 @@ export default function StoryBibleChat({ projectSlug }: StoryBibleChatProps) {
           <button
             type="submit"
             disabled={isStreaming || !input.trim()}
-            className="rounded-lg bg-blue-600 px-3 py-2 text-sm text-white hover:bg-blue-500 disabled:opacity-50"
+            className="rounded-lg bg-indigo-600 px-3 py-2 text-sm text-white hover:bg-indigo-500 disabled:opacity-50"
           >
             Send
           </button>

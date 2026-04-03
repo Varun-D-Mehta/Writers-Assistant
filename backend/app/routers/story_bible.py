@@ -7,13 +7,25 @@ from datetime import datetime, timezone
 
 from fastapi import APIRouter, HTTPException
 from fastapi.responses import StreamingResponse
-from pydantic import BaseModel
 
-from app.prompts.story_bible_chat_system import STORY_BIBLE_CHAT_PROMPT
-from app.prompts.story_bible_context_check_system import STORY_BIBLE_CHECK_PROMPT
-from app.schemas.story_bible import StoryBible
-from app.services.ai_service import chat_stream, json_completion
+from app.models.proposal import (
+    BibleProposal,
+    BibleProposalCreate,
+    BibleProposeRequestBody,
+    BibleProposeResponse,
+    ProposalStatusUpdate,
+)
+from app.models.story_bible import StoryBible, StoryBibleChatRequest
+from app.services.ai_service import StreamUsage, chat_stream, json_completion
 from app.services.storage import read_json, story_bible_path, write_json
+from app.services.story_bible_service import (
+    build_bible_chat_messages,
+    build_bible_context_check_messages,
+    build_bible_propose_messages,
+    load_bible_chat_history,
+    save_bible_chat_history,
+)
+from app.services.usage_service import record_usage
 
 logger = logging.getLogger(__name__)
 router = APIRouter()
@@ -26,7 +38,6 @@ async def get_story_bible(project_slug: str) -> StoryBible:
     path = story_bible_path(project_slug) / "story_bible.json"
     data = read_json(path)
     if not data:
-        logger.error("Story bible not found for project: %s", project_slug)
         raise HTTPException(404, "Story bible not found")
     return StoryBible(**data)
 
@@ -43,41 +54,10 @@ async def update_story_bible(project_slug: str, body: StoryBible) -> StoryBible:
 # ── Story Bible Chat ──────────────────────────────────────────────
 
 
-class StoryBibleChatRequest(BaseModel):
-    """Request body for story bible chat messages."""
-    message: str
-
-
-def _load_bible_chat_history(project_slug: str) -> list[dict]:
-    """Load chat history for the story bible.
-
-    Args:
-        project_slug: The project identifier.
-
-    Returns:
-        List of message dicts from the chat history.
-    """
-    path = story_bible_path(project_slug) / "chat_history.json"
-    data = read_json(path, {"messages": []})
-    return data.get("messages", [])
-
-
-def _save_bible_chat_history(project_slug: str, messages: list[dict]) -> None:
-    """Save chat history for the story bible.
-
-    Args:
-        project_slug: The project identifier.
-        messages: List of message dicts to save.
-    """
-    path = story_bible_path(project_slug) / "chat_history.json"
-    write_json(path, {"messages": messages})
-
-
 @router.get("/chat")
 async def get_bible_chat_history(project_slug: str) -> dict:
     """Retrieve the story bible chat history."""
-    logger.info("Getting story bible chat history for project: %s", project_slug)
-    messages = _load_bible_chat_history(project_slug)
+    messages = load_bible_chat_history(project_slug)
     return {"messages": messages}
 
 
@@ -85,24 +65,16 @@ async def get_bible_chat_history(project_slug: str) -> dict:
 async def send_bible_chat_message(project_slug: str, body: StoryBibleChatRequest):
     """Send a message to the story bible AI assistant and stream the response."""
     logger.info("Story bible chat message received for project: %s", project_slug)
-    # Load story bible
-    bible_path = story_bible_path(project_slug) / "story_bible.json"
-    bible_data = read_json(bible_path, {"characters": [], "events": [], "environment": [], "objects": []})
-    story_bible_text = json.dumps(bible_data, indent=2)
-
-    system_prompt = STORY_BIBLE_CHAT_PROMPT.format(story_bible=story_bible_text)
-
-    history = _load_bible_chat_history(project_slug)
-    messages: list[dict] = [{"role": "system", "content": system_prompt}]
-    for msg in history:
-        messages.append({"role": msg["role"], "content": msg["content"]})
-    messages.append({"role": "user", "content": body.message})
+    messages, history = build_bible_chat_messages(project_slug, body.message)
 
     async def stream():
         full_response = ""
-        async for token in chat_stream(messages):
-            full_response += token
-            yield f"data: {json.dumps({'token': token})}\n\n"
+        async for chunk in chat_stream(messages):
+            if isinstance(chunk, StreamUsage):
+                record_usage(project_slug, "bible_chat", chunk)
+            else:
+                full_response += chunk
+                yield f"data: {json.dumps({'token': chunk})}\n\n"
 
         now = datetime.now(timezone.utc).isoformat()
         history.append({
@@ -117,7 +89,7 @@ async def send_bible_chat_message(project_slug: str, body: StoryBibleChatRequest
             "content": full_response,
             "created_at": now,
         })
-        _save_bible_chat_history(project_slug, history)
+        save_bible_chat_history(project_slug, history)
         logger.info("Story bible chat response completed for project: %s", project_slug)
 
         yield f"data: {json.dumps({'done': True, 'full_response': full_response})}\n\n"
@@ -128,7 +100,6 @@ async def send_bible_chat_message(project_slug: str, body: StoryBibleChatRequest
 @router.delete("/chat")
 async def clear_bible_chat(project_slug: str):
     """Clear the story bible chat history."""
-    logger.info("Clearing story bible chat history for project: %s", project_slug)
     path = story_bible_path(project_slug) / "chat_history.json"
     write_json(path, {"messages": []})
     return {"ok": True}
@@ -137,115 +108,24 @@ async def clear_bible_chat(project_slug: str):
 # ── Story Bible Proposals ──────────────────────────────────────
 
 
-SECTION_SCHEMAS = {
-    "characters": '{"name": "", "description": "", "traits": [""], "notes": ""}',
-    "events": '{"name": "", "description": "", "chapter_refs": [""]}',
-    "environment": '{"name": "", "description": "", "details": {}}',
-    "objects": '{"name": "", "description": "", "significance": "", "notes": ""}',
-}
-
-BIBLE_PROPOSE_TYPES = {
-    "rewrite": "Rewrite for clarity, depth, and consistency.",
-    "expand": "Expand with additional details, backstory, or connections.",
-    "fix_typo": "Fix spelling, grammar, and punctuation only.",
-    "add_detail": "Add specific details like descriptions, motivations, or history.",
-    "fetch_info": "Incorporate real-world research to ground the element in reality.",
-    "consistency": "Fix consistency issues with other story bible entries.",
-}
-
-BIBLE_PROPOSE_PROMPT = """You are a story bible editor for a creative writing project.
-
-## Full Story Bible
-{story_bible}
-
-## Section Type: {section_type}
-## Current Entry (index {entry_index})
-{current_entry}
-
-## Task: {proposal_type_instruction}
-## User Instruction: {instruction}
-
-{search_context}
-
-Return ONLY a JSON object with the COMPLETE updated entry matching this schema:
-{entry_schema}
-
-Rules:
-- Return the FULL entry with ALL fields populated
-- Apply the requested changes while keeping unchanged fields intact
-- Maintain consistency with the rest of the story bible
-- If search results are provided, incorporate relevant details naturally
-"""
-
-
-class BibleProposeRequest(BaseModel):
-    """Request body for story bible entry proposals."""
-    section: str  # characters, events, environment, objects
-    entry_index: int
-    instruction: str
-    proposal_type: str = "rewrite"
-
-
-class BibleProposeResponse(BaseModel):
-    """Response containing the proposed entry update."""
-    section: str
-    entry_index: int
-    current_entry: dict
-    proposed_entry: dict
-    proposal_type: str
-
-
 @router.post("/propose")
-async def propose_bible_entry(project_slug: str, body: BibleProposeRequest) -> BibleProposeResponse:
-    """Generate a structured proposal for a story bible entry.
-
-    Returns the complete updated entry object that can be directly
-    applied to replace the existing entry.
-    """
+async def propose_bible_entry(project_slug: str, body: BibleProposeRequestBody) -> BibleProposeResponse:
+    """Generate a structured proposal for a story bible entry."""
     logger.info("Generating %s proposal for %s[%d] in project %s",
                 body.proposal_type, body.section, body.entry_index, project_slug)
 
-    bible_file = story_bible_path(project_slug) / "story_bible.json"
-    bible_data = read_json(bible_file, {"characters": [], "events": [], "environment": [], "objects": []})
-    story_bible_text = json.dumps(bible_data, indent=2)
-
-    entries = bible_data.get(body.section, [])
-    if body.entry_index < 0 or body.entry_index >= len(entries):
-        from fastapi import HTTPException
-        raise HTTPException(400, f"Invalid entry index {body.entry_index} for section {body.section}")
-
-    current_entry = entries[body.entry_index]
-    entry_schema = SECTION_SCHEMAS.get(body.section, "{}")
-
-    type_instruction = BIBLE_PROPOSE_TYPES.get(body.proposal_type, BIBLE_PROPOSE_TYPES["rewrite"])
-
-    # Web search for fetch_info
-    search_context = ""
-    if body.proposal_type == "fetch_info":
-        from app.services.search_service import web_search
-        search_results = web_search(body.instruction)
-        search_context = f"## Web Search Results\n{search_results}"
-
-    prompt = BIBLE_PROPOSE_PROMPT.format(
-        story_bible=story_bible_text,
-        section_type=body.section,
-        entry_index=body.entry_index,
-        current_entry=json.dumps(current_entry, indent=2),
-        proposal_type_instruction=type_instruction,
-        instruction=body.instruction,
-        search_context=search_context,
-        entry_schema=entry_schema,
-    )
-
-    messages = [
-        {"role": "system", "content": prompt},
-        {"role": "user", "content": body.instruction},
-    ]
+    try:
+        messages, current_entry = build_bible_propose_messages(
+            project_slug, body.section, body.entry_index,
+            body.instruction, body.proposal_type,
+        )
+    except ValueError as e:
+        raise HTTPException(400, str(e))
 
     result = await json_completion(messages)
-    proposed = json.loads(result)
+    record_usage(project_slug, "bible_propose", result)
+    proposed = json.loads(result.content)
 
-    logger.info("Story bible proposal generated for %s[%d]", body.section, body.entry_index)
     return BibleProposeResponse(
         section=body.section,
         entry_index=body.entry_index,
@@ -255,6 +135,60 @@ async def propose_bible_entry(project_slug: str, body: BibleProposeRequest) -> B
     )
 
 
+# ── Story Bible Proposal Persistence ──────────────────────────
+
+
+def _bible_proposals_path(project_slug: str):
+    return story_bible_path(project_slug) / "proposals.json"
+
+
+@router.get("/proposals")
+async def list_bible_proposals(project_slug: str) -> list[BibleProposal]:
+    """List all story bible proposals for a project."""
+    data = read_json(_bible_proposals_path(project_slug), [])
+    for p in data:
+        p.setdefault("kind", "bible")
+    return [BibleProposal(**p) for p in data]
+
+
+@router.post("/proposals", status_code=201)
+async def create_bible_proposal(project_slug: str, body: BibleProposalCreate) -> BibleProposal:
+    """Persist a story bible proposal."""
+    path = _bible_proposals_path(project_slug)
+    data = read_json(path, [])
+    proposal = BibleProposal(
+        id=str(uuid.uuid4()),
+        kind="bible",
+        section=body.section,
+        entry_index=body.entry_index,
+        current_entry=body.current_entry,
+        proposed_entry=body.proposed_entry,
+        proposal_type=body.proposal_type,
+        source_label=body.source_label,
+        status="pending",
+        created_at=datetime.now(timezone.utc).isoformat(),
+    )
+    data.append(proposal.model_dump())
+    write_json(path, data)
+    return proposal
+
+
+@router.patch("/proposals/{proposal_id}")
+async def update_bible_proposal_status(
+    project_slug: str, proposal_id: str, body: ProposalStatusUpdate
+) -> BibleProposal:
+    """Update a story bible proposal's status to accepted or declined."""
+    path = _bible_proposals_path(project_slug)
+    data = read_json(path, [])
+    for p in data:
+        if p["id"] == proposal_id:
+            p["status"] = body.status
+            p.setdefault("kind", "bible")
+            write_json(path, data)
+            return BibleProposal(**p)
+    raise HTTPException(404, f"Proposal {proposal_id} not found")
+
+
 # ── Story Bible Context Check ───────────────────────────────────
 
 
@@ -262,14 +196,8 @@ async def propose_bible_entry(project_slug: str, body: BibleProposeRequest) -> B
 async def story_bible_context_check(project_slug: str) -> dict:
     """Run a consistency check on the story bible entries."""
     logger.info("Running story bible context check for project: %s", project_slug)
-    bible_path = story_bible_path(project_slug) / "story_bible.json"
-    bible_data = read_json(bible_path, {"characters": [], "events": [], "environment": [], "objects": []})
-    story_bible_text = json.dumps(bible_data, indent=2)
-
-    system_prompt = STORY_BIBLE_CHECK_PROMPT.format(story_bible=story_bible_text)
-
-    messages = [{"role": "system", "content": system_prompt}]
+    messages = build_bible_context_check_messages(project_slug)
     result = await json_completion(messages)
-    data = json.loads(result)
-    logger.info("Story bible context check completed for project: %s", project_slug)
+    record_usage(project_slug, "bible_context_check", result)
+    data = json.loads(result.content)
     return data

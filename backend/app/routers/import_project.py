@@ -1,197 +1,71 @@
-"""Router for importing projects from PDF files."""
+"""Router for importing projects from Writers Assistant export files."""
 
 import json
 import logging
-import random
-from io import BytesIO
-from datetime import datetime, timezone
 
 from fastapi import APIRouter, UploadFile, File
-from slugify import slugify
-import pdfplumber
+from fastapi.responses import StreamingResponse
 
-from app.services.ai_service import json_completion
-from app.services.storage import (
-    project_path,
-    ensure_dir,
-    write_json,
+from app.services.import_service import (
+    create_project_from_data,
+    extract_pdf_text,
+    parse_export_text,
 )
 
 logger = logging.getLogger(__name__)
 router = APIRouter()
 
-IMPORT_PROMPT = """You are a document parser. Given the text extracted from a PDF of a creative writing project, parse it into a structured format.
-
-## Extracted Text
-{text}
-
-## Instructions
-Parse this text into the following JSON structure. Extract whatever information is available:
-{{
-  "title": "project title (infer from content if not explicit)",
-  "metadata": {{
-    "title": "",
-    "genre": "",
-    "setting": "",
-    "time_period": "",
-    "pov": "",
-    "tone": "",
-    "synopsis": ""
-  }},
-  "characters": [
-    {{"name": "", "description": "", "traits": [], "notes": ""}}
-  ],
-  "events": [
-    {{"name": "", "description": "", "chapter_refs": []}}
-  ],
-  "environment": [
-    {{"name": "", "description": "", "details": {{}}}}
-  ],
-  "objects": [
-    {{"name": "", "description": "", "significance": "", "notes": ""}}
-  ],
-  "parts": [
-    {{
-      "title": "Part title",
-      "chapters": [
-        {{"title": "Chapter title", "content": "chapter text content"}}
-      ]
-    }}
-  ]
-}}
-
-Rules:
-- Extract as much structured information as possible
-- If the PDF doesn't contain story bible info, leave those arrays empty
-- If it's just manuscript text, put it all in a single part with chapters
-- Infer a project title from the content if none is explicit
-- Return valid JSON only
-"""
-
 
 @router.post("/import/pdf")
-async def import_project_from_pdf(file: UploadFile = File(...)) -> dict:
-    """Import a project from an uploaded PDF file.
+async def import_project_from_file(file: UploadFile = File(...)):
+    """Import a project from a Writers Assistant export file (PDF or TXT).
 
-    Extracts text from the PDF, uses LLM to parse it into structured
-    project data, and creates a new project with the parsed content.
+    Only files exported by Writers Assistant are accepted.
+    Streams SSE progress events during the import process.
     """
-    logger.info("Importing project from PDF: %s", file.filename)
+    logger.info("Importing from file: %s", file.filename)
 
-    # Extract text from PDF
-    content = await file.read()
-    text = ""
-    with pdfplumber.open(BytesIO(content)) as pdf:
-        for page in pdf.pages:
-            page_text = page.extract_text()
-            if page_text:
-                text += page_text + "\n\n"
+    async def stream():
+        # Step 1: Read and extract text
+        yield _sse({"step": "extract", "message": "Reading file..."})
+        content = await file.read()
+        filename = file.filename or ""
 
-    if not text.strip():
-        return {"error": "Could not extract text from PDF"}
+        if filename.lower().endswith(".pdf"):
+            text = extract_pdf_text(content)
+        else:
+            text = content.decode("utf-8", errors="replace")
 
-    # Truncate if too long (LLM context limit)
-    if len(text) > 30000:
-        text = text[:30000] + "\n\n[... truncated ...]"
+        if not text.strip():
+            yield _sse({"error": "Could not extract text from file. PDF may be image-based."})
+            return
 
-    logger.info("Extracted %d characters from PDF", len(text))
+        yield _sse({"step": "extract_done", "message": f"Read {len(text):,} characters"})
 
-    # Use LLM to parse the text
-    prompt = IMPORT_PROMPT.format(text=text)
-    messages = [
-        {"role": "system", "content": prompt},
-        {"role": "user", "content": "Parse this document into structured project data."},
-    ]
+        # Step 2: Parse the structured export format
+        yield _sse({"step": "parse", "message": "Parsing export format..."})
+        try:
+            data = parse_export_text(text)
+        except ValueError as e:
+            yield _sse({"error": str(e)})
+            return
 
-    result = await json_completion(messages)
-    data = json.loads(result)
-
-    # Create the project
-    title = data.get("title", file.filename or "Imported Project")
-    slug = slugify(title)
-
-    # Ensure unique slug
-    base_slug = slug
-    counter = 1
-    while project_path(slug).exists():
-        slug = f"{base_slug}-{counter}"
-        counter += 1
-
-    path = project_path(slug)
-    ensure_dir(path)
-    ensure_dir(path / "story-bible")
-    ensure_dir(path / "parts")
-
-    now = datetime.now(timezone.utc).isoformat()
-    logo = random.choice(["quill", "scroll", "inkwell"])
-
-    # Save project metadata
-    write_json(path / "project.json", {
-        "slug": slug,
-        "title": title,
-        "logo": logo,
-        "created_at": now,
-        "updated_at": now,
-    })
-
-    # Save story bible
-    story_bible = {
-        "metadata": data.get("metadata", {}),
-        "characters": data.get("characters", []),
-        "events": data.get("events", []),
-        "environment": data.get("environment", []),
-        "objects": data.get("objects", []),
-    }
-    write_json(path / "story-bible" / "story_bible.json", story_bible)
-
-    # Save parts and chapters
-    parts = data.get("parts", [])
-    for i, part_data in enumerate(parts):
-        part_title = part_data.get("title", f"Part {i + 1}")
-        part_slug = slugify(part_title)
-        part_dir = path / "parts" / part_slug
-        ensure_dir(part_dir / "chapters")
-
-        write_json(part_dir / "meta.json", {
-            "slug": part_slug,
-            "title": part_title,
-            "order": i,
-            "created_at": now,
+        chapter_count = sum(len(p.get("chapters", [])) for p in data.get("parts", []))
+        yield _sse({
+            "step": "parse_done",
+            "message": f"Found {len(data.get('parts', []))} part(s), {chapter_count} chapter(s)",
         })
 
-        chapters = part_data.get("chapters", [])
-        for j, ch_data in enumerate(chapters):
-            ch_title = ch_data.get("title", f"Chapter {j + 1}")
-            ch_slug = slugify(ch_title)
-            ch_dir = part_dir / "chapters" / ch_slug
-            ensure_dir(ch_dir)
+        # Step 3: Create project structure
+        yield _sse({"step": "create", "message": "Creating project..."})
+        project = create_project_from_data(data, fallback_title=filename.rsplit(".", 1)[0] or "Imported Project")
 
-            write_json(ch_dir / "meta.json", {
-                "slug": ch_slug,
-                "title": ch_title,
-                "part_slug": part_slug,
-                "order": j,
-                "word_count": 0,
-                "created_at": now,
-                "updated_at": now,
-            })
+        logger.info("Project imported successfully: %s", project["slug"])
+        yield _sse({"step": "done", "project": project})
 
-            # Convert text to Tiptap JSON
-            ch_content = ch_data.get("content", "")
-            paragraphs = [p.strip() for p in ch_content.split("\n") if p.strip()]
-            tiptap_doc = {
-                "type": "doc",
-                "content": [
-                    {"type": "paragraph", "content": [{"type": "text", "text": p}]}
-                    for p in paragraphs
-                ] if paragraphs else [],
-            }
-            write_json(ch_dir / "content.json", tiptap_doc)
+    return StreamingResponse(stream(), media_type="text/event-stream")
 
-    logger.info("Project imported successfully: %s (%s)", title, slug)
 
-    return {
-        "slug": slug,
-        "title": title,
-        "logo": logo,
-    }
+def _sse(data: dict) -> str:
+    """Format a dict as an SSE data line."""
+    return f"data: {json.dumps(data)}\n\n"

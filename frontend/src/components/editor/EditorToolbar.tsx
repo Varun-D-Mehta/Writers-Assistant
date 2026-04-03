@@ -32,8 +32,8 @@ export default function EditorToolbar({ editor, onRequestRewrite }: EditorToolba
   const btnClass = (active: boolean) =>
     `rounded px-2 py-1 text-xs font-medium transition ${
       active
-        ? "bg-blue-600/20 text-blue-400"
-        : "text-slate-400 hover:bg-slate-800 hover:text-slate-200"
+        ? "bg-indigo-500/10 text-indigo-400"
+        : "text-slate-400 hover:bg-white/[0.05] hover:text-slate-200"
     }`;
 
   function handleRewrite() {
@@ -101,7 +101,7 @@ export default function EditorToolbar({ editor, onRequestRewrite }: EditorToolba
           <span className="mx-1 h-4 w-px bg-slate-700" />
           <button
             onClick={handleRewrite}
-            className="rounded bg-blue-600/20 px-2 py-1 text-xs font-medium text-blue-400 transition hover:bg-blue-600/30"
+            className="rounded bg-indigo-500/10 px-2 py-1 text-xs font-medium text-indigo-400 transition hover:bg-indigo-600/30"
             title="Suggest a rewrite for selected text"
           >
             ✨ Rewrite

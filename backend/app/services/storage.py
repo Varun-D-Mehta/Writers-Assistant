@@ -93,6 +93,30 @@ def write_json(path: Path, data) -> None:
         json.dump(data, f, indent=2, default=str)
 
 
+def extract_tiptap_text(node: dict) -> str:
+    """Extract plain text from a Tiptap JSON document.
+
+    Args:
+        node: A Tiptap document node dict.
+
+    Returns:
+        Plain text content extracted from the document.
+    """
+    text = ""
+    if node.get("type") == "text":
+        text += node.get("text", "")
+    for child in node.get("content", []):
+        text += extract_tiptap_text(child)
+        if child.get("type") in ("paragraph", "heading"):
+            text += "\n"
+    return text
+
+
+def word_count(content: dict) -> int:
+    """Count words in a Tiptap JSON document."""
+    return len(extract_tiptap_text(content).split())
+
+
 def list_dirs(path: Path) -> list[str]:
     """List all subdirectory names within a directory, sorted alphabetically.
 

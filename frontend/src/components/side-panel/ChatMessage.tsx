@@ -14,7 +14,7 @@ export default function ChatMessage({ message }: ChatMessageProps) {
       <div
         className={`max-w-[85%] rounded-2xl px-4 py-2 text-sm ${
           isUser
-            ? "rounded-br-md bg-blue-600 text-white"
+            ? "rounded-br-md bg-indigo-600 text-white"
             : "rounded-bl-md bg-slate-800 text-slate-200"
         }`}
       >

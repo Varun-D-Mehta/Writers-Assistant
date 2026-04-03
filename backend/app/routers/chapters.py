@@ -4,34 +4,18 @@ from typing import Any
 from fastapi import APIRouter, HTTPException
 from slugify import slugify
 
-from app.schemas.chapter import ChapterCreate, ChapterFull, ChapterMeta
+from app.models.chapter import ChapterCreate, ChapterFull, ChapterMeta
 from app.services.storage import (
     chapter_path,
     ensure_dir,
     list_dirs,
     part_path,
     read_json,
+    word_count,
     write_json,
 )
 
 router = APIRouter()
-
-
-def extract_text(node: dict) -> str:
-    """Extract plain text from a Tiptap JSON document node."""
-    text = ""
-    if node.get("type") == "text":
-        text += node.get("text", "")
-    for child in node.get("content", []):
-        text += extract_text(child)
-        if child.get("type") in ("paragraph", "heading"):
-            text += "\n"
-    return text
-
-
-def word_count(content: dict) -> int:
-    text = extract_text(content)
-    return len(text.split())
 
 
 @router.get("")

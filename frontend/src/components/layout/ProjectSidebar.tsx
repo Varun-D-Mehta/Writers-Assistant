@@ -15,7 +15,7 @@ interface PartWithChapters extends Part {
 function ChevronIcon({ open }: { open: boolean }) {
   return (
     <svg
-      className={`h-3.5 w-3.5 shrink-0 text-slate-500 transition-transform ${open ? "rotate-90" : ""}`}
+      className={`h-3.5 w-3.5 shrink-0 text-slate-600 transition-transform ${open ? "rotate-90" : ""}`}
       fill="none"
       stroke="currentColor"
       viewBox="0 0 24 24"
@@ -168,11 +168,14 @@ export default function ProjectSidebar() {
   const environments = bible?.environment ?? [];
   const objects = bible?.objects ?? [];
 
+  const activeClass = "bg-indigo-500/10 font-medium text-indigo-400";
+  const inactiveClass = "text-slate-400 hover:bg-white/[0.03] hover:text-slate-200";
+
   return (
-    <aside className="flex h-full w-56 flex-col border-r border-slate-700/50 bg-slate-900 text-sm">
+    <aside className="flex h-full w-56 flex-col border-r text-sm surface-1" style={{ borderColor: "var(--border)" }}>
       {/* Project header */}
       {project && (
-        <div className="flex items-center gap-2 border-b border-slate-800 px-3 py-3">
+        <div className="flex items-center gap-2 border-b px-3 py-3" style={{ borderColor: "var(--border)" }}>
           <ProjectLogo logo={project.logo} size="sm" />
           <span className="truncate text-sm font-semibold text-slate-200">
             {project.title}
@@ -185,7 +188,7 @@ export default function ProjectSidebar() {
         <div className="mb-1">
           <button
             onClick={() => toggleSection("bible")}
-            className="flex w-full items-center gap-1.5 px-3 py-1.5 text-left text-xs font-semibold uppercase tracking-wide text-slate-500 hover:text-slate-300"
+            className="flex w-full items-center gap-1.5 px-3 py-1.5 text-left text-[11px] font-semibold uppercase tracking-wider text-slate-500 hover:text-slate-300"
           >
             <ChevronIcon open={expandedSections.bible} />
             Story Bible
@@ -196,13 +199,11 @@ export default function ProjectSidebar() {
               {/* Overview */}
               <Link
                 href={overviewHref}
-                className={`flex w-full items-center gap-2 rounded-md px-3 py-1.5 text-left text-sm ${
-                  isOverviewActive
-                    ? "bg-blue-600/20 font-medium text-blue-400"
-                    : "text-slate-400 hover:bg-slate-800 hover:text-slate-200"
+                className={`flex w-full items-center gap-2 rounded-lg px-3 py-1.5 text-left text-sm transition ${
+                  isOverviewActive ? activeClass : inactiveClass
                 }`}
               >
-                <span className="text-xs">{"\uD83D\uDCCB"}</span>
+                <span className="text-xs opacity-70">{"\uD83D\uDCCB"}</span>
                 Overview
               </Link>
 
@@ -211,19 +212,17 @@ export default function ProjectSidebar() {
                 <div className="group flex items-center">
                   <button
                     onClick={() => toggleBibleSection("characters")}
-                    className="shrink-0 rounded-md p-1.5 text-slate-400 hover:bg-slate-800 hover:text-slate-200"
+                    className="shrink-0 rounded-lg p-1.5 text-slate-500 hover:text-slate-300"
                   >
                     <ChevronIcon open={expandedBibleSections.characters} />
                   </button>
                   <Link
                     href={charactersHref}
-                    className={`flex flex-1 items-center gap-1.5 rounded-md px-1.5 py-1.5 text-left ${
-                      isCharactersActive
-                        ? "bg-blue-600/20 font-medium text-blue-400"
-                        : "text-slate-400 hover:bg-slate-800 hover:text-slate-200"
+                    className={`flex flex-1 items-center gap-1.5 rounded-lg px-1.5 py-1.5 text-left transition ${
+                      isCharactersActive ? activeClass : inactiveClass
                     }`}
                   >
-                    <span className="text-xs">{"\uD83D\uDC64"}</span>
+                    <span className="text-xs opacity-70">{"\uD83D\uDC64"}</span>
                     <span>Characters</span>
                     {characters.length > 0 && (
                       <span className="ml-auto text-[10px] text-slate-600">
@@ -238,16 +237,16 @@ export default function ProjectSidebar() {
                       <Link
                         key={i}
                         href={charactersHref}
-                        className="flex w-full items-center gap-2 rounded-md px-3 py-1 text-left text-xs text-slate-500 hover:bg-slate-800 hover:text-slate-300"
+                        className="flex w-full items-center gap-2 rounded-lg px-3 py-1 text-left text-xs text-slate-500 transition hover:bg-white/[0.03] hover:text-slate-300"
                       >
-                        <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-blue-500/50" />
+                        <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-indigo-400/40" />
                         <span className="truncate">
                           {char.name || "Unnamed"}
                         </span>
                       </Link>
                     ))}
                     {characters.length === 0 && (
-                      <p className="px-3 py-1 text-xs italic text-slate-600">
+                      <p className="px-3 py-1 text-xs italic text-slate-700">
                         None yet
                       </p>
                     )}
@@ -260,19 +259,17 @@ export default function ProjectSidebar() {
                 <div className="group flex items-center">
                   <button
                     onClick={() => toggleBibleSection("events")}
-                    className="shrink-0 rounded-md p-1.5 text-slate-400 hover:bg-slate-800 hover:text-slate-200"
+                    className="shrink-0 rounded-lg p-1.5 text-slate-500 hover:text-slate-300"
                   >
                     <ChevronIcon open={expandedBibleSections.events} />
                   </button>
                   <Link
                     href={eventsHref}
-                    className={`flex flex-1 items-center gap-1.5 rounded-md px-1.5 py-1.5 text-left ${
-                      isEventsActive
-                        ? "bg-blue-600/20 font-medium text-blue-400"
-                        : "text-slate-400 hover:bg-slate-800 hover:text-slate-200"
+                    className={`flex flex-1 items-center gap-1.5 rounded-lg px-1.5 py-1.5 text-left transition ${
+                      isEventsActive ? activeClass : inactiveClass
                     }`}
                   >
-                    <span className="text-xs">{"\u26A1"}</span>
+                    <span className="text-xs opacity-70">{"\u26A1"}</span>
                     <span>Events</span>
                     {events.length > 0 && (
                       <span className="ml-auto text-[10px] text-slate-600">
@@ -287,9 +284,9 @@ export default function ProjectSidebar() {
                       <Link
                         key={i}
                         href={eventsHref}
-                        className="group/ev flex w-full items-center gap-2 rounded-md px-3 py-1 text-left text-xs text-slate-500 hover:bg-slate-800 hover:text-slate-300"
+                        className="group/ev flex w-full items-center gap-2 rounded-lg px-3 py-1 text-left text-xs text-slate-500 transition hover:bg-white/[0.03] hover:text-slate-300"
                       >
-                        <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full border border-blue-500/40 text-[9px] font-bold text-blue-400">
+                        <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full border border-indigo-400/30 text-[9px] font-bold text-indigo-400/70">
                           {i + 1}
                         </span>
                         <span className="truncate">
@@ -298,7 +295,7 @@ export default function ProjectSidebar() {
                       </Link>
                     ))}
                     {events.length === 0 && (
-                      <p className="px-3 py-1 text-xs italic text-slate-600">
+                      <p className="px-3 py-1 text-xs italic text-slate-700">
                         None yet
                       </p>
                     )}
@@ -311,19 +308,17 @@ export default function ProjectSidebar() {
                 <div className="group flex items-center">
                   <button
                     onClick={() => toggleBibleSection("environment")}
-                    className="shrink-0 rounded-md p-1.5 text-slate-400 hover:bg-slate-800 hover:text-slate-200"
+                    className="shrink-0 rounded-lg p-1.5 text-slate-500 hover:text-slate-300"
                   >
                     <ChevronIcon open={expandedBibleSections.environment} />
                   </button>
                   <Link
                     href={environmentHref}
-                    className={`flex flex-1 items-center gap-1.5 rounded-md px-1.5 py-1.5 text-left ${
-                      isEnvironmentActive
-                        ? "bg-blue-600/20 font-medium text-blue-400"
-                        : "text-slate-400 hover:bg-slate-800 hover:text-slate-200"
+                    className={`flex flex-1 items-center gap-1.5 rounded-lg px-1.5 py-1.5 text-left transition ${
+                      isEnvironmentActive ? activeClass : inactiveClass
                     }`}
                   >
-                    <span className="text-xs">{"\uD83C\uDF0D"}</span>
+                    <span className="text-xs opacity-70">{"\uD83C\uDF0D"}</span>
                     <span>Environment</span>
                     {environments.length > 0 && (
                       <span className="ml-auto text-[10px] text-slate-600">
@@ -338,16 +333,16 @@ export default function ProjectSidebar() {
                       <Link
                         key={i}
                         href={environmentHref}
-                        className="flex w-full items-center gap-2 rounded-md px-3 py-1 text-left text-xs text-slate-500 hover:bg-slate-800 hover:text-slate-300"
+                        className="flex w-full items-center gap-2 rounded-lg px-3 py-1 text-left text-xs text-slate-500 transition hover:bg-white/[0.03] hover:text-slate-300"
                       >
-                        <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-green-500/50" />
+                        <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-400/40" />
                         <span className="truncate">
                           {env.name || "Unnamed"}
                         </span>
                       </Link>
                     ))}
                     {environments.length === 0 && (
-                      <p className="px-3 py-1 text-xs italic text-slate-600">
+                      <p className="px-3 py-1 text-xs italic text-slate-700">
                         None yet
                       </p>
                     )}
@@ -360,19 +355,17 @@ export default function ProjectSidebar() {
                 <div className="group flex items-center">
                   <button
                     onClick={() => toggleBibleSection("objects")}
-                    className="shrink-0 rounded-md p-1.5 text-slate-400 hover:bg-slate-800 hover:text-slate-200"
+                    className="shrink-0 rounded-lg p-1.5 text-slate-500 hover:text-slate-300"
                   >
                     <ChevronIcon open={expandedBibleSections.objects} />
                   </button>
                   <Link
                     href={objectsHref}
-                    className={`flex flex-1 items-center gap-1.5 rounded-md px-1.5 py-1.5 text-left ${
-                      isObjectsActive
-                        ? "bg-blue-600/20 font-medium text-blue-400"
-                        : "text-slate-400 hover:bg-slate-800 hover:text-slate-200"
+                    className={`flex flex-1 items-center gap-1.5 rounded-lg px-1.5 py-1.5 text-left transition ${
+                      isObjectsActive ? activeClass : inactiveClass
                     }`}
                   >
-                    <span className="text-xs">{"\uD83D\uDCE6"}</span>
+                    <span className="text-xs opacity-70">{"\uD83D\uDCE6"}</span>
                     <span>Objects</span>
                     {objects.length > 0 && (
                       <span className="ml-auto text-[10px] text-slate-600">
@@ -387,16 +380,16 @@ export default function ProjectSidebar() {
                       <Link
                         key={i}
                         href={objectsHref}
-                        className="flex w-full items-center gap-2 rounded-md px-3 py-1 text-left text-xs text-slate-500 hover:bg-slate-800 hover:text-slate-300"
+                        className="flex w-full items-center gap-2 rounded-lg px-3 py-1 text-left text-xs text-slate-500 transition hover:bg-white/[0.03] hover:text-slate-300"
                       >
-                        <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-amber-500/50" />
+                        <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-amber-400/40" />
                         <span className="truncate">
                           {obj.name || "Unnamed"}
                         </span>
                       </Link>
                     ))}
                     {objects.length === 0 && (
-                      <p className="px-3 py-1 text-xs italic text-slate-600">
+                      <p className="px-3 py-1 text-xs italic text-slate-700">
                         None yet
                       </p>
                     )}
@@ -407,14 +400,14 @@ export default function ProjectSidebar() {
           )}
         </div>
 
-        <div className="mx-3 my-2 border-t border-slate-800" />
+        <div className="mx-3 my-2 border-t" style={{ borderColor: "var(--border)" }} />
 
         {/* -- Manuscript -- */}
         <div>
           <div className="flex items-center justify-between pr-2">
             <button
               onClick={() => toggleSection("book")}
-              className="flex flex-1 items-center gap-1.5 px-3 py-1.5 text-left text-xs font-semibold uppercase tracking-wide text-slate-500 hover:text-slate-300"
+              className="flex flex-1 items-center gap-1.5 px-3 py-1.5 text-left text-[11px] font-semibold uppercase tracking-wider text-slate-500 hover:text-slate-300"
             >
               <ChevronIcon open={expandedSections.book} />
               Manuscript
@@ -426,7 +419,7 @@ export default function ProjectSidebar() {
                 setNewTitle("");
                 setExpandedSections((prev) => ({ ...prev, book: true }));
               }}
-              className="rounded p-0.5 text-slate-600 hover:bg-slate-800 hover:text-blue-400"
+              className="rounded p-0.5 text-slate-700 hover:text-indigo-400"
               title="Add part"
             >
               <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -444,10 +437,10 @@ export default function ProjectSidebar() {
                     <div className="group flex items-center">
                       <button
                         onClick={() => togglePart(part.slug)}
-                        className="flex flex-1 items-center gap-1.5 rounded-md px-3 py-1.5 text-left text-slate-300 hover:bg-slate-800"
+                        className="flex flex-1 items-center gap-1.5 rounded-lg px-3 py-1.5 text-left text-slate-300 transition hover:bg-white/[0.03]"
                       >
                         <ChevronIcon open={isPartExpanded} />
-                        <span className="text-xs">{"\uD83D\uDCC1"}</span>
+                        <span className="text-xs opacity-70">{"\uD83D\uDCC1"}</span>
                         <span className="truncate font-medium">{part.title}</span>
                       </button>
                       <button
@@ -460,7 +453,7 @@ export default function ProjectSidebar() {
                             [part.slug]: true,
                           }));
                         }}
-                        className="mr-2 rounded p-0.5 text-slate-600 opacity-0 transition group-hover:opacity-100 hover:bg-slate-700 hover:text-blue-400"
+                        className="mr-2 rounded p-0.5 text-slate-700 opacity-0 transition group-hover:opacity-100 hover:text-indigo-400"
                         title="Add chapter"
                       >
                         <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -478,13 +471,11 @@ export default function ProjectSidebar() {
                             <Link
                               key={chapter.slug}
                               href={href}
-                              className={`flex items-center gap-2 rounded-md px-3 py-1.5 ${
-                                isActive
-                                  ? "bg-blue-600/20 font-medium text-blue-400"
-                                  : "text-slate-400 hover:bg-slate-800 hover:text-slate-200"
+                              className={`flex items-center gap-2 rounded-lg px-3 py-1.5 transition ${
+                                isActive ? activeClass : inactiveClass
                               }`}
                             >
-                              <span className="text-xs">{"\uD83D\uDCC4"}</span>
+                              <span className="text-xs opacity-70">{"\uD83D\uDCC4"}</span>
                               <span className="truncate">{chapter.title}</span>
                             </Link>
                           );
@@ -500,7 +491,8 @@ export default function ProjectSidebar() {
                               value={newTitle}
                               onChange={(e) => setNewTitle(e.target.value)}
                               placeholder="Chapter title..."
-                              className="w-full rounded border border-slate-600 bg-slate-800 px-2 py-1 text-xs text-slate-200 placeholder-slate-500 focus:border-blue-500 focus:outline-none"
+                              className="w-full rounded-lg border px-2 py-1 text-xs text-slate-200 placeholder-slate-600 focus:outline-none focus:ring-1 focus:ring-indigo-500/50"
+                              style={{ borderColor: "var(--border-strong)", background: "var(--surface-3)" }}
                               onBlur={() => !newTitle && setShowCreateChapter(null)}
                               onKeyDown={(e) =>
                                 e.key === "Escape" && setShowCreateChapter(null)
@@ -511,7 +503,7 @@ export default function ProjectSidebar() {
 
                         {part.chapters.length === 0 &&
                           showCreateChapter !== part.slug && (
-                            <p className="px-3 py-1 text-xs italic text-slate-600">
+                            <p className="px-3 py-1 text-xs italic text-slate-700">
                               No chapters
                             </p>
                           )}
@@ -528,7 +520,8 @@ export default function ProjectSidebar() {
                     value={newTitle}
                     onChange={(e) => setNewTitle(e.target.value)}
                     placeholder="Part title..."
-                    className="w-full rounded border border-slate-600 bg-slate-800 px-2 py-1 text-xs text-slate-200 placeholder-slate-500 focus:border-blue-500 focus:outline-none"
+                    className="w-full rounded-lg border px-2 py-1 text-xs text-slate-200 placeholder-slate-600 focus:outline-none focus:ring-1 focus:ring-indigo-500/50"
+                    style={{ borderColor: "var(--border-strong)", background: "var(--surface-3)" }}
                     onBlur={() => !newTitle && setShowCreatePart(false)}
                     onKeyDown={(e) =>
                       e.key === "Escape" && setShowCreatePart(false)
@@ -538,7 +531,7 @@ export default function ProjectSidebar() {
               )}
 
               {parts.length === 0 && !showCreatePart && (
-                <p className="px-3 py-1.5 text-xs italic text-slate-600">
+                <p className="px-3 py-1.5 text-xs italic text-slate-700">
                   No parts yet
                 </p>
               )}
@@ -548,7 +541,7 @@ export default function ProjectSidebar() {
       </nav>
 
       {/* Export buttons */}
-      <div className="border-t border-slate-800 p-2">
+      <div className="border-t p-2" style={{ borderColor: "var(--border)" }}>
         <div className="flex gap-1">
           <button
             onClick={async () => {
@@ -562,7 +555,7 @@ export default function ProjectSidebar() {
               document.body.removeChild(a);
               URL.revokeObjectURL(a.href);
             }}
-            className="flex-1 rounded px-2 py-1.5 text-[10px] text-slate-500 hover:bg-slate-800 hover:text-slate-300"
+            className="flex-1 rounded-lg px-2 py-1.5 text-[10px] text-slate-500 transition hover:bg-white/[0.03] hover:text-slate-300"
           >
             Export TXT
           </button>
@@ -578,7 +571,7 @@ export default function ProjectSidebar() {
               document.body.removeChild(a);
               URL.revokeObjectURL(a.href);
             }}
-            className="flex-1 rounded px-2 py-1.5 text-[10px] text-slate-500 hover:bg-slate-800 hover:text-slate-300"
+            className="flex-1 rounded-lg px-2 py-1.5 text-[10px] text-slate-500 transition hover:bg-white/[0.03] hover:text-slate-300"
           >
             Export PDF
           </button>

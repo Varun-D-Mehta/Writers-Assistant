@@ -1,9 +1,9 @@
 import { create } from "zustand";
 import { apiFetch } from "@/lib/api";
-import type { Proposal } from "@/lib/types";
+import type { ChapterProposal } from "@/lib/types";
 
 interface ProposalStore {
-  proposals: Proposal[];
+  proposals: ChapterProposal[];
   loadProposals: (
     projectSlug: string,
     partSlug: string,
@@ -21,6 +21,14 @@ interface ProposalStore {
       proposal_type?: string;
     }
   ) => Promise<void>;
+  updateProposalStatus: (
+    projectSlug: string,
+    partSlug: string,
+    chapterSlug: string,
+    proposalId: string,
+    status: "accepted" | "declined"
+  ) => Promise<void>;
+  /** @deprecated Use updateProposalStatus instead */
   removeProposal: (
     projectSlug: string,
     partSlug: string,
@@ -32,17 +40,28 @@ interface ProposalStore {
 export const useProposalStore = create<ProposalStore>((set) => ({
   proposals: [],
   loadProposals: async (projectSlug, partSlug, chapterSlug) => {
-    const data = await apiFetch<Proposal[]>(
+    const data = await apiFetch<ChapterProposal[]>(
       `/api/projects/${projectSlug}/parts/${partSlug}/chapters/${chapterSlug}/proposals`
     );
     set({ proposals: data });
   },
   addProposal: async (projectSlug, partSlug, chapterSlug, data) => {
-    const proposal = await apiFetch<Proposal>(
+    const proposal = await apiFetch<ChapterProposal>(
       `/api/projects/${projectSlug}/parts/${partSlug}/chapters/${chapterSlug}/proposals`,
       { method: "POST", body: JSON.stringify(data) }
     );
     set((state) => ({ proposals: [...state.proposals, proposal] }));
+  },
+  updateProposalStatus: async (projectSlug, partSlug, chapterSlug, proposalId, status) => {
+    const updated = await apiFetch<ChapterProposal>(
+      `/api/projects/${projectSlug}/parts/${partSlug}/chapters/${chapterSlug}/proposals/${proposalId}`,
+      { method: "PATCH", body: JSON.stringify({ status }) }
+    );
+    set((state) => ({
+      proposals: state.proposals.map((p) =>
+        p.id === proposalId ? updated : p
+      ),
+    }));
   },
   removeProposal: async (projectSlug, partSlug, chapterSlug, proposalId) => {
     await apiFetch(

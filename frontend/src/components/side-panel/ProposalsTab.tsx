@@ -26,7 +26,7 @@ interface ProposalsTabProps {
 }
 
 function findAndReplace(editor: Editor, original: string, replacement: string): boolean {
-  const { doc } = editor.state;
+  const { doc, schema } = editor.state;
 
   // Build a position map: for each character in the flat text, store its ProseMirror pos
   const posMap: number[] = [];
@@ -52,8 +52,79 @@ function findAndReplace(editor: Editor, original: string, replacement: string): 
   });
   const fullText = flatChars.join("");
 
-  const index = fullText.indexOf(original);
-  if (index === -1) return false;
+  // Normalize whitespace for fuzzy matching
+  const normalize = (s: string) => s.replace(/\s+/g, " ").trim();
+
+  // Try exact match first
+  let index = fullText.indexOf(original);
+
+  // Fuzzy fallback: normalize whitespace
+  if (index === -1) {
+    const normOriginal = normalize(original);
+    const normFull = normalize(fullText);
+    const normIndex = normFull.indexOf(normOriginal);
+    if (normIndex !== -1) {
+      // Map normalized index back to original text position
+      let normCount = 0;
+      let realIndex = 0;
+      const fullTrimmed = fullText.replace(/^\s+/, "");
+      const leadingSpaces = fullText.length - fullTrimmed.length;
+      realIndex = leadingSpaces;
+
+      for (let i = leadingSpaces; i < fullText.length && normCount < normIndex; i++) {
+        if (fullText[i] === " " || fullText[i] === "\n" || fullText[i] === "\t") {
+          // Skip consecutive whitespace
+          while (i + 1 < fullText.length && /\s/.test(fullText[i + 1])) i++;
+        }
+        normCount++;
+        realIndex = i + 1;
+      }
+
+      // Find end position similarly
+      let normEndCount = 0;
+      let realEnd = realIndex;
+      for (let i = realIndex; i < fullText.length && normEndCount < normOriginal.length; i++) {
+        if (/\s/.test(fullText[i])) {
+          while (i + 1 < fullText.length && /\s/.test(fullText[i + 1])) i++;
+          normEndCount++; // counts as one space in normalized
+        } else {
+          normEndCount++;
+        }
+        realEnd = i + 1;
+      }
+
+      // Use the real positions for the match
+      index = realIndex;
+      const matchedOriginal = fullText.slice(realIndex, realEnd);
+      // Re-verify
+      if (normalize(matchedOriginal) !== normOriginal) {
+        index = -1;
+      } else {
+        // Proceed with realIndex and realEnd
+        const from = posMap[realIndex];
+        const to = posMap[realEnd - 1] + 1;
+        if (from === undefined || from === -1 || to === undefined) return false;
+
+        const { tr } = editor.state;
+        const nodes = createParagraphNodes(schema, replacement);
+        tr.replaceWith(from, to, nodes);
+        editor.view.dispatch(tr);
+        return true;
+      }
+    }
+  }
+
+  if (index === -1) {
+    // Last resort: if original covers >80% of the doc, replace entire content
+    if (normalize(original).length > normalize(fullText).length * 0.8) {
+      const nodes = createParagraphNodes(schema, replacement);
+      const { tr } = editor.state;
+      tr.replaceWith(0, doc.content.size, nodes);
+      editor.view.dispatch(tr);
+      return true;
+    }
+    return false;
+  }
 
   // Map flat text offsets to ProseMirror positions
   const from = posMap[index];
@@ -63,10 +134,29 @@ function findAndReplace(editor: Editor, original: string, replacement: string): 
   if (from === undefined || from === -1 || to === undefined) return false;
 
   const { tr } = editor.state;
-  tr.replaceWith(from, to, editor.state.schema.text(replacement));
+  const nodes = createParagraphNodes(schema, replacement);
+  tr.replaceWith(from, to, nodes);
   editor.view.dispatch(tr);
 
   return true;
+}
+
+/**
+ * Split replacement text on newlines and create proper paragraph nodes
+ * so multi-paragraph replacements preserve document structure.
+ */
+function createParagraphNodes(schema: Editor["state"]["schema"], text: string) {
+  const lines = text.split("\n");
+
+  // Single line — return plain text node
+  if (lines.length === 1) {
+    return schema.text(text);
+  }
+
+  // Multiple lines — create paragraph nodes
+  return lines
+    .filter((line) => line.length > 0)
+    .map((line) => schema.nodes.paragraph.create(null, schema.text(line)));
 }
 
 export default function ProposalsTab({
@@ -77,12 +167,13 @@ export default function ProposalsTab({
   rewriteRequest,
   onRewriteHandled,
 }: ProposalsTabProps) {
-  const { proposals, loadProposals, removeProposal, addProposal } = useProposalStore();
+  const { proposals, loadProposals, updateProposalStatus, addProposal } = useProposalStore();
   const [instruction, setInstruction] = useState("");
   const [proposalType, setProposalType] = useState("rewrite");
   const [requesting, setRequesting] = useState(false);
   const [showForm, setShowForm] = useState(false);
   const [selectedText, setSelectedText] = useState<string | null>(null);
+  const [showHistory, setShowHistory] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   // Handle rewrite requests from the editor toolbar
@@ -113,11 +204,11 @@ export default function ProposalsTab({
       );
     }
 
-    await removeProposal(projectSlug, partSlug, chapterSlug, proposalId);
+    await updateProposalStatus(projectSlug, partSlug, chapterSlug, proposalId, "accepted");
   }
 
   async function handleReject(proposalId: string) {
-    await removeProposal(projectSlug, partSlug, chapterSlug, proposalId);
+    await updateProposalStatus(projectSlug, partSlug, chapterSlug, proposalId, "declined");
   }
 
   async function requestProposal(e: React.FormEvent) {
@@ -168,6 +259,9 @@ export default function ProposalsTab({
     }
   }
 
+  const pending = proposals.filter((p) => p.status === "pending");
+  const history = proposals.filter((p) => p.status !== "pending");
+
   return (
     <div className="flex h-full flex-col">
       {/* Request Proposal */}
@@ -177,15 +271,15 @@ export default function ProposalsTab({
             <select
               value={proposalType}
               onChange={(e) => setProposalType(e.target.value)}
-              className="mb-2 w-full rounded-lg border border-slate-600 bg-slate-800 px-3 py-2 text-xs text-slate-200 focus:border-blue-500 focus:outline-none"
+              className="mb-2 w-full rounded-lg border border-slate-600 bg-slate-800 px-3 py-2 text-xs text-slate-200 focus:border-indigo-500 focus:outline-none"
             >
               {CHAPTER_TYPES.map((t) => (
                 <option key={t.value} value={t.value}>{t.label}</option>
               ))}
             </select>
             {selectedText && (
-              <div className="mb-2 rounded-lg border border-blue-500/30 bg-blue-500/10 p-2">
-                <div className="mb-1 text-[10px] font-medium uppercase tracking-wide text-blue-400">
+              <div className="mb-2 rounded-lg border border-indigo-500/30 bg-indigo-500/8 p-2">
+                <div className="mb-1 text-[10px] font-medium uppercase tracking-wide text-indigo-400">
                   Selected text
                 </div>
                 <p className="line-clamp-3 text-xs italic text-slate-300">
@@ -205,13 +299,13 @@ export default function ProposalsTab({
               }
               rows={2}
               disabled={requesting}
-              className="mb-2 w-full resize-none rounded-lg border border-slate-600 bg-slate-800 px-3 py-2 text-sm text-slate-200 placeholder-slate-500 focus:border-blue-500 focus:outline-none disabled:opacity-50"
+              className="mb-2 w-full resize-none rounded-lg border border-slate-600 bg-slate-800 px-3 py-2 text-sm text-slate-200 placeholder-slate-500 focus:border-indigo-500 focus:outline-none disabled:opacity-50"
             />
             <div className="flex gap-2">
               <button
                 type="submit"
                 disabled={requesting || !instruction.trim()}
-                className="flex-1 rounded-lg bg-blue-600 px-3 py-2 text-xs font-medium text-white hover:bg-blue-500 disabled:opacity-50"
+                className="flex-1 rounded-lg bg-indigo-600 px-3 py-2 text-xs font-medium text-white hover:bg-indigo-500 disabled:opacity-50"
               >
                 {requesting ? (
                   <span className="flex items-center justify-center gap-2">
@@ -225,7 +319,7 @@ export default function ProposalsTab({
               <button
                 type="button"
                 onClick={() => { setShowForm(false); setInstruction(""); setSelectedText(null); }}
-                className="rounded-lg border border-slate-600 px-3 py-2 text-xs text-slate-400 hover:bg-slate-800"
+                className="rounded-lg border border-slate-600 px-3 py-2 text-xs text-slate-400 hover:bg-white/[0.05]"
               >
                 Cancel
               </button>
@@ -234,7 +328,7 @@ export default function ProposalsTab({
         ) : (
           <button
             onClick={() => setShowForm(true)}
-            className="w-full rounded-lg border border-dashed border-slate-600 px-4 py-2.5 text-sm text-slate-400 transition hover:border-blue-500/50 hover:text-blue-400"
+            className="w-full rounded-lg border border-dashed border-slate-600 px-4 py-2.5 text-sm text-slate-400 transition hover:border-indigo-500/50 hover:text-indigo-400"
           >
             + Request Proposal
           </button>
@@ -243,7 +337,7 @@ export default function ProposalsTab({
 
       {/* Proposals list */}
       <div className="flex-1 overflow-y-auto p-3">
-        {proposals.length === 0 ? (
+        {pending.length === 0 && history.length === 0 ? (
           <div className="flex h-full flex-col items-center justify-center">
             <p className="text-sm text-slate-500">No pending proposals</p>
             <p className="mt-1 text-xs text-slate-600">
@@ -252,7 +346,7 @@ export default function ProposalsTab({
           </div>
         ) : (
           <div className="space-y-3">
-            {proposals.map((proposal) => (
+            {pending.map((proposal) => (
               <ProposalCard
                 key={proposal.id}
                 proposal={proposal}
@@ -266,6 +360,47 @@ export default function ProposalsTab({
                 onReject={() => handleReject(proposal.id)}
               />
             ))}
+
+            {/* History toggle */}
+            {history.length > 0 && (
+              <div className="pt-2">
+                <button
+                  onClick={() => setShowHistory(!showHistory)}
+                  className="w-full rounded-lg border border-slate-700 px-3 py-2 text-xs text-slate-400 hover:bg-white/[0.05]"
+                >
+                  {showHistory ? "Hide" : "Show"} History ({history.length})
+                </button>
+                {showHistory && (
+                  <div className="mt-2 space-y-2">
+                    {history.map((proposal) => (
+                      <div
+                        key={proposal.id}
+                        className="rounded-xl border border-slate-700/50 bg-slate-800/30 p-3 opacity-60"
+                      >
+                        <div className="mb-1 flex items-center gap-2">
+                          <span
+                            className={`rounded-full px-2 py-0.5 text-[10px] font-medium ${
+                              proposal.status === "accepted"
+                                ? "bg-green-500/20 text-green-400"
+                                : "bg-red-500/20 text-red-400"
+                            }`}
+                          >
+                            {proposal.status}
+                          </span>
+                          <span className="truncate text-xs text-slate-500">
+                            {proposal.source_label}
+                          </span>
+                        </div>
+                        <p className="line-clamp-2 text-xs text-slate-500">
+                          {proposal.proposed_text.slice(0, 120)}
+                          {proposal.proposed_text.length > 120 ? "..." : ""}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
           </div>
         )}
       </div>

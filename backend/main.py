@@ -1,4 +1,6 @@
 import logging
+import shutil
+from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -6,6 +8,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from config import settings
 from app.routers import projects, parts, chapters, story_bible, chat, context_check, fix, proposals, predict, propose
 from app.routers import export, import_project
+from app.services.storage import projects_root, ensure_dir
 
 logging.basicConfig(
     level=logging.INFO,
@@ -14,7 +17,21 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-app = FastAPI(title="Writers Assistant API")
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    """Application lifespan: clean up project data on shutdown."""
+    logger.info("Writers Assistant API starting up")
+    yield
+    # Shutdown: clear all project data
+    root = projects_root()
+    if root.exists():
+        shutil.rmtree(root)
+        ensure_dir(root)
+        logger.info("Project data cleared on shutdown")
+
+
+app = FastAPI(title="Writers Assistant API", lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,

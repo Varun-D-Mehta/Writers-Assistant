@@ -8,14 +8,14 @@ export default function ProjectLayout({
 }) {
   return (
     <div className="flex h-screen flex-col">
-      <header className="flex items-center border-b border-slate-700/50 bg-slate-900 px-4 py-2">
+      <header className="flex items-center border-b px-4 py-2 surface-1" style={{ borderColor: "var(--border)" }}>
         <Link
           href="/"
-          className="text-sm font-medium text-slate-400 hover:text-blue-400"
+          className="text-sm font-medium text-slate-400 transition hover:text-indigo-400"
         >
           Projects
         </Link>
-        <span className="mx-2 text-slate-600">/</span>
+        <span className="mx-2 text-slate-700">/</span>
       </header>
       <div className="flex flex-1 overflow-hidden">
         <ProjectSidebar />

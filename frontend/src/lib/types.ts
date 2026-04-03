@@ -84,12 +84,29 @@ export interface ContextIssue {
   fix_instruction: string;
 }
 
-export interface Proposal {
+// ── Proposal discriminated union ──────────────────────────────────
+
+export interface BaseProposal {
   id: string;
-  source: "chat" | "context-check";
   source_label: string;
-  original_text: string;
-  proposed_text: string;
   proposal_type: string;
+  status: "pending" | "accepted" | "declined";
   created_at: string;
 }
+
+export interface ChapterProposal extends BaseProposal {
+  kind: "chapter";
+  source: "chat" | "context-check";
+  original_text: string;
+  proposed_text: string;
+}
+
+export interface BibleProposal extends BaseProposal {
+  kind: "bible";
+  section: string;
+  entry_index: number;
+  current_entry: Record<string, unknown>;
+  proposed_entry: Record<string, unknown>;
+}
+
+export type Proposal = ChapterProposal | BibleProposal;

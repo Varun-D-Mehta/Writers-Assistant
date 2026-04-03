@@ -8,8 +8,8 @@ from datetime import datetime, timezone
 from fastapi import APIRouter
 from fastapi.responses import StreamingResponse
 
-from app.schemas.chat import ChatRequest
-from app.services.ai_service import chat_stream
+from app.models.chat import ChatRequest
+from app.services.ai_service import StreamUsage, chat_stream
 from app.services.chat_service import (
     build_chat_messages,
     extract_proposals_from_response,
@@ -17,6 +17,7 @@ from app.services.chat_service import (
     save_chat_history,
 )
 from app.services.storage import chapter_path, write_json
+from app.services.usage_service import record_usage
 
 logger = logging.getLogger(__name__)
 router = APIRouter()
@@ -53,9 +54,12 @@ async def send_chat_message(
 
     async def stream():
         full_response = ""
-        async for token in chat_stream(messages):
-            full_response += token
-            yield f"data: {json.dumps({'token': token})}\n\n"
+        async for chunk in chat_stream(messages):
+            if isinstance(chunk, StreamUsage):
+                record_usage(project_slug, "chat", chunk, chapter_slug=chapter_slug)
+            else:
+                full_response += chunk
+                yield f"data: {json.dumps({'token': chunk})}\n\n"
 
         # Extract proposals from the response
         clean_text, proposals = extract_proposals_from_response(full_response)

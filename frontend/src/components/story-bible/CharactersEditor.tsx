@@ -35,7 +35,7 @@ export default function CharactersEditor({
       {characters.map((char, i) => (
         <div
           key={i}
-          className="rounded-xl border border-slate-700 bg-slate-800/50 p-4"
+          className="rounded-xl border border-slate-700 bg-[var(--surface-2)] p-4"
         >
           <div className="mb-3 flex items-start justify-between">
             <input
@@ -56,7 +56,7 @@ export default function CharactersEditor({
             onChange={(e) => update(i, "description", e.target.value)}
             placeholder="Description..."
             rows={2}
-            className="mb-2 w-full resize-none rounded border border-slate-600 bg-slate-900 px-3 py-2 text-sm text-slate-200 placeholder-slate-500 focus:border-blue-500 focus:outline-none"
+            className="mb-2 w-full resize-none rounded border border-slate-600 bg-slate-900 px-3 py-2 text-sm text-slate-200 placeholder-slate-500 focus:border-indigo-500 focus:outline-none"
           />
           <input
             value={char.traits.join(", ")}
@@ -68,20 +68,20 @@ export default function CharactersEditor({
               )
             }
             placeholder="Traits (comma-separated)"
-            className="mb-2 w-full rounded border border-slate-600 bg-slate-900 px-3 py-2 text-sm text-slate-200 placeholder-slate-500 focus:border-blue-500 focus:outline-none"
+            className="mb-2 w-full rounded border border-slate-600 bg-slate-900 px-3 py-2 text-sm text-slate-200 placeholder-slate-500 focus:border-indigo-500 focus:outline-none"
           />
           <textarea
             value={char.notes}
             onChange={(e) => update(i, "notes", e.target.value)}
             placeholder="Notes..."
             rows={1}
-            className="w-full resize-none rounded border border-slate-600 bg-slate-900 px-3 py-2 text-sm text-slate-200 placeholder-slate-500 focus:border-blue-500 focus:outline-none"
+            className="w-full resize-none rounded border border-slate-600 bg-slate-900 px-3 py-2 text-sm text-slate-200 placeholder-slate-500 focus:border-indigo-500 focus:outline-none"
           />
         </div>
       ))}
       <button
         onClick={addCharacter}
-        className="w-full rounded-xl border-2 border-dashed border-slate-600 py-3 text-sm text-slate-400 hover:border-blue-500/50 hover:text-blue-400"
+        className="w-full rounded-xl border-2 border-dashed border-slate-600 py-3 text-sm text-slate-400 hover:border-indigo-500/50 hover:text-indigo-400"
       >
         + Add Character
       </button>

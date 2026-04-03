@@ -118,7 +118,7 @@ export default function ChapterEditor({
 
   return (
     <div className="flex h-full flex-col">
-      <div className="flex items-center justify-between border-b border-slate-700/50 bg-slate-900 px-4 py-2">
+      <div className="flex items-center justify-between border-b px-4 py-2 surface-1" style={{ borderColor: "var(--border)" }}>
         <EditorToolbar editor={editor} onRequestRewrite={onRequestRewrite} />
         <div className="flex items-center gap-4">
           <span className="text-xs text-slate-500">{wordCount} words</span>
@@ -127,7 +127,7 @@ export default function ChapterEditor({
           </span>
         </div>
       </div>
-      <div className="flex-1 overflow-y-auto bg-slate-900 px-12 py-8">
+      <div className="flex-1 overflow-y-auto px-12 py-8" style={{ background: "var(--surface-1)" }}>
         <EditorContent
           editor={editor}
           className="prose prose-invert prose-lg mx-auto max-w-3xl"

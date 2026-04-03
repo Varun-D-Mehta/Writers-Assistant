@@ -43,3 +43,11 @@ class StoryBible(BaseModel):
     events: list[StoryEvent] = []
     environment: list[Environment] = []
     objects: list[StoryObject] = []
+
+
+# ── Story Bible Chat ──────────────────────────────────────────────
+
+
+class StoryBibleChatRequest(BaseModel):
+    """Request body for story bible chat messages."""
+    message: str
