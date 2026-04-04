@@ -5,3 +5,7 @@ __pycache__/
 *.pyc
 .venv/
 data/projects/
+
+# Credentials / service account keys
+gateway/*-firebase-adminsdk-*.json
+gateway/client_secret_*.json
