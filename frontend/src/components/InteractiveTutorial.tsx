@@ -201,19 +201,24 @@ export default function InteractiveTutorial() {
           [data-tour="${current.highlight}"] {
             position: relative;
             z-index: 40;
-            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.3), 0 0 20px rgba(99, 102, 241, 0.1);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.6), 0 0 0 6px rgba(99, 102, 241, 0.25), 0 0 30px rgba(99, 102, 241, 0.3);
             border-radius: 8px;
+            animation: tutorial-pulse 2s ease-in-out infinite;
+          }
+          @keyframes tutorial-pulse {
+            0%, 100% { box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.6), 0 0 0 6px rgba(99, 102, 241, 0.25), 0 0 30px rgba(99, 102, 241, 0.3); }
+            50% { box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.8), 0 0 0 8px rgba(99, 102, 241, 0.35), 0 0 40px rgba(99, 102, 241, 0.4); }
           }
         `}</style>
       )}
 
-      {/* Tutorial panel — fixed bottom right */}
+      {/* Tutorial panel — fixed center */}
       <div
-        className="fixed bottom-4 right-4 z-50 w-96 rounded-2xl border shadow-2xl"
+        className="fixed left-1/2 top-1/2 z-50 w-[420px] -translate-x-1/2 -translate-y-1/2 rounded-2xl border shadow-2xl"
         style={{
-          borderColor: "rgba(99, 102, 241, 0.2)",
+          borderColor: "rgba(99, 102, 241, 0.25)",
           background: "linear-gradient(180deg, #0d1528 0%, #111a30 100%)",
-          boxShadow: "0 25px 60px -12px rgba(0, 0, 0, 0.5), 0 0 40px -10px rgba(99, 102, 241, 0.1)",
+          boxShadow: "0 25px 80px -12px rgba(0, 0, 0, 0.7), 0 0 60px -10px rgba(99, 102, 241, 0.15)",
         }}
       >
         {/* Progress bar */}
