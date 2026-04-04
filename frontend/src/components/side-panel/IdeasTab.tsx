@@ -170,6 +170,7 @@ export default function IdeasTab({
   const { ideas, loadIdeas, updateIdeaStatus, addIdea } = useIdeaStore();
   const [instruction, setInstruction] = useState("");
   const [ideaType, setIdeaType] = useState("rewrite");
+  const [tryHarder, setTryHarder] = useState(false);
   const [requesting, setRequesting] = useState(false);
   const [showForm, setShowForm] = useState(false);
   const [selectedText, setSelectedText] = useState<string | null>(null);
@@ -231,15 +232,17 @@ export default function IdeasTab({
       }
 
       const result = await apiFetch<{ original: string; proposed: string }>(
-        "/api/propose",
+        "/api/ideate",
         {
           method: "POST",
           body: JSON.stringify({
+            kind: "chapter",
             project_slug: projectSlug,
             chapter_content: chapterText,
             instruction: instruction.trim(),
             proposal_type: ideaType,
             selected_text: selText,
+            try_harder: tryHarder,
           }),
         }
       );
@@ -301,19 +304,42 @@ export default function IdeasTab({
               disabled={requesting}
               className="mb-2 w-full resize-none rounded-lg border border-slate-600 bg-slate-800 px-3 py-2 text-sm text-slate-200 placeholder-slate-500 focus:border-indigo-500 focus:outline-none disabled:opacity-50"
             />
+            {/* Try Harder toggle */}
+            <label className="mb-2 flex items-center gap-2 cursor-pointer">
+              <button
+                type="button"
+                onClick={() => setTryHarder(!tryHarder)}
+                className={`relative h-5 w-9 rounded-full transition-colors ${
+                  tryHarder ? "bg-amber-500" : "bg-slate-700"
+                }`}
+              >
+                <span
+                  className={`absolute top-0.5 left-0.5 h-4 w-4 rounded-full bg-white transition-transform ${
+                    tryHarder ? "translate-x-4" : ""
+                  }`}
+                />
+              </button>
+              <span className={`text-xs font-medium ${tryHarder ? "text-amber-400" : "text-slate-500"}`}>
+                Try Harder {tryHarder && "🔥"}
+              </span>
+            </label>
             <div className="flex gap-2">
               <button
                 type="submit"
                 disabled={requesting || !instruction.trim()}
-                className="flex-1 rounded-lg bg-indigo-600 px-3 py-2 text-xs font-medium text-white hover:bg-indigo-500 disabled:opacity-50"
+                className={`flex-1 rounded-lg px-3 py-2 text-xs font-medium text-white disabled:opacity-50 ${
+                  tryHarder
+                    ? "bg-amber-600 hover:bg-amber-500"
+                    : "bg-indigo-600 hover:bg-indigo-500"
+                }`}
               >
                 {requesting ? (
                   <span className="flex items-center justify-center gap-2">
                     <span className="h-3 w-3 animate-spin rounded-full border-2 border-white border-t-transparent" />
-                    {ideaType === "fetch_info" ? "Searching & generating..." : "Generating..."}
+                    {tryHarder ? "Thinking harder..." : ideaType === "fetch_info" ? "Searching..." : "Generating..."}
                   </span>
                 ) : (
-                  "Generate Idea"
+                  tryHarder ? "Generate Idea 🔥" : "Generate Idea"
                 )}
               </button>
               <button

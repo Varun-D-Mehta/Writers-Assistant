@@ -59,7 +59,7 @@ export default function StoryBibleIdeasTab({
         current_entry: Record<string, unknown>;
         proposed_entry: Record<string, unknown>;
         proposal_type: string;
-      }>(`/api/projects/${projectSlug}/story-bible/propose`, {
+      }>(`/api/projects/${projectSlug}/story-bible/ideate`, {
         method: "POST",
         body: JSON.stringify({
           section,

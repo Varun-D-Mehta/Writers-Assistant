@@ -19,7 +19,7 @@ async def predict(body: PredictRequest) -> PredictResponse:
     logger.info("Generating prediction for project: %s", body.project_slug)
 
     messages = build_predict_messages(body.project_slug, body.text_before_cursor)
-    result = await chat_completion(messages, model="gpt-4o-mini")
+    result = await chat_completion(messages, model="gpt-5.4-mini")
     record_usage(body.project_slug, "predict", result)
 
     return PredictResponse(prediction=result.content.strip())

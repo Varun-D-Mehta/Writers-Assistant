@@ -30,8 +30,8 @@ async def generate_idea(body: IdeaRequest) -> IdeaResponse:
     logger.info("Generating %s idea (kind=%s) for project %s",
                 body.idea_type, body.kind, body.project_slug)
 
-    messages = build_ideate_messages(body)
-    result = await json_completion(messages)
+    messages, temp_override = build_ideate_messages(body)
+    result = await json_completion(messages, temperature=temp_override)
     record_usage(body.project_slug, "ideate", result)
     data = json.loads(result.content)
 

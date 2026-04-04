@@ -22,6 +22,7 @@ class BaseIdeaRequest(BaseModel):
     project_slug: str
     instruction: str
     idea_type: str = "rewrite"
+    try_harder: bool = False
 
 
 class ChapterIdeaRequest(BaseIdeaRequest):

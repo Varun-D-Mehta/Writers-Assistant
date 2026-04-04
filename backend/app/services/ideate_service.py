@@ -15,12 +15,24 @@ from app.services.storage import read_json, story_bible_path
 
 logger = logging.getLogger(__name__)
 
+TRY_HARDER_SUFFIX = """
 
-def build_ideate_messages(body: IdeaRequest) -> list[dict]:
+## IMPORTANT: Maximum Effort Mode
+You are in "Try Harder" mode. This means:
+- Take significantly MORE time to think through the edit
+- Produce LONGER, MORE DETAILED, MORE CREATIVE output
+- Consider multiple approaches before settling on the best one
+- Add richer sensory details, deeper character psychology, more nuanced prose
+- Don't settle for the first acceptable version — push for exceptional quality
+- If rewriting, make it dramatically better, not just marginally improved
+"""
+
+
+def build_ideate_messages(body: IdeaRequest) -> tuple[list[dict], float | None]:
     """Build AI messages for idea generation.
 
-    Handles both chapter and bible idea requests based on
-    the discriminated union type.
+    Returns (messages, temperature_override).
+    temperature_override is None for normal mode, 0.9 for try_harder.
     """
     bible_path = story_bible_path(body.project_slug) / "story_bible.json"
     bible_data = read_json(bible_path, {
@@ -70,7 +82,15 @@ def build_ideate_messages(body: IdeaRequest) -> list[dict]:
             search_context=search_context,
         )
 
-    return [
+    # Try harder: append extra instructions + higher temperature
+    if body.try_harder:
+        system_prompt += TRY_HARDER_SUFFIX
+        logger.info("Try Harder mode enabled for ideate request")
+
+    messages = [
         {"role": "system", "content": system_prompt},
         {"role": "user", "content": body.instruction},
     ]
+
+    temperature = 0.9 if body.try_harder else None
+    return messages, temperature
