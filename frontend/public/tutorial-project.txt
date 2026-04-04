@@ -1,0 +1,125 @@
+============================================================
+  The Clockmaker's Daughter
+  Writers Assistant Export
+============================================================
+
+[STORY BIBLE]
+
+[OVERVIEW]
+  Title: The Clockmaker's Daughter
+  Genre: Fantasy / Mystery
+  Setting: Victorian-era London with hidden magical districts
+  Time Period: 1883
+  Point of View: Third person limited
+  Tone & Style: Atmospheric, lyrical, with undercurrents of suspense
+  Synopsis: When master clockmaker Elias Thorne dies under mysterious circumstances, his estranged daughter Ada returns to London to claim his workshop — only to discover that her father's clocks don't just tell time. They hold memories, secrets, and doorways to places that shouldn't exist.
+
+[CHARACTERS]
+  Character: Ada Thorne
+    Description: A 26-year-old woman with ink-stained fingers and her father's
+      sharp eyes. She left London at 18 after a bitter argument with Elias
+      and spent eight years restoring antique instruments in Edinburgh.
+      Practical and skeptical, she initially dismisses the magical properties
+      of her father's clocks as grief-induced imagination.
+    Traits: resourceful, stubborn, mechanically gifted, emotionally guarded
+    Notes: Key arc: from skeptic to believer. Her mechanical skills are
+      the bridge — she understands the clockwork but must learn the magic.
+
+  Character: Silas Blackwood
+    Description: A tall, gaunt man who appears to be in his 40s but speaks of
+      events from centuries past. He was Elias's closest friend and the only
+      other person who knows the true nature of the clocks. Runs an antiquarian
+      bookshop that serves as a front for the Horologists' Guild.
+    Traits: enigmatic, loyal, melancholic, dry-witted
+    Notes: Mentor figure. Knows more than he reveals. His own clock is
+      running down — a plot point revealed in Act 3.
+
+  Character: Inspector Clement Marsh
+    Description: A Scotland Yard detective assigned to investigate Elias's death.
+      Methodical and persistent, he senses something unusual about the case
+      but can't articulate what. Follows evidence wherever it leads, even
+      into impossible places.
+    Traits: analytical, dogged, honest, increasingly unsettled
+    Notes: Represents the rational world pushing against the magical one.
+      Potential ally or antagonist depending on how Ada handles him.
+
+[EVENTS]
+  Event 1: The Death of Elias Thorne
+    Description: Elias is found dead in his workshop, slumped over an unfinished
+      clock. The coroner rules natural causes, but Silas notices the clock's
+      hands are spinning backwards and the workshop smells of ozone — signs
+      of a temporal fracture.
+
+  Event 2: Ada's Return to London
+    Description: Ada arrives at Paddington Station on a grey November morning.
+      She hasn't been to London in eight years. The solicitor's letter said
+      only that her father left everything to her. She expects a dusty workshop
+      and painful memories. She gets both, plus something she never expected.
+
+  Event 3: The First Clock Speaks
+    Description: While cataloguing her father's inventory, Ada winds a small
+      brass carriage clock. Instead of ticking, it plays a memory — her
+      father's voice, speaking words he said the day she left. Ada drops the
+      clock. It doesn't break. It keeps playing.
+
+[ENVIRONMENT]
+  Setting: Thorne's Clockwork Shop
+    Description: A narrow three-story building on Cavendish Row, wedged between
+      a tailor and a chemist. The ground floor is the public shop, cluttered
+      with grandfather clocks, pocket watches, and maritime chronometers. The
+      workshop is in the basement, lit by gas lamps and filled with brass
+      gears, crystal pendulums, and tools that have no names in any catalogue.
+      The top floor was Elias's living quarters, now covered in dust.
+    Climate: Damp London cold seeps through the walls
+    Atmosphere: The constant ticking of a hundred clocks creates a living pulse
+
+  Setting: The Horologists' Guild
+    Description: Hidden behind an unmarked door in a Clerkenwell alley, the Guild
+      occupies a converted chapel. Inside, time behaves strangely — clocks on
+      different walls show different hours, and members occasionally flicker
+      as if they're not entirely present. The Guild has existed since the 14th
+      century, though its records only go back to the Great Fire of 1666,
+      when the previous archives were lost (or deliberately destroyed).
+    Members: Currently seven, down from a historical peak of thirteen
+    Purpose: Maintaining the temporal barriers between London and its echoes
+
+[OBJECTS]
+  Object: The Meridian Clock
+    Description: An ornate astronomical clock that Elias spent the last three
+      years of his life building. It has thirteen faces instead of twelve,
+      with the thirteenth showing a location rather than a time. The case is
+      made of blackened steel and glass, with internal mechanisms visible —
+      gears that seem to move in impossible directions simultaneously.
+    Significance: The central MacGuffin. Completing the Meridian Clock is the
+      key to sealing the temporal fractures that are spreading across London.
+    Notes: Currently incomplete. The final component — a crystal oscillator
+      tuned to a specific frequency — was not among Elias's possessions.
+      Ada must find or create it.
+
+[MANUSCRIPT]
+
+[PART: Act One — The Inheritance]
+
+[CHAPTER: The Letter]
+
+The letter arrived on a Tuesday, which Ada would later consider appropriate. Tuesdays were her father's favourite day — the day he claimed the week's machinery truly began to turn. Mondays were just the winding, he'd say. Tuesdays were when you heard the first tick.
+
+She read it standing at her workbench in Edinburgh, a half-restored astrolabe pinned under her left hand. The solicitor's handwriting was precise and impersonal: Elias Thorne, deceased. Estate and effects. Her presence requested at the earliest convenience.
+
+Ada set the letter down beside the astrolabe and stared at them both. Two relics from different centuries, equally distant from her present life.
+
+She hadn't spoken to her father in eight years. Eight years since she'd stormed out of the workshop on Cavendish Row, swearing she'd never touch another clock as long as she lived. She'd kept half that promise — she'd left London and never returned. But she couldn't stop working with her hands. The instruments changed. The precision didn't.
+
+---
+
+[CHAPTER: Cavendish Row]
+
+London smelled the same. That was the first thing Ada noticed stepping off the train at Paddington — the particular blend of coal smoke, horse dung, and river fog that no amount of progress seemed able to scrub away. Edinburgh had its own smell, cleaner and sharper, flavoured with sea salt and brewing hops. London's smell was older, heavier, like something that had been accumulating for centuries.
+
+The cab ride to Cavendish Row took twenty minutes through streets Ada half-remembered. Some landmarks held steady — the British Museum's iron fence, the plane trees along Russell Square — while others had changed entirely. A new department store where a bookshop had been. An electric lamp where gas had burned. The city was editing itself, page by page, and Ada had missed several chapters.
+
+Number 14 Cavendish Row looked smaller than she remembered. The brass plaque still read THORNE & SON — HOROLOGICAL INSTRUMENTS, though there had never been a son. Just a daughter who'd left.
+
+She stood on the pavement with her single trunk and looked up at the dark windows. The shop was closed, of course. Had been since Elias died three weeks ago. The solicitor had arranged for a neighbour to wind the clocks — a detail that struck Ada as both practical and deeply sad. Someone had to keep them alive. Even now, even with their maker gone.
+
+---
