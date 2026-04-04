@@ -6,6 +6,7 @@ import { apiFetch } from "@/lib/api";
 import { API_BASE } from "@/lib/constants";
 import type { Project } from "@/lib/types";
 import ProjectLogo from "@/components/ui/ProjectLogo";
+import WelcomeModal from "@/components/WelcomeModal";
 
 const PROGRESS_STEPS: Record<string, { pct: number; label: string }> = {
   extract: { pct: 10, label: "Reading file..." },
@@ -124,6 +125,7 @@ export default function HomePage() {
 
   return (
     <div className="mx-auto max-w-4xl px-6 py-16">
+      <WelcomeModal />
       <div className="mb-10 flex items-end justify-between">
         <div>
           <h1 className="text-3xl font-bold tracking-tight text-slate-100">

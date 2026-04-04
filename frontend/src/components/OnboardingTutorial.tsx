@@ -4,14 +4,14 @@ import { useState, useEffect } from "react";
 import { Joyride, STATUS } from "react-joyride";
 import type { Step, EventData } from "react-joyride";
 
-const STORAGE_KEY = "wa_onboarding_complete";
+const STORAGE_KEY = "wa_workspace_tour_complete";
 
 const STEPS: Step[] = [
   {
     target: "body",
     placement: "center",
-    title: "Welcome to Writers Assistant!",
-    content: "Let's take a quick tour of the workspace. This will only take a minute.",
+    title: "Your Workspace",
+    content: "This is your project workspace. Let's walk through the key areas.",
   },
   {
     target: '[data-tour="story-bible"]',
@@ -58,8 +58,8 @@ const STEPS: Step[] = [
   {
     target: "body",
     placement: "center",
-    title: "You're all set!",
-    content: "Start by adding entries to your Story Bible, then create your first chapter. Happy writing!",
+    title: "You're ready!",
+    content: "Start by adding entries to your Story Bible, then create chapters and write. The AI gets smarter as you add more context.",
   },
 ];
 
@@ -69,9 +69,12 @@ export default function OnboardingTutorial() {
 
   useEffect(() => {
     setMounted(true);
-    const completed = localStorage.getItem(STORAGE_KEY);
-    if (!completed) {
-      setTimeout(() => setRun(true), 1000);
+    // Only show if welcome was shown (user is past home page) but workspace tour hasn't run
+    const welcomeShown = localStorage.getItem("wa_welcome_shown");
+    const tourDone = localStorage.getItem(STORAGE_KEY);
+    if (welcomeShown && !tourDone) {
+      // Wait for sidebar and panel to render
+      setTimeout(() => setRun(true), 1500);
     }
   }, []);
 
