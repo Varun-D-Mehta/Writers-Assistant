@@ -2,9 +2,23 @@
 
 import json
 import os
+import re
 from pathlib import Path
 
 from config import settings
+
+# Slug validation: only alphanumeric, hyphens, underscores
+_SLUG_PATTERN = re.compile(r"^[a-zA-Z0-9][a-zA-Z0-9_-]*$")
+
+
+def _validate_slug(slug: str, label: str = "slug") -> str:
+    """Validate a slug to prevent path traversal attacks.
+
+    Raises ValueError if the slug contains dangerous characters.
+    """
+    if not slug or not _SLUG_PATTERN.match(slug):
+        raise ValueError(f"Invalid {label}: must be alphanumeric with hyphens/underscores")
+    return slug
 
 
 def data_root() -> Path:
@@ -18,41 +32,29 @@ def projects_root() -> Path:
 
 
 def project_path(project_slug: str) -> Path:
-    """Return the directory path for a specific project.
-
-    Args:
-        project_slug: The project identifier.
-    """
-    return projects_root() / project_slug
+    """Return the directory path for a specific project."""
+    _validate_slug(project_slug, "project_slug")
+    path = projects_root() / project_slug
+    # Double-check resolved path is inside projects root
+    if not str(path.resolve()).startswith(str(projects_root().resolve())):
+        raise ValueError("Invalid project path")
+    return path
 
 
 def story_bible_path(project_slug: str) -> Path:
-    """Return the story bible directory path for a project.
-
-    Args:
-        project_slug: The project identifier.
-    """
+    """Return the story bible directory path for a project."""
     return project_path(project_slug) / "story-bible"
 
 
 def part_path(project_slug: str, part_slug: str) -> Path:
-    """Return the directory path for a specific part within a project.
-
-    Args:
-        project_slug: The project identifier.
-        part_slug: The part identifier.
-    """
+    """Return the directory path for a specific part within a project."""
+    _validate_slug(part_slug, "part_slug")
     return project_path(project_slug) / "parts" / part_slug
 
 
 def chapter_path(project_slug: str, part_slug: str, chapter_slug: str) -> Path:
-    """Return the directory path for a specific chapter within a part.
-
-    Args:
-        project_slug: The project identifier.
-        part_slug: The part identifier.
-        chapter_slug: The chapter identifier.
-    """
+    """Return the directory path for a specific chapter within a part."""
+    _validate_slug(chapter_slug, "chapter_slug")
     return part_path(project_slug, part_slug) / "chapters" / chapter_slug
 
 
@@ -93,20 +95,23 @@ def write_json(path: Path, data) -> None:
         json.dump(data, f, indent=2, default=str)
 
 
-def extract_tiptap_text(node: dict) -> str:
+def extract_tiptap_text(node: dict, _depth: int = 0) -> str:
     """Extract plain text from a Tiptap JSON document.
 
     Args:
         node: A Tiptap document node dict.
+        _depth: Internal recursion depth counter (max 50).
 
     Returns:
         Plain text content extracted from the document.
     """
+    if _depth > 50:
+        return ""
     text = ""
     if node.get("type") == "text":
         text += node.get("text", "")
     for child in node.get("content", []):
-        text += extract_tiptap_text(child)
+        text += extract_tiptap_text(child, _depth + 1)
         if child.get("type") in ("paragraph", "heading"):
             text += "\n"
     return text

@@ -3,8 +3,10 @@
 import json
 import logging
 
-from fastapi import APIRouter, UploadFile, File
+from fastapi import APIRouter, HTTPException, UploadFile, File
 from fastapi.responses import StreamingResponse
+
+MAX_UPLOAD_SIZE = 50 * 1024 * 1024  # 50 MB
 
 from app.services.import_service import (
     create_project_from_data,
@@ -29,6 +31,9 @@ async def import_project_from_file(file: UploadFile = File(...)):
         # Step 1: Read and extract text
         yield _sse({"step": "extract", "message": "Reading file..."})
         content = await file.read()
+        if len(content) > MAX_UPLOAD_SIZE:
+            yield _sse({"error": f"File too large ({len(content) // 1024 // 1024}MB). Maximum is 50MB."})
+            return
         filename = file.filename or ""
 
         if filename.lower().endswith(".pdf"):
