@@ -63,10 +63,10 @@ class BaseIdeaResponse(BaseModel):
 
 
 class ChapterIdeaResponse(BaseIdeaResponse):
-    """Response from chapter idea generation — original/ideated text pair."""
+    """Response from chapter idea generation — original/proposed text pair."""
     kind: Literal["chapter"] = "chapter"
     original: str
-    ideated: str
+    proposed: str
 
 
 class BibleIdeaResponse(BaseIdeaResponse):

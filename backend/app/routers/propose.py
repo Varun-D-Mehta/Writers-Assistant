@@ -40,12 +40,12 @@ async def generate_idea(body: IdeaRequest) -> IdeaResponse:
             section=body.section,
             entry_index=body.entry_index,
             current_entry=data.get("current_entry", {}),
-            ideated_entry=data.get("ideated_entry", data),
+            proposed_entry=data.get("proposed_entry", data),
             idea_type=body.idea_type,
         )
     else:
         return ChapterIdeaResponse(
             original=data.get("original", ""),
-            ideated=data.get("ideated", ""),
+            proposed=data.get("proposed", ""),
             idea_type=body.idea_type,
         )
