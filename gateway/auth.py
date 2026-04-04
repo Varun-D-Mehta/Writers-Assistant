@@ -128,11 +128,12 @@ async def handle_google_callback(request: Request):
     jwt_token = create_jwt(user_data["user_id"], session_id)
 
     response = RedirectResponse(url=settings.frontend_url)
+    is_localhost = "localhost" in settings.frontend_url
     response.set_cookie(
         key="wa_token",
         value=jwt_token,
         httponly=True,
-        secure=True,
+        secure=not is_localhost,
         samesite="lax",
         max_age=settings.jwt_expiry_hours * 3600,
     )
@@ -166,7 +167,7 @@ async def handle_me(request: Request):
 
 
 async def handle_logout(request: Request):
-    """Clear auth cookie and signal session end."""
-    response = JSONResponse({"ok": True})
-    response.delete_cookie("wa_token")
+    """Clear auth cookie and redirect to website."""
+    response = RedirectResponse(url=settings.frontend_url)
+    response.delete_cookie("wa_token", path="/", domain=None)
     return response

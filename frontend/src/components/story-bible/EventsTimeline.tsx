@@ -13,11 +13,7 @@ export default function EventsTimeline({
     onChange([...events, { name: "", description: "", chapter_refs: [] }]);
   }
 
-  function update(
-    index: number,
-    field: keyof StoryEvent,
-    value: string | string[]
-  ) {
+  function update(index: number, field: "name" | "description", value: string) {
     const updated = [...events];
     updated[index] = { ...updated[index], [field]: value };
     onChange(updated);
@@ -45,35 +41,43 @@ export default function EventsTimeline({
     <div>
       {/* Timeline */}
       <div className="relative">
-        {/* Vertical timeline line */}
         {events.length > 0 && (
-          <div className="absolute left-[19px] top-6 bottom-6 w-px bg-gradient-to-b from-blue-500/60 via-blue-500/30 to-transparent" />
+          <div
+            className="absolute left-[19px] bottom-6 top-6 w-px"
+            style={{ background: "linear-gradient(180deg, rgba(99, 102, 241, 0.4) 0%, transparent 100%)" }}
+          />
         )}
 
-        <div className="space-y-0">
+        <div className="space-y-3">
           {events.map((event, i) => (
-            <div key={i} className="relative flex gap-4 pb-6">
+            <div key={i} className="relative flex gap-4 pb-3">
               {/* Timeline node */}
               <div className="relative z-10 flex flex-col items-center">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border-2 border-indigo-500/50 bg-slate-900 text-sm font-bold text-indigo-400 shadow-lg shadow-blue-500/10">
+                <div
+                  className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border text-sm font-bold text-indigo-400"
+                  style={{ borderColor: "rgba(99, 102, 241, 0.3)", background: "var(--surface-1)" }}
+                >
                   {i + 1}
                 </div>
               </div>
 
               {/* Event card */}
-              <div className="flex-1 rounded-xl border border-slate-700 bg-[var(--surface-2)] p-4">
-                <div className="mb-2 flex items-start justify-between">
+              <div
+                className="flex-1 rounded-xl border p-5"
+                style={{ borderColor: "var(--border)", background: "var(--surface-2)" }}
+              >
+                <div className="mb-4 flex items-start justify-between">
                   <input
                     value={event.name}
                     onChange={(e) => update(i, "name", e.target.value)}
                     placeholder="Event name"
-                    className="flex-1 bg-transparent text-base font-semibold text-slate-100 placeholder-slate-500 focus:outline-none"
+                    className="flex-1 bg-transparent text-base font-semibold text-slate-100 placeholder-slate-600 focus:outline-none"
                   />
-                  <div className="flex items-center gap-1 ml-2">
+                  <div className="ml-2 flex items-center gap-0.5">
                     <button
                       onClick={() => moveUp(i)}
                       disabled={i === 0}
-                      className="rounded p-1 text-slate-500 hover:bg-white/[0.07] hover:text-slate-300 disabled:opacity-30"
+                      className="rounded-lg p-1.5 text-slate-600 transition hover:bg-white/[0.05] hover:text-slate-300 disabled:opacity-20"
                       title="Move up"
                     >
                       <svg className="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -83,7 +87,7 @@ export default function EventsTimeline({
                     <button
                       onClick={() => moveDown(i)}
                       disabled={i === events.length - 1}
-                      className="rounded p-1 text-slate-500 hover:bg-white/[0.07] hover:text-slate-300 disabled:opacity-30"
+                      className="rounded-lg p-1.5 text-slate-600 transition hover:bg-white/[0.05] hover:text-slate-300 disabled:opacity-20"
                       title="Move down"
                     >
                       <svg className="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -92,7 +96,7 @@ export default function EventsTimeline({
                     </button>
                     <button
                       onClick={() => remove(i)}
-                      className="rounded p-1 text-slate-500 hover:bg-white/[0.07] hover:text-red-400"
+                      className="rounded-lg p-1.5 text-slate-600 transition hover:bg-red-500/10 hover:text-red-400"
                       title="Remove"
                     >
                       <svg className="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -101,38 +105,30 @@ export default function EventsTimeline({
                     </button>
                   </div>
                 </div>
-                <textarea
-                  value={event.description}
-                  onChange={(e) => update(i, "description", e.target.value)}
-                  placeholder="What happens in this event..."
-                  rows={2}
-                  className="mb-2 w-full resize-none rounded border border-slate-600 bg-slate-900 px-3 py-2 text-sm text-slate-200 placeholder-slate-500 focus:border-indigo-500 focus:outline-none"
-                />
-                <input
-                  value={event.chapter_refs.join(", ")}
-                  onChange={(e) =>
-                    update(
-                      i,
-                      "chapter_refs",
-                      e.target.value
-                        .split(",")
-                        .map((r) => r.trim())
-                        .filter(Boolean)
-                    )
-                  }
-                  placeholder="Related chapters (comma-separated)"
-                  className="w-full rounded border border-slate-600 bg-slate-900 px-3 py-2 text-xs text-slate-300 placeholder-slate-500 focus:border-indigo-500 focus:outline-none"
-                />
+
+                <div>
+                  <label className="mb-1.5 block text-[11px] font-medium uppercase tracking-wider text-slate-500">
+                    What happens
+                  </label>
+                  <textarea
+                    value={event.description}
+                    onChange={(e) => update(i, "description", e.target.value)}
+                    placeholder="Describe this event and its significance to the story..."
+                    rows={3}
+                    className="w-full resize-none rounded-lg border px-3 py-2.5 text-sm leading-relaxed text-slate-200 placeholder-slate-600 transition focus:outline-none focus:ring-1 focus:ring-indigo-500/50"
+                    style={{ borderColor: "var(--border)", background: "var(--surface-1)" }}
+                  />
+                </div>
               </div>
             </div>
           ))}
         </div>
       </div>
 
-      {/* Add event button */}
       <button
         onClick={addEvent}
-        className="mt-2 flex w-full items-center justify-center gap-2 rounded-xl border-2 border-dashed border-slate-600 py-3 text-sm text-slate-400 hover:border-indigo-500/50 hover:text-indigo-400"
+        className="mt-3 flex w-full items-center justify-center gap-2 rounded-xl border-2 border-dashed py-4 text-sm text-slate-500 transition hover:border-indigo-500/30 hover:text-indigo-400"
+        style={{ borderColor: "var(--border)" }}
       >
         <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />

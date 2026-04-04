@@ -62,7 +62,7 @@ async def auth_me(request: Request):
     return await handle_me(request)
 
 
-@app.post("/auth/logout")
+@app.api_route("/auth/logout", methods=["GET", "POST"])
 async def auth_logout(request: Request):
     token = request.cookies.get("wa_token")
     if token:
