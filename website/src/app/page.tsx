@@ -6,7 +6,8 @@ export const metadata: Metadata = {
   alternates: { canonical: "https://writersassistant.com" },
 };
 
-const APP_URL = "https://app.writersassistant.com";
+const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
+const LOGIN_URL = process.env.NEXT_PUBLIC_LOGIN_URL || "http://localhost:9000/auth/google";
 
 const FEATURES = [
   {
@@ -105,7 +106,7 @@ export default function HomePage() {
             FAQ
           </a>
           <a
-            href={APP_URL}
+            href={LOGIN_URL}
             className="rounded-lg px-5 py-2 text-sm font-medium text-white transition hover:opacity-90"
             style={{ background: "linear-gradient(135deg, var(--gold) 0%, #c49b2a 100%)" }}
           >
@@ -146,7 +147,7 @@ export default function HomePage() {
           style={{ animationDelay: "0.3s" }}
         >
           <a
-            href={APP_URL}
+            href={LOGIN_URL}
             className="rounded-xl px-10 py-4 text-sm font-semibold text-white shadow-xl transition hover:shadow-2xl"
             style={{
               background: "linear-gradient(135deg, var(--gold) 0%, #c49b2a 100%)",
@@ -307,7 +308,7 @@ export default function HomePage() {
             View All Plans
           </a>
           <a
-            href={APP_URL}
+            href={LOGIN_URL}
             className="rounded-xl px-10 py-4 text-sm font-semibold text-white transition hover:opacity-90"
             style={{ background: "linear-gradient(135deg, var(--gold) 0%, #c49b2a 100%)" }}
           >
@@ -369,7 +370,7 @@ export default function HomePage() {
           Join writers who use AI to stay consistent and productive across complex narratives.
         </p>
         <a
-          href={APP_URL}
+          href={LOGIN_URL}
           className="mt-10 inline-block rounded-xl px-12 py-4 text-sm font-semibold text-white transition hover:shadow-2xl"
           style={{
             background: "linear-gradient(135deg, var(--gold) 0%, #c49b2a 100%)",
@@ -398,7 +399,7 @@ export default function HomePage() {
           <div className="flex items-center gap-6 text-xs" style={{ color: "var(--text-muted)" }}>
             <a href="/pricing" className="transition hover:text-white">Pricing</a>
             <a href="#faq" className="transition hover:text-white">FAQ</a>
-            <a href={APP_URL} className="transition hover:text-white">Sign In</a>
+            <a href={LOGIN_URL} className="transition hover:text-white">Sign In</a>
           </div>
         </div>
       </footer>

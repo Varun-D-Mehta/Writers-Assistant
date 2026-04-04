@@ -20,8 +20,18 @@ db = None
 def get_db():
     global db
     if db is None:
+        import os
+        from pathlib import Path
         from google.cloud import firestore
-        db = firestore.AsyncClient()
+        from google.oauth2 import service_account
+
+        # Try explicit credentials file first, then fall back to ADC
+        creds_path = os.environ.get("GOOGLE_APPLICATION_CREDENTIALS", "")
+        if creds_path and Path(creds_path).exists():
+            credentials = service_account.Credentials.from_service_account_file(creds_path)
+            db = firestore.AsyncClient(credentials=credentials, project=credentials.project_id)
+        else:
+            db = firestore.AsyncClient()
     return db
 
 # OAuth setup

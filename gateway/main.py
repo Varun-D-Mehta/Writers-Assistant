@@ -3,12 +3,15 @@
 import asyncio
 import logging
 
+from dotenv import load_dotenv
+load_dotenv()  # Load .env into os.environ (needed for GOOGLE_APPLICATION_CREDENTIALS)
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from starlette.middleware.sessions import SessionMiddleware
 from starlette.requests import Request
 
-from auth import handle_google_callback, handle_google_login, handle_logout, handle_me
+from auth import handle_google_callback, handle_google_login, handle_logout, handle_me, verify_jwt
 from config import settings
 from proxy import proxy_request
 from session_manager import idle_reaper_loop, manager
@@ -61,7 +64,6 @@ async def auth_me(request: Request):
 
 @app.post("/auth/logout")
 async def auth_logout(request: Request):
-    from auth import verify_jwt
     token = request.cookies.get("wa_token")
     if token:
         payload = verify_jwt(token)

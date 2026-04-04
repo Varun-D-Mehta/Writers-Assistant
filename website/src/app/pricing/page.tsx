@@ -6,7 +6,8 @@ export const metadata: Metadata = {
   alternates: { canonical: "https://writersassistant.com/pricing" },
 };
 
-const APP_URL = "https://app.writersassistant.com";
+const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
+const LOGIN_URL = process.env.NEXT_PUBLIC_LOGIN_URL || "http://localhost:9000/auth/google";
 
 const PLANS = [
   {
@@ -78,7 +79,7 @@ export default function PricingPage() {
             Features
           </a>
           <a
-            href={APP_URL}
+            href={LOGIN_URL}
             className="rounded-lg px-5 py-2 text-sm font-medium text-white transition hover:opacity-90"
             style={{ background: "linear-gradient(135deg, var(--gold) 0%, #c49b2a 100%)" }}
           >
@@ -160,7 +161,7 @@ export default function PricingPage() {
               </ul>
 
               <a
-                href={APP_URL}
+                href={LOGIN_URL}
                 className={`mt-8 block rounded-xl px-4 py-3.5 text-center text-sm font-medium transition ${
                   plan.highlight ? "text-white hover:opacity-90" : "hover:bg-white/[0.03]"
                 }`}
@@ -187,11 +188,11 @@ export default function PricingPage() {
             or cancel anytime from the subscription management portal in the app.
           </p>
           <a
-            href={APP_URL}
+            href={LOGIN_URL}
             className="mt-6 inline-block rounded-xl border px-8 py-3 text-sm font-medium transition hover:bg-white/[0.03]"
             style={{ borderColor: "var(--border-warm)", color: "var(--text-bright)" }}
           >
-            Go to App → Settings → Subscription
+            Go to App → Subscription
           </a>
         </div>
       </section>
@@ -231,7 +232,7 @@ export default function PricingPage() {
           <div className="flex items-center gap-6 text-xs" style={{ color: "var(--text-muted)" }}>
             <a href="/" className="transition hover:text-white">Home</a>
             <a href="/#faq" className="transition hover:text-white">FAQ</a>
-            <a href={APP_URL} className="transition hover:text-white">Sign In</a>
+            <a href={LOGIN_URL} className="transition hover:text-white">Sign In</a>
           </div>
         </div>
       </footer>

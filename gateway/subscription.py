@@ -6,6 +6,7 @@ import json
 import logging
 from datetime import datetime, timezone
 
+import httpx
 from starlette.requests import Request
 from starlette.responses import JSONResponse
 
@@ -74,7 +75,6 @@ async def create_razorpay_subscription(request: Request):
     Returns the subscription ID and Razorpay key for frontend checkout.
     The frontend uses Razorpay's JavaScript checkout widget to complete payment.
     """
-    import httpx
 
     token = request.cookies.get("wa_token")
     if not token:
@@ -227,7 +227,6 @@ async def _pause_subscription(payload: dict):
 
 async def cancel_subscription(request: Request):
     """Cancel the current user's subscription via Razorpay API."""
-    import httpx
 
     token = request.cookies.get("wa_token")
     if not token:
