@@ -8,6 +8,7 @@ import Highlight from "@tiptap/extension-highlight";
 import Placeholder from "@tiptap/extension-placeholder";
 import CharacterCount from "@tiptap/extension-character-count";
 import { apiFetch } from "@/lib/api";
+import { usePreferencesStore } from "@/stores/usePreferencesStore";
 import EditorToolbar from "./EditorToolbar";
 import { InlinePrediction } from "./InlinePrediction";
 
@@ -30,6 +31,7 @@ export default function ChapterEditor({
   const saveStatusRef = useRef<"saved" | "saving" | "unsaved">("saved");
   const statusElRef = useRef<HTMLSpanElement>(null);
   const [wordCount, setWordCount] = useState(0);
+  const { editorFont, editorFontSize } = usePreferencesStore();
 
   const updateStatus = (status: "saved" | "saving" | "unsaved") => {
     saveStatusRef.current = status;
@@ -127,7 +129,16 @@ export default function ChapterEditor({
           </span>
         </div>
       </div>
-      <div className="flex-1 overflow-y-auto px-12 py-8" style={{ background: "var(--surface-1)" }}>
+      <div
+        className="flex-1 overflow-y-auto px-12 py-8"
+        style={{
+          background: "var(--surface-1)",
+          fontFamily: editorFont === "serif" ? "Georgia, 'Times New Roman', serif"
+            : editorFont === "mono" ? "var(--font-mono), 'Courier New', monospace"
+            : "var(--font-sans), system-ui, sans-serif",
+          fontSize: `${editorFontSize}px`,
+        }}
+      >
         <EditorContent
           editor={editor}
           className="prose prose-invert prose-lg mx-auto max-w-3xl"
